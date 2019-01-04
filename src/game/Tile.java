@@ -1,6 +1,10 @@
 package game;
 
+import org.lwjgl.util.Point;
+
 import elements.Clickable;
+import game.plants.Plant;
+import game.plants.Shrum;
 import render2d.Rect;
 import render2d.RectTex;
 import render2d.Render;
@@ -14,10 +18,12 @@ public class Tile implements Clickable{
 	static boolean hidden = false;
 	static int scale = 32;
 	Rect soil;
-	RectTex shrum;
+	//RectTex shrum;
 	
+	Plant plant;
+
+	Point[][] neigh;
 	int fert; 	// 0 - 3
-	int stage;	// 0 - 3
 	
 	/* fert col codes
 	 * 160 128 64
@@ -26,11 +32,10 @@ public class Tile implements Clickable{
 	 * 64 32 0 
 	 * */
 	
-	Tile(int x, int y){
-		fert = 3;
-		stage = 0;
-		soil = new Rect(x,y,scale,scale,64,32,0);
-		shrum = new RectTex(x,y,scale,scale,2,0);
+	public Tile(int x, int y, Plant p){
+		fert = 0;
+		soil = new Rect(x,y,scale,scale,160,128,64);
+		plant = p;
 	}
 	
 	public static int getScale(){
@@ -40,23 +45,48 @@ public class Tile implements Clickable{
 	public static void setScale(int sc){
 		scale = sc;
 	}
-
+	
+	public Plant getPlant(){
+		return plant;
+	}
+	
+	public void setPlant(Plant p){
+		plant = p;
+	}
+	
 	public void reScale(int xdif, int ydif){
 		soil.setX(soil.getX()+xdif);
 		soil.setY(soil.getY()+ydif);
-		shrum.setX(shrum.getX()+xdif);
-		shrum.setY(shrum.getY()+ydif);
 		
 		soil.setW(scale);
 		soil.setH(scale);
-		shrum.setW(scale);
-		shrum.setH(scale);
+		
+		if(plant == null)
+			return;
+		
+		plant.getSkin().setX(plant.getSkin().getX()+xdif);
+		plant.getSkin().setY(plant.getSkin().getY()+ydif);
+
+		plant.getSkin().setW(scale);
+		plant.getSkin().setH(scale);
 	}
 	
 	public int getFert() {
 		return fert;
 	}
+	
+	public int getStage(){
+		if(plant == null)
+			return -1;
+		return plant.getStage();
+	}
 
+	public void setNeigh(Point[][] p){
+		neigh = p;
+	}
+	public Point[][] getNeigh(){
+		return neigh;
+	}
 	public void setFert(int fert) {
 		if(fert > 3)
 			fert = 3;
@@ -72,48 +102,21 @@ public class Tile implements Clickable{
 		}
 	}
 
-	public void setStage(int stage) {
-		if(stage > 3 || stage < 0)
-			stage = 0;
-		this.stage = stage;
-		shrum.setFcu(stage);
-	}	
-	
+
 	public void toRender(){
 		Render.addShape(soil, 2);
-		if(!hidden && stage != 0)
-			Render.addShape(shrum, 3);
+		if(!hidden && plant != null)
+			Render.addShape(plant.getSkin(), 3);
+	}
+	public Tile[] spread(){
+		return plant.spread(neigh);
 	}
 	
 	public boolean cycle(){
-		switch(stage){
-			case 3: return true;	
-			case 2: 
-			case 1:
-				if(fert > 0){
-					setStage(stage+1);
-					setFert(fert-1);
-				}
-				else {
-					setStage(0);
-					if(stage > 1)
-						setFert(fert+1);	
-				}
-				break;
-			case 0:
-				if(regen && Shrumz.getTicks()%12 == 0)
-					setFert(fert+1);
-		}
-		return false;
-	}
-	
-	public void spread(){
-		switch(stage){	
-			case 2: 
-			case 1: return;
-			case 3: setStage(0); break;
-			case 0: setStage(1); break;
-		}
+		if(plant == null)
+			return false;
+		return plant.cycle(fert, this);
+		// késõbb soil
 	}
 
 	@Override
@@ -135,7 +138,12 @@ public class Tile implements Clickable{
 	public void action() {
 		if(!down){
 			down = true;
-			setStage(1);
+		// kókány ez..
+			plant = new Shrum(
+				soil.getX(),
+				soil.getY(),
+				scale
+			);
 			setFert(3);
 		}
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.util.Point;
 
 import elements.Cursor;
+import render2d.RectTex;
 
 public class Map {
 
@@ -25,7 +26,8 @@ public class Map {
 			for(int j = 0;j<dy;j++)
 				table[i][j] = new Tile(
 						mx+i*Tile.getScale(),
-						my+j*Tile.getScale()
+						my+j*Tile.getScale(),
+						null
 					);
 	}
 	
@@ -54,25 +56,27 @@ public class Map {
 	
 	public static void cycle(){
 		for(int i = 0;i<dx;i++)
-			for(int j = 0;j<dy;j++)
+			for(int j = 0;j<dy;j++){
+				setNeigh(i, j, table[i][j]);
 				if(table[i][j].cycle())
 					spread.add(new Point(i,j));
-		
+			}
 		if(!spread.isEmpty()){
 			for(Point p : spread){
-				int i = p.getX();
-				int j = p.getY();
-
-				table[i][j].spread();
-				
-				if(i != 0)
-					table[i-1][j].spread();
-				if(i != dx-1)
-					table[i+1][j].spread();
-				if(j != 0)
-					table[i][j-1].spread();
-				if(j != dy-1)
-					table[i][j+1].spread();
+				Tile[] t = table[p.getX()][p.getY()].spread();
+				for(Tile s : t){
+					RectTex skin = s.getPlant().getSkin();
+				// ha valami terjeszkedett már ide..
+					if(table[skin.getX()][skin.getY()].getPlant() != null
+							&& Math.random() > 0.5){
+					//akkor 50% esély h felülírja
+						table[skin.getX()][skin.getY()] = s;
+					// vagy el is lehetne tárolni Tile ban a saját pozícióját a table[][] ben...	
+						skin.setX(mx+skin.getX()*Tile.getScale());
+						skin.setY(my+skin.getY()*Tile.getScale());
+					// nem tetszik ez a módszer
+					}
+				}
 			}
 			spread.clear();
 		}
@@ -81,7 +85,22 @@ public class Map {
 	public static int getX(){
 		return dx;
 	}
+	
 	public static int getY(){
 		return dy;
+	}
+	public static void setNeigh(int x, int y, Tile t){
+		Point[][] p = new Point[3][3];
+
+		for(int i = -1;i < 2;i++)
+			for(int j = -1;j < 2;j++)
+				try{
+					p[i+1][j+1] = new Point(x+i, y+j);
+				} catch(Exception e){
+					p[i+1][j+1] = null;
+				}
+		
+		p[1][1] = null;
+		t.setNeigh(p);
 	}
 }
