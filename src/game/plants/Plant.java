@@ -10,8 +10,8 @@ public abstract class Plant {
 
 	RectTex skin;
 	
-	final int ENDSTAGE;
-	final int SPRSTAGE; // spreadstage
+	public final int ENDSTAGE;
+	public final int SPRSTAGE; // spreadstage
 	int stage;
 	int age;
 	
@@ -40,7 +40,7 @@ public abstract class Plant {
 	}
 	
 	public abstract void grow();
-	public abstract Tile[] spread(Point[][] n);
+	public abstract Plant[] spread(Point[][] n, Tile t);
 	public abstract boolean cycle(int fert, Tile t);
 	// return stage == SPRSTAGE;
 }

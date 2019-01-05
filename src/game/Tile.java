@@ -13,7 +13,7 @@ import root.Shrumz;
 
 public class Tile implements Clickable{
 	
-	static boolean regen = false;
+	static boolean regen = true;
 	static boolean down;
 	static boolean hidden = false;
 	static int scale = 32;
@@ -107,12 +107,15 @@ public class Tile implements Clickable{
 		Render.addShape(soil, 2);
 		if(!hidden && plant != null)
 			Render.addShape(plant.getSkin(), 3);
+		
 	}
-	public Tile[] spread(){
-		return plant.spread(neigh);
+	public Plant[] spread(){
+		return plant.spread(neigh, this);
 	}
 	
 	public boolean cycle(){
+		if(Shrumz.getTicks() % 12 == 0 && regen)
+			setFert(getFert()+1);
 		if(plant == null)
 			return false;
 		return plant.cycle(fert, this);
@@ -139,10 +142,12 @@ public class Tile implements Clickable{
 		if(!down){
 			down = true;
 		// kókány ez..
-			plant = new Shrum(
-				soil.getX(),
-				soil.getY(),
-				scale
+			setPlant(
+				new Shrum(
+					soil.getX(),
+					soil.getY(),
+					scale
+				)
 			);
 			setFert(3);
 		}

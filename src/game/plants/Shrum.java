@@ -2,12 +2,13 @@ package game.plants;
 
 import org.lwjgl.util.Point;
 
+import game.Map;
 import game.Tile;
 
 public class Shrum extends Plant {
 // TODO az egészet újra
 	public Shrum(int x, int y, int scale) {
-		super(x, y, scale, 1, 2, 2);
+		super(x, y, scale, 2, 2, 2);
 	}
 
 	@Override
@@ -24,90 +25,83 @@ public class Shrum extends Plant {
 	}
 
 	@Override
-	public Tile[] spread(Point[][] n) {
+	public Plant[] spread(Point[][] n, Tile t) {
 		// TODO szépen csináld már meg
-		Tile[] s = new Tile[4];
-		
-		if(n[0][1] != null)
-			s[0] = new Tile(
-					n[0][1].getX(), 
-					n[0][1].getY(), 
-					new Shrum(
-							n[0][1].getX(), 
-							n[0][1].getY(), 
-							Tile.getScale()
-							)
-					);
-		if(n[1][0] != null)
-			s[1] = new Tile(
-					n[1][0].getX(), 
-					n[1][0].getY(), 
-					new Shrum(
-							n[1][0].getX(), 
-							n[1][0].getY(), 
-							Tile.getScale()
-							)
-					);
-		if(n[1][2] != null)
-			s[2] = new Tile(
-					n[1][2].getX(), 
-					n[1][2].getY(), 
-					new Shrum(
-							n[1][2].getX(), 
-							n[1][2].getY(), 
-							Tile.getScale()
-							)
-					);
-		if(n[2][1] != null)
-			s[3] = new Tile(
-					n[2][1].getX(), 
-					n[2][1].getY(), 
-					new Shrum(
-							n[2][1].getX(), 
-							n[2][1].getY(), 
-							Tile.getScale()
-							)
-					);
-		
+		t.setPlant(null);
+		Plant[] s = new Plant[4];
+		s[0] = new Shrum(
+				n[0][1].getX(), 
+				n[0][1].getY(), 
+				Tile.getScale()
+			);
+		s[1] = new Shrum(
+				n[1][0].getX(), 
+				n[1][0].getY(), 
+				Tile.getScale()
+			);
+		s[2] = new Shrum(
+				n[1][2].getX(), 
+				n[1][2].getY(), 
+				Tile.getScale()
+			);
+		s[3] = new Shrum(
+				n[2][1].getX(), 
+				n[2][1].getY(), 
+				Tile.getScale()
+			);
+			
 		return s;
 	}
 
 	@Override
 	public boolean cycle(int fert, Tile t) {
 		incAge();
-		setStage();
 		switch(stage){
-			case 0: 
-				if(nCount(2, t) != 2 || fert == 0)
-					t.setPlant(null);
-				else
+			case 0:
+				if(nCount(2, t) == 2 && nCount(8, t) < 6 
+					&& fert > 0){
+					setStage();
 					t.setFert(fert-1);
-				break;
+				}
+				else
+					t.setPlant(null);
+			break;
 			case 1: 
-				if(nCount(1, t) != 1 || fert == 0){
+				if(nCount(1, t) == 1 && nCount(8, t) < 4 
+					&& fert > 0){
+					setStage();
+					t.setFert(fert-1);
+				}
+				else{
 					t.setPlant(null);
 					t.setFert(fert+1);
 				}
-				else
-					t.setFert(fert-1);
-				break;
-			case 2:
-				t.setPlant(null);
 			break;
+			case 2:
+				//setStage();
+				return true;
 		}
 		
 		
-		return stage == SPRSTAGE;
+		return false;
 	}
 
 	int nCount(int c, Tile t){
 
 		int count = 0;
-		while(count < c)
-			for(int i = 0;i < 3;i++)
-				for(int j = 0;j < 3;j++)
-					if(t.getNeigh()[i][j] != null)
+		int i = 0;
+		while(count < c && i < 3){
+			int j = 0;
+			while(count < c && j < 3){
+				Point p = t.getNeigh()[i][j];
+				try{
+					if(Map.getTable()[p.getX()][p.getY()].getPlant() != null)
 						count++;
+				} catch(Exception e){}
+				j++;
+			}
+			i++;
+		}
 		return count;
 	}	
 			

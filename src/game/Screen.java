@@ -15,8 +15,7 @@ public class Screen {
 	}
 
 	public static void load(){
-	
-		Map.load(64,64,8);
+		Map.load(128,96,6);
 		Panel.load();
 	}
 }
