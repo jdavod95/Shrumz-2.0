@@ -20,12 +20,16 @@ public class RectTex extends Shape{
 	public void setFcu(int fcu){
 		this.fcu = fcu;
 	}
-	private static void SetTexture(float fx,float fy,int fcu){
+	private static void setTexture(float fx, float fy, int fid, int fcu){
+		TextureLoad.setDims(fid);
 		
-		fx=((fcu%((float)TextureLoad.getIW()/(float)TextureLoad.getTW())+fx)*(1/((float)TextureLoad.getIW()/(float)TextureLoad.getTW())));		
-		fy=((fcu/(TextureLoad.getIH()/TextureLoad.getTH())+fy)*(1/((float)TextureLoad.getIH()/(float)TextureLoad.getTH())));
+		float fw = TextureLoad.getIW() / TextureLoad.getTW();
+		float fh = TextureLoad.getIH() / TextureLoad.getTH();
 		
-//		System.out.println(fx+" "+fy);
+		fx = ((fcu % fw ) + fx ) * (float)(1 / fw) ;
+		fy = (int)((fcu / fw ) + fy ) * (float)(1 / fh) ;
+
+		//System.out.println(fx+" "+fy);
 		glTexCoord2f(fx, fy);
 	}
 	public void draw(){
@@ -34,22 +38,22 @@ public class RectTex extends Shape{
 		
 		glColor4d(1,1,1,1.0);	
 	
-			SetTexture(0f,0f,fcu);
+			setTexture(0f,0f,fid,fcu);
 			glVertex2i(x,y);
 
-			SetTexture(1f,0f,fcu);
+			setTexture(1f,0f,fid,fcu);
 			glVertex2i(x+w,y);
 
-			SetTexture(1f,1f,fcu);
+			setTexture(1f,1f,fid,fcu);
 			glVertex2i(x+w,y+h);
 	
-			SetTexture(0f,0f,fcu);
+			setTexture(0f,0f,fid,fcu);
 			glVertex2i(x,y);
 
-			SetTexture(0f,1f,fcu);
+			setTexture(0f,1f,fid,fcu);
 			glVertex2i(x,y+h);
 
-			SetTexture(1f,1f,fcu);
+			setTexture(1f,1f,fid,fcu);
 			glVertex2i(x+w,y+h);
 
 

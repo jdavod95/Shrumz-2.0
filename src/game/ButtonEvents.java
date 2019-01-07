@@ -20,31 +20,28 @@ public class ButtonEvents {
 		@Override
 		public void action(){
 			if(Map.getX() < 128)
-				Map.set(Map.getX()+8, Map.getY());
-				
+				Map.setTable(Map.getX()+8, Map.getY());	
 		}
 	};
 	public final static MyEvent SHRINKMAPX = new MyEvent(){
 		@Override
 		public void action(){
 			if(Map.getX() > 8)
-				Map.set(Map.getX()-8, Map.getY());
-				
+				Map.setTable(Map.getX()-8, Map.getY());
 		}
 	};
-	
 	public final static MyEvent GROWMAPY = new MyEvent(){
 		@Override
 		public void action(){
 			if(Map.getY() < 128)
-				Map.set(Map.getX(), Map.getY()+8);
+				Map.setTable(Map.getX(), Map.getY()+8);
 		}
 	};
 	public final static MyEvent SHRINKMAPY = new MyEvent(){
 		@Override
 		public void action(){
 			if(Map.getY() > 8)
-				Map.set(Map.getX(), Map.getY()-8);	
+				Map.setTable(Map.getX(), Map.getY()-8);	
 		}
 	};
 	public final static MyEvent SCALEUP = new MyEvent(){
@@ -79,6 +76,24 @@ public class ButtonEvents {
 				Tile.setHidden(false);
 			else
 				Tile.setHidden(true);
+		}
+	};
+	public final static MyEvent BRPLSHRUM = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushPlant("Shrum");
+		}
+	};
+	public final static MyEvent BRPLWEED = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushPlant("Weed");
+		}
+	};
+	public final static MyEvent BRPLNULL = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushPlant("");
 		}
 	};
 

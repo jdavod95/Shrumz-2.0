@@ -60,7 +60,7 @@ public class Shrumz {
         glDisable(GL_LIGHTING);
           
 		while (!Display.isCloseRequested()) {
-		    Render.addShape(new Rect(Camera.getCX(),Camera.getCY(),W,H,255,255,255),0);
+			Render.addShape(new Rect(Camera.getCX(),Camera.getCY(),W,H,255,255,255),0);
 
 		    Screen.show();
 		    

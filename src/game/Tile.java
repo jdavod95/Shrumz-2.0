@@ -5,8 +5,8 @@ import org.lwjgl.util.Point;
 import elements.Clickable;
 import game.plants.Plant;
 import game.plants.Shrum;
+import game.plants.Weed;
 import render2d.Rect;
-import render2d.RectTex;
 import render2d.Render;
 import render2d.Shape;
 import root.Shrumz;
@@ -17,12 +17,12 @@ public class Tile implements Clickable{
 	static boolean down;
 	static boolean hidden = false;
 	static int scale = 32;
-	Rect soil;
-	//RectTex shrum;
 	
 	Plant plant;
 
 	Point[][] neigh;
+	// TODO soil class
+	Rect soil;
 	int fert; 	// 0 - 3
 	
 	/* fert col codes
@@ -54,74 +54,35 @@ public class Tile implements Clickable{
 		plant = p;
 	}
 	
-	public void reScale(int xdif, int ydif){
-		soil.setX(soil.getX()+xdif);
-		soil.setY(soil.getY()+ydif);
-		
-		soil.setW(scale);
-		soil.setH(scale);
-		
-		if(plant == null)
-			return;
-		
-		plant.getSkin().setX(plant.getSkin().getX()+xdif);
-		plant.getSkin().setY(plant.getSkin().getY()+ydif);
+	public static boolean isRegen() {
+		return regen;
+	}
 
-		plant.getSkin().setW(scale);
-		plant.getSkin().setH(scale);
+	public static void setRegen(boolean regen) {
+		Tile.regen = regen;
 	}
-	
-	public int getFert() {
-		return fert;
+
+	public static boolean isHidden() {
+		return hidden;
 	}
-	
-	public int getStage(){
-		if(plant == null)
-			return -1;
-		return plant.getStage();
+
+	public static void setHidden(boolean hidden) {
+		Tile.hidden = hidden;
 	}
 
 	public void setNeigh(Point[][] p){
 		neigh = p;
 	}
+	
 	public Point[][] getNeigh(){
 		return neigh;
 	}
-	public void setFert(int fert) {
-		if(fert > 3)
-			fert = 3;
-		else if(fert < 0)
-			fert = 0;
-		
-		this.fert = fert;
-		switch(fert){
-			case 0: soil.setCol(160, 128, 64); break;
-			case 1: soil.setCol(160, 96, 32); break;
-			case 2: soil.setCol(96, 64, 32); break;
-			case 3: soil.setCol(64, 32, 0); break;
-		}
-	}
-
-
-	public void toRender(){
-		Render.addShape(soil, 2);
-		if(!hidden && plant != null)
-			Render.addShape(plant.getSkin(), 3);
-		
-	}
-	public Plant[] spread(){
-		return plant.spread(neigh, this);
-	}
 	
-	public boolean cycle(){
-		if(Shrumz.getTicks() % 12 == 0 && regen)
-			setFert(getFert()+1);
-		if(plant == null)
-			return false;
-		return plant.cycle(fert, this);
-		// késõbb soil
-	}
-
+//
+// --------------------- Clickable ---------------------
+// --------------------- Clickable ---------------------
+// --------------------- Clickable ---------------------
+//
 	@Override
 	public Shape getShape() {
 		return soil;
@@ -141,31 +102,94 @@ public class Tile implements Clickable{
 	public void action() {
 		if(!down){
 			down = true;
-		// kókány ez..
-			setPlant(
-				new Shrum(
-					soil.getX(),
-					soil.getY(),
-					scale
-				)
-			);
+			switch(Screen.getBrushPlant()){
+			case "Shrum":
+				setPlant(
+						new Shrum(
+							soil.getX(),
+							soil.getY()
+						)
+					);
+				break;
+			case "Weed":
+				setPlant(
+						new Weed(
+							soil.getX(),
+							soil.getY()
+						)
+					);
+				break;
+			default: setPlant(null);
+			}
 			setFert(3);
 		}
 	}
+	
+//
+// --------------------- Core ---------------------
+// --------------------- Core ---------------------
+// --------------------- Core ---------------------
+//
+	public void reScale(int xdif, int ydif){
+		soil.setX(soil.getX()+xdif);
+		soil.setY(soil.getY()+ydif);
+		
+		soil.setW(scale);
+		soil.setH(scale);
+		
+		if(plant == null)
+			return;
+		
+		plant.getSkin().setX(plant.getSkin().getX()+xdif);
+		plant.getSkin().setY(plant.getSkin().getY()+ydif);
 
-	public static boolean isRegen() {
-		return regen;
+		plant.getSkin().setW(scale);
+		plant.getSkin().setH(scale);
+	}
+	
+	public void toRender(){
+		Render.addShape(soil, 2);
+		if(!hidden && plant != null)
+			Render.addShape(plant.getSkin(), 3);
+		
+	}
+	
+	public void chkDead(){
+		if(plant != null)
+			plant.die(this);
+	}
+	
+	public int getFert() {
+		return fert;
 	}
 
-	public static void setRegen(boolean regen) {
-		Tile.regen = regen;
+	public void setFert(int fert) {
+		if(fert > 3)
+			fert = 3;
+		else if(fert < 0)
+			fert = 0;
+		
+		this.fert = fert;
+		switch(fert){
+			case 0: soil.setCol(160, 128, 64); break;
+			case 1: soil.setCol(160, 96, 32); break;
+			case 2: soil.setCol(96, 64, 32); break;
+			case 3: soil.setCol(64, 32, 0); break;
+		}
+	}
+	
+	public Plant[] spread(){
+		return plant.spread(neigh);
+	}
+	
+	public boolean cycle(){
+		if(Shrumz.getTicks() % 12 == 0 && regen)
+			setFert(getFert()+1);
+		if(plant == null)
+			return false;
+		return plant.cycle(this) && plant.isSpreading();
+		// késõbb soil
 	}
 
-	public static boolean isHidden() {
-		return hidden;
-	}
 
-	public static void setHidden(boolean hidden) {
-		Tile.hidden = hidden;
-	}
 }

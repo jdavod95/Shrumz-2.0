@@ -6,14 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.Point;
 import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.opengl.TextureLoader;
 
 public class TextureLoad {
 	private static TextureImpl texture = null;
+	private static Point[] dims;
 	
-	
-	public static TextureImpl load(String path, int fw, int fh){
+	public static TextureImpl load(String path, int fw, int fh, int fid){
 		try {
 			texture = (TextureImpl)TextureLoader.getTexture("PNG", new FileInputStream(new File(path)));
 		} catch (FileNotFoundException e) {
@@ -25,17 +26,19 @@ public class TextureLoad {
 			Display.destroy();
 			System.exit(1);
 		}
-		texture.setTextureHeight(texture.getImageHeight()/fh);
-		texture.setTextureWidth(texture.getImageWidth()/fw);
+
+		dims[fid-1] = new Point(fw, fh);
 		
 		return texture;
 	}
 	
 	public static void loadAll(){
 		// example  :   texture=Load("res/spore.png");		//1
-		texture = load("res/abc_0.png",1,1);
-		texture = load("res/Shroomz.png",2,2);
-
+		dims  = new Point[3];
+		texture = load("res/abc_0.png",1,1,1);
+		texture = load("res/Shrum.png",2,2,2);
+		texture = load("res/Weed.png",2,4,3);
+		
 	}
 	public static int getTW(){
 		return texture.getTextureWidth();
@@ -48,5 +51,10 @@ public class TextureLoad {
 	}
 	public static int getIH(){
 		return texture.getImageHeight();
+	}
+	public static void setDims(int fid){
+		texture.setTextureWidth(texture.getImageWidth()/dims[fid-1].getX());
+		texture.setTextureHeight(texture.getImageHeight()/dims[fid-1].getY());
+			
 	}
 }

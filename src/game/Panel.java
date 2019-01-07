@@ -3,8 +3,9 @@ package game;
 import elements.Button;
 import elements.Cursor;
 import render2d.Camera;
-import render2d.Font;
+
 import render2d.Render;
+import root.Shrumz;
 
 public class Panel {
 	
@@ -18,9 +19,7 @@ public class Panel {
 	static Button hidepanel = new Button(cx, cy, 25, 25, "",
 			ButtonEvents.HIDEPANEL, true);
 
-	static Button[] butts = new Button[8];
-			
-			
+	static Button[] butts = new Button[11];
 			
 	public static void show() {
 		cx = Camera.getCX()+mx;
@@ -60,5 +59,15 @@ public class Panel {
 		
 		butts[7] =  new Button(cx+170, cy+45, 40, 40, "",
 				ButtonEvents.HIDESHRUM, true);
+		
+		butts[8] =  new Button(cx+Shrumz.W-50, cy+45, 40, 40, "",
+				ButtonEvents.BRPLNULL, true);
+		
+		butts[9] =  new Button(cx+Shrumz.W-95, cy+45, 40, 40, "",
+				ButtonEvents.BRPLSHRUM, true);
+		
+		butts[10] =  new Button(cx+Shrumz.W-140, cy+45, 40, 40, "",
+				ButtonEvents.BRPLWEED, true);
+	
 	}
 }
