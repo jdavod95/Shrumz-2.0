@@ -2,6 +2,11 @@ package render2d;
 import java.util.ArrayList;
 import java.util.List;
 
+import render2d.shape.Rect;
+import render2d.shape.RectTex;
+import render2d.shape.Shape;
+import render2d.write.Symbol;
+import render2d.write.Word;
 import root.Controls;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -9,8 +14,10 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Render {
 	
-	// TODO: fix textures work
+	// TODO: draw words by layers
 
+	//static List<Word> wrd = new ArrayList<>();
+	
 	static List<Shape> tex = new ArrayList<>();
 	static List<ArrayList<Shape>> layer = new ArrayList<>();
 	
@@ -39,6 +46,7 @@ public class Render {
 		Camera.create();
 	    Controls.navigate();
 
+		glBindTexture(GL_TEXTURE_2D,0);
 	    glBegin(GL_TRIANGLES);	
 	    
 		for(ArrayList<Shape> l : layer){
@@ -65,4 +73,15 @@ public class Render {
 		flush();
 	}	
 
+	public static void drawWord(Word w){
+		glEnd();
+		glBindTexture(GL_TEXTURE_2D,1);
+		glBegin(GL_TRIANGLES);	
+		
+		w.draw();
+		
+		glEnd();
+		glBindTexture(GL_TEXTURE_2D,0);
+	    glBegin(GL_TRIANGLES);	
+	}
 }

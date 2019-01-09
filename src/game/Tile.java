@@ -6,9 +6,9 @@ import elements.Clickable;
 import game.plants.Plant;
 import game.plants.Shrum;
 import game.plants.Weed;
-import render2d.Rect;
 import render2d.Render;
-import render2d.Shape;
+import render2d.shape.Rect;
+import render2d.shape.Shape;
 import root.Shrumz;
 
 public class Tile implements Clickable{

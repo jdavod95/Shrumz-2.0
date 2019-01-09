@@ -2,8 +2,7 @@ package elements;
 
 import org.lwjgl.util.Point;
 
-
-import render2d.Shape;
+import render2d.shape.Shape;
 
 public interface Clickable {
 

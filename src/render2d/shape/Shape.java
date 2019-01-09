@@ -1,4 +1,4 @@
-package render2d;
+package render2d.shape;
 
 
 public abstract class Shape {

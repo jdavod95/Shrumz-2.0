@@ -7,7 +7,7 @@ import org.lwjgl.util.Point;
 
 import elements.Cursor;
 import game.plants.Plant;
-import render2d.RectTex;
+import render2d.shape.RectTex;
 
 public class Map {
 

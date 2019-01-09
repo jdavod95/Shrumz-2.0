@@ -3,9 +3,10 @@ package elements;
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
-import render2d.Font;
-import render2d.Rect;
-import render2d.Shape;
+import render2d.Render;
+import render2d.shape.Rect;
+import render2d.shape.Shape;
+import render2d.write.Word;
 
 public class Button extends Rect implements Clickable {
 
@@ -84,7 +85,8 @@ public class Button extends Rect implements Clickable {
 		
 		setCol(col,col,col);
 		
-		Font.writeString(x, y, label, 32, true, this.w, this.h);
+		Render.drawWord(new Word(x,y,32,label));
+		
 	}
 	
 	// Clickable

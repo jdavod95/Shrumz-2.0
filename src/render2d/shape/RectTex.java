@@ -1,8 +1,11 @@
-package render2d;
+package render2d.shape;
 
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2i;
+
+import render2d.TextureLoad;
+
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.glBegin;

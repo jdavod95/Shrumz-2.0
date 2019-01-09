@@ -20,10 +20,10 @@ import org.lwjgl.opengl.DisplayMode;
 import elements.Cursor;
 import game.Screen;
 import render2d.Camera;
-import render2d.Font;
-import render2d.Rect;
 import render2d.Render;
 import render2d.TextureLoad;
+import render2d.shape.Rect;
+import render2d.write.Word;
 
 public class Shrumz {
 
@@ -61,13 +61,14 @@ public class Shrumz {
           
 		while (!Display.isCloseRequested()) {
 			Render.addShape(new Rect(Camera.getCX(),Camera.getCY(),W,H,255,255,255),0);
-
+			
 		    Screen.show();
+		    
 		    
 		    Cursor.check();
 		    Render.drawFrame();	
-
-    		glEnd();
+			
+		    glEnd();
     		
     		ticks ++;
     		if(ticks == 60){
@@ -85,7 +86,7 @@ public class Shrumz {
 	
 	public static void preLoad(){ 
 		TextureLoad.loadAll();
-		Font.LoadSymbols();
+		Word.loadSymbols();
 		Screen.load();
 		
 	}

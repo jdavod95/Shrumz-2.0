@@ -1,11 +1,10 @@
 package game.plants;
 
-import render2d.RectTex;
-
 import org.lwjgl.util.Point;
 
 import game.Map;
 import game.Tile;
+import render2d.shape.RectTex;
 
 public abstract class Plant {
 

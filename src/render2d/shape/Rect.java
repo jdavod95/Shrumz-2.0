@@ -1,4 +1,4 @@
-package render2d;
+package render2d.shape;
 
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glVertex2i;
