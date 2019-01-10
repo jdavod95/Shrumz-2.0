@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import render2d.Render;
 import render2d.shape.Rect;
+import render2d.shape.RectTex;
 import render2d.shape.Shape;
 import render2d.write.Word;
 
@@ -14,7 +15,9 @@ public class Button extends Rect implements Clickable {
 	int cDif = 16;
 	int bd = 5;
 
-	String label;
+	RectTex lpic = null;
+	String label = null;
+	
 	boolean visible;
 	boolean down = false;
 	boolean type = true; //toggle true|| hold false 
@@ -29,6 +32,15 @@ public class Button extends Rect implements Clickable {
 	public Button(int x, int y, int w, int h, String label, MyEvent e, boolean toggle) {
 		super(x,y,w,h,col,col,col);
 		this.label = label;
+		this.type = toggle;
+		visible = true;
+		if(e != null)
+			this.e = e;
+	}
+	
+	public Button(int x, int y, int w, int h, int fid, int fcu, MyEvent e, boolean toggle) {
+		super(x,y,w,h,col,col,col);
+		this.lpic = new RectTex(x ,y, w, h, fid ,fcu);
 		this.type = toggle;
 		visible = true;
 		if(e != null)
@@ -84,11 +96,17 @@ public class Button extends Rect implements Clickable {
 		glVertex2i(x+w-bd,y+h-bd);
 		
 		setCol(col,col,col);
-		
-		Render.drawWord(new Word(x,y,32,label));
+	
+		if(label != null)
+			Render.drawWord(new Word(x,y,32,label));
 		
 	}
 	
+	public void toRender(int l){
+		Render.addShape(this, l);
+		if(lpic != null)
+			Render.addShape(lpic, l);
+	}
 	// Clickable
 	
 	@Override

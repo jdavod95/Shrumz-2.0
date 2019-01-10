@@ -29,8 +29,8 @@ public class RectTex extends Shape{
 		float fw = TextureLoad.getIW() / TextureLoad.getTW();
 		float fh = TextureLoad.getIH() / TextureLoad.getTH();
 		
-		fx = ((fcu % fw ) + fx ) * (float)(1 / fw) ;
-		fy = (int)((fcu / fw ) + fy ) * (float)(1 / fh) ;
+		fx = ((fcu % fw ) + fx ) * (1 / fw) ;
+		fy = (int)((fcu / fw ) + fy ) * (1 / fh) ;
 
 		//System.out.println(fx+" "+fy);
 		glTexCoord2f(fx, fy);

@@ -7,12 +7,12 @@ public class ButtonEvents {
 	public final static MyEvent HIDEPANEL = new MyEvent(){
 		@Override
 		public void action(){
-			if(Panel.butts[0].getVis())
-				for(int i = 0;i<Panel.butts.length;i++)
-					Panel.butts[i].setVis(false);
+			if(Panel.butts.get(0).getVis())
+				for(int i = 0;i<Panel.butts.size();i++)
+					Panel.butts.get(i).setVis(false);
 			else
-				for(int i = 0;i<Panel.butts.length;i++)
-					Panel.butts[i].setVis(true);
+				for(int i = 0;i<Panel.butts.size();i++)
+					Panel.butts.get(i).setVis(true);
 		}
 	};
 	
@@ -96,5 +96,91 @@ public class ButtonEvents {
 			Screen.setBrushPlant("");
 		}
 	};
+	
+	public final static MyEvent BRSL_NO = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushFert(-1);
+		}
+	};
+	
+	public final static MyEvent BRSL_0 = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushFert(0);
+		}
+	};
+	
+	public final static MyEvent BRSL_1 = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushFert(1);
+		}
+	};
+	
+	public final static MyEvent BRSL_2 = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushFert(2);
+		}
+	};
+	
+	public final static MyEvent BRSL_3 = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushFert(3);
+		}
+	};
+	
+	public final static MyEvent CTRLPLAY = new MyEvent(){
+		@Override
+		public void action(){
+			if(Screen.isPaused())
+				Screen.setPaused(false);			
+		}
+	};
+	
+	public final static MyEvent CTRLPAUSE = new MyEvent(){
+		@Override
+		public void action(){
+			if(!Screen.isPaused())
+				Screen.setPaused(true);			
+		}
+	};
+	
+	public final static MyEvent CTRLSTOP = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.load();
+		}
+	};
+	
 
+	public final static MyEvent CTRLSTEP = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setPaused(true);
+			Map.cycle();		
+		}
+	};
+	
+	public final static MyEvent CTRLFRUP = new MyEvent(){
+		@Override
+		public void action(){
+			if(Screen.getPerframe() > 20)
+				Screen.setPerframe(Screen.getPerframe()+5);	
+			else
+				Screen.setPerframe(Screen.getPerframe()+1);
+		}
+	};
+	
+	public final static MyEvent CTRLFRDOWN = new MyEvent(){
+		@Override
+		public void action(){
+			if(Screen.getPerframe() > 20)
+				Screen.setPerframe(Screen.getPerframe()-5);	
+			else
+				Screen.setPerframe(Screen.getPerframe()-1);
+		}
+	};
 }

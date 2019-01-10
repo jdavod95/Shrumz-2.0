@@ -121,7 +121,8 @@ public class Tile implements Clickable{
 				break;
 			default: setPlant(null);
 			}
-			setFert(3);
+			if(Screen.getBrushFert() != -1)
+				setFert(Screen.getBrushFert());
 		}
 	}
 	

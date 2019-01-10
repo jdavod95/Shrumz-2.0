@@ -2,16 +2,15 @@ package render2d;
 import java.util.ArrayList;
 import java.util.List;
 
+import elements.Label;
 import render2d.shape.Rect;
 import render2d.shape.RectTex;
 import render2d.shape.Shape;
-import render2d.write.Symbol;
 import render2d.write.Word;
 import root.Controls;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
-import static org.lwjgl.opengl.GL32.GL_TEXTURE_2D_MULTISAMPLE;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
 
 public class Render {
@@ -19,8 +18,9 @@ public class Render {
 	// TODO: draw words by layers
 
 	//static List<Word> wrd = new ArrayList<>();
-	
+
 	static List<Shape> tex = new ArrayList<>();
+	static List<Shape> wrd = new ArrayList<>();
 	static List<ArrayList<Shape>> layer = new ArrayList<>();
 	
 	public static void addShape(Shape[] s, int l){
@@ -57,6 +57,8 @@ public class Render {
 					s.draw();
 				else if(s instanceof RectTex)
 					tex.add(s);
+				else if(s instanceof Label)
+					wrd.add(s);
 			}
 			
 			if(!tex.isEmpty()){
@@ -70,6 +72,20 @@ public class Render {
 			    glBegin(GL_TRIANGLES);	
 			}
 			
+			if(!wrd.isEmpty()){
+				glEnd();
+				glBindTexture(GL_TEXTURE_2D,1);
+				glGenerateMipmap(GL_TEXTURE_2D);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				glBegin(GL_TRIANGLES);	
+				for(Shape w : wrd)
+					w.draw();
+				
+				wrd.clear();
+				glEnd();
+				glBindTexture(GL_TEXTURE_2D,0);
+			    glBegin(GL_TRIANGLES);	
+			}
 		}
 		glEnd();
 		flush();

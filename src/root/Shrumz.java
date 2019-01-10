@@ -66,11 +66,11 @@ public class Shrumz {
 		while (!Display.isCloseRequested()) {
 			Render.addShape(new Rect(Camera.getCX(),Camera.getCY(),W,H,255,255,255),0);
 			
-		    
+		    Screen.show();
 		    
 		    Cursor.check();
 		    Render.drawFrame();	
-		    Screen2.show();
+
 			   
 		    glEnd();
     		
@@ -91,7 +91,7 @@ public class Shrumz {
 	public static void preLoad(){ 
 		TextureLoad.loadAll();
 		Word.loadSymbols();
-		//Screen.load();
+		Screen.load();
 		
 	}
 	

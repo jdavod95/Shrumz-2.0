@@ -83,7 +83,7 @@ public class Word {
 			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
 			glVertex2i(x+w, y+dscale);
 			
-			x += (s.getW()/2)+2;
+			x += w;
 			
 		}	
 	}	
