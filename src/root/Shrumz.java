@@ -1,5 +1,5 @@
 package root;
-
+import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
@@ -49,7 +49,11 @@ public class Shrumz {
             System.exit(1);
         }
     
+		
 		preLoad();
+		
+		
+		glEnable(GL_MULTISAMPLE);  
 		
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D,0);
@@ -62,12 +66,12 @@ public class Shrumz {
 		while (!Display.isCloseRequested()) {
 			Render.addShape(new Rect(Camera.getCX(),Camera.getCY(),W,H,255,255,255),0);
 			
-		    Screen.show();
 		    
 		    
 		    Cursor.check();
 		    Render.drawFrame();	
-			
+		    Screen2.show();
+			   
 		    glEnd();
     		
     		ticks ++;
@@ -87,7 +91,7 @@ public class Shrumz {
 	public static void preLoad(){ 
 		TextureLoad.loadAll();
 		Word.loadSymbols();
-		Screen.load();
+		//Screen.load();
 		
 	}
 	

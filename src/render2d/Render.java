@@ -10,7 +10,9 @@ import render2d.write.Word;
 import root.Controls;
 
 import static org.lwjgl.opengl.GL11.*;
-
+import static org.lwjgl.opengl.GL30.glGenerateMipmap;
+import static org.lwjgl.opengl.GL32.GL_TEXTURE_2D_MULTISAMPLE;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
 
 public class Render {
 	
@@ -76,6 +78,8 @@ public class Render {
 	public static void drawWord(Word w){
 		glEnd();
 		glBindTexture(GL_TEXTURE_2D,1);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glBegin(GL_TRIANGLES);	
 		
 		w.draw();

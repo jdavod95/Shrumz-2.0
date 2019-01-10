@@ -1,9 +1,5 @@
 package render2d.write;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
@@ -19,7 +15,7 @@ public class Word {
 	private static String path = new File("res/abc.fnt").getAbsolutePath();//"D:/workspace/"projekt_nev"/res/abc.fnt";
 	private static Symbol[] symb;
 
-	public static final int SCALE = 64;
+	public static final float SCALE = 64;
 	public static final float TXSIZE = 512f;//(scale*scale)/(scale/8);
 
 	int x, y;
@@ -66,12 +62,13 @@ public class Word {
 		int x = this.x;
 		for(int i = 0;i < word.length;i++){
 			Symbol s = getSymb(word[i]);
-
+			int w = (int)(s.getW()*(dscale/SCALE));
+			
 			glTexCoord2f(s.getX()/TXSIZE, s.getY()/TXSIZE);
 			glVertex2i(x, y);
 			
 			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
-			glVertex2i(x+s.getW()/(SCALE/dscale), y+dscale);
+			glVertex2i(x+w, y+dscale);
 			
 			glTexCoord2f(s.getX()/TXSIZE, (s.getY()+SCALE)/TXSIZE);
 			glVertex2i(x,y+dscale);
@@ -81,10 +78,10 @@ public class Word {
 			glVertex2i(x, y);
 
 			glTexCoord2f((s.getX()+s.getW())/TXSIZE, s.getY()/TXSIZE);
-			glVertex2i(x+s.getW()/(SCALE/dscale), y);
+			glVertex2i(x+w, y);
 	        
 			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
-			glVertex2i(x+s.getW()/(SCALE/dscale), y+dscale);
+			glVertex2i(x+w, y+dscale);
 			
 			x += (s.getW()/2)+2;
 			
