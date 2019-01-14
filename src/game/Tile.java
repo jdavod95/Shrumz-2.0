@@ -8,6 +8,7 @@ import game.plants.Shrum;
 import game.plants.Weed;
 import render2d.Render;
 import render2d.shape.Rect;
+import render2d.shape.RectIsom;
 import render2d.shape.Shape;
 import root.Shrumz;
 
@@ -34,7 +35,7 @@ public class Tile implements Clickable{
 	
 	public Tile(int x, int y, Plant p){
 		fert = 0;
-		soil = new Rect(x,y,scale,scale,160,128,64);
+		soil = new RectIsom(x,y,scale,160,128,64);
 		plant = p;
 	}
 	
@@ -106,16 +107,16 @@ public class Tile implements Clickable{
 			case "Shrum":
 				setPlant(
 						new Shrum(
-							soil.getX(),
-							soil.getY()
+							soil.getX()+soil.getW()/4,
+							soil.getY()-soil.getH()/2
 						)
 					);
 				break;
 			case "Weed":
 				setPlant(
 						new Weed(
-							soil.getX(),
-							soil.getY()
+							soil.getX()+soil.getW()/4,
+							soil.getY()-soil.getH()/2
 						)
 					);
 				break;
@@ -126,6 +127,10 @@ public class Tile implements Clickable{
 		}
 	}
 	
+	@Override
+	public void hover() {	
+		Render.addShape(new RectIsom(soil.getX(), soil.getY(), soil.getH(),128, 128, 128,0.5),4);
+	}
 //
 // --------------------- Core ---------------------
 // --------------------- Core ---------------------
@@ -136,13 +141,13 @@ public class Tile implements Clickable{
 		soil.setY(soil.getY()+ydif);
 		
 		soil.setW(scale);
-		soil.setH(scale);
+		soil.setH(scale/2);
 		
 		if(plant == null)
 			return;
 		
-		plant.getSkin().setX(plant.getSkin().getX()+xdif);
-		plant.getSkin().setY(plant.getSkin().getY()+ydif);
+		plant.getSkin().setX(soil.getX()+soil.getW()/4);
+		plant.getSkin().setY(soil.getY()-soil.getH()/2);
 
 		plant.getSkin().setW(scale);
 		plant.getSkin().setH(scale);
@@ -191,6 +196,8 @@ public class Tile implements Clickable{
 		return plant.cycle(this) && plant.isSpreading();
 		// késõbb soil
 	}
+
+
 
 
 }

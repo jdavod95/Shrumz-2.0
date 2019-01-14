@@ -7,12 +7,17 @@ public class Rect extends Shape {
 
 	static protected final double COLBITS = 255; 
 	protected int r,g,b;
-	
+	protected double op = 1.0;
 	public Rect(int x, int y, int w, int h, int r, int g, int b) {
 		super(x, y, w, h);
 		this.r = r;
 		this.g = g;
 		this.b = b;
+	}
+	
+	public Rect(int x, int y, int w, int h, int r, int g, int b, double op) {
+		this(x, y, w, h,r,g,b);
+		this.op = op;
 	}
 	public void setCol(int r, int g, int b){
 		this.r = r;

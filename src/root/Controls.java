@@ -5,6 +5,7 @@ package root;
 import org.lwjgl.input.Keyboard;
 
 import game.ButtonEvents;
+import game.Screen;
 import render2d.Camera;
 
 public class Controls {
@@ -28,6 +29,12 @@ public class Controls {
 			ButtonEvents.SCALEDOWN.action();
 		else if(Keyboard.isKeyDown(Keyboard.KEY_ADD))
 			ButtonEvents.SCALEUP.action();
+	
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+			if(!Screen.isPaused())
+				ButtonEvents.CTRLPAUSE.action();
+			else
+				ButtonEvents.CTRLSTEP.action();
 		
 	}
 

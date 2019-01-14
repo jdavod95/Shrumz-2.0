@@ -1,12 +1,15 @@
 package game;
 
+import render2d.Render;
+import render2d.shape.Rect;
+import render2d.shape.RectIsom;
 import root.Shrumz;
 
 public class Screen {
 
 	static int perframe = 5;
 	static boolean paused = false;
-	static String brushPlant = "";
+	static String brushPlant = "Shrum";
 	static int brushFert = 3;
 	
 	public static void show() {
@@ -19,7 +22,7 @@ public class Screen {
 	}
 
 	public static void load(){
-		Map.load(16,16,32);
+		Map.load(8,8,32);
 		Panel.load();
 	}
 

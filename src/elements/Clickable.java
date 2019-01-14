@@ -10,6 +10,7 @@ public interface Clickable {
 	public abstract boolean getVis();
 	public abstract void release();
 	public void action();
+	public void hover();
 		
 	public static boolean check(Point m, Shape s){
 		if(m.getX() > s.getX() && m.getX() < s.getX() + s.getW())

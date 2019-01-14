@@ -27,24 +27,27 @@ public class Cursor {
 	}
 	
 	public static void check() {
-		 if(Mouse.isButtonDown(0)){
-		    	Point p = new Point(Camera.getCX()+Mouse.getX(), Camera.getCY()+Shrumz.H-Mouse.getY());
-		    	for(Clickable c : clicks){
-		    		if(Clickable.check(p, c.getShape())){
-		    			c.action();
-		    			if(pressed == null)
-		    				pressed = c;
-		    			else if(pressed != c){
-		    				pressed.release();
-		    				pressed = c;
-		    			}
-		    		}
-		    	}
-		    }
-	 	if(!Mouse.isButtonDown(0) && pressed != null){
-	 		pressed.release();
-	 		pressed = null;
-	 	}
+		Point p = new Point(Camera.getCX()+Mouse.getX(), 
+				Camera.getCY()+Shrumz.H-Mouse.getY());
+    	for(Clickable c : clicks){
+    		if(Clickable.check(p, c.getShape())){
+    			
+    			c.hover();
+    			if(Mouse.isButtonDown(0)){
+    				c.action();
+	    			if(pressed == null)
+	    				pressed = c;
+	    			else if(pressed != c){
+	    				pressed.release();
+	    				pressed = c;
+	    			}
+    			}
+	    	 	if(!Mouse.isButtonDown(0) && pressed != null){
+	    	 		pressed.release();
+	    	 		pressed = null;
+	    	 	}
+	    	}
+	    }
 	 	clicks.clear();
 	}
 

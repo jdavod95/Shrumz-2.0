@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
 
-public class Word {
+import render2d.shape.Shape;
+
+public class Label extends Shape{
 
 	// alphabet from bmfc
 	
@@ -18,20 +20,49 @@ public class Word {
 	public static final float SCALE = 64;
 	public static final float TXSIZE = 512f;//(scale*scale)/(scale/8);
 
-	int x, y;
 	int[] word;
-	int dscale;
 	
-	public Word(int x, int y, int scale, String s){
-		this.x = x;
-		this.y = y;
-		this.dscale = scale;
+	public Label(int x, int y, int scale, String s){
+		super(x, y, 0, scale);
+		
 		word = new int[s.length()];
 		for(int i = 0; i < s.length(); i++)
 			word[i] = s.charAt(i);
-
-		
 	}
+	
+	public void draw(){
+		int x = this.x;
+		for(int i = 0;i < word.length;i++){
+			Symbol s = getSymb(word[i]);
+			int w = (int)(s.getW()*(h/SCALE));
+			
+			glTexCoord2f(s.getX()/TXSIZE, s.getY()/TXSIZE);
+			glVertex2i(x, y);
+			
+			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
+			glVertex2i(x+w, y+h);
+			
+			glTexCoord2f(s.getX()/TXSIZE, (s.getY()+SCALE)/TXSIZE);
+			glVertex2i(x,y+h);
+			
+			
+			glTexCoord2f(s.getX()/TXSIZE, s.getY()/TXSIZE);
+			glVertex2i(x, y);
+
+			glTexCoord2f((s.getX()+s.getW())/TXSIZE, s.getY()/TXSIZE);
+			glVertex2i(x+w, y);
+	        
+			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
+			glVertex2i(x+w, y+h);
+			
+			x += w;
+		}	
+	}	
+	
+	//---------------------- static ----------------------
+	//---------------------- static ----------------------
+	//---------------------- static ----------------------
+	
 	public static void loadSymbols(){
 		BufferedReader br;
 		int k = 0;		
@@ -50,7 +81,6 @@ public class Word {
 			   			);
 				else if(k == 3)
 				   	symb = new Symbol[Integer.parseInt(st.nextToken("chars count="))];
-				
 				k++;	
 			}
 			br.close();
@@ -58,36 +88,6 @@ public class Word {
 		catch (Exception e) {e.printStackTrace();}	   	
 	}
 		
-	public void draw(){
-		int x = this.x;
-		for(int i = 0;i < word.length;i++){
-			Symbol s = getSymb(word[i]);
-			int w = (int)(s.getW()*(dscale/SCALE));
-			
-			glTexCoord2f(s.getX()/TXSIZE, s.getY()/TXSIZE);
-			glVertex2i(x, y);
-			
-			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
-			glVertex2i(x+w, y+dscale);
-			
-			glTexCoord2f(s.getX()/TXSIZE, (s.getY()+SCALE)/TXSIZE);
-			glVertex2i(x,y+dscale);
-			
-			
-			glTexCoord2f(s.getX()/TXSIZE, s.getY()/TXSIZE);
-			glVertex2i(x, y);
-
-			glTexCoord2f((s.getX()+s.getW())/TXSIZE, s.getY()/TXSIZE);
-			glVertex2i(x+w, y);
-	        
-			glTexCoord2f((s.getX()+s.getW())/TXSIZE, (s.getY()+SCALE)/TXSIZE);
-			glVertex2i(x+w, y+dscale);
-			
-			x += w;
-			
-		}	
-	}	
-	
 	public static Symbol getSymb(int id){
 		int i = 0;
 		while(id != symb[i].getId())

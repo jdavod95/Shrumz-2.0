@@ -8,6 +8,7 @@ import org.lwjgl.util.Point;
 import elements.Cursor;
 import game.plants.Plant;
 import render2d.shape.RectTex;
+import render2d.shape.Shape;
 
 public class Map {
 
@@ -39,8 +40,8 @@ public class Map {
 		for(int i = 0;i<dx;i++)
 			for(int j = 0;j<dy;j++)
 				table[i][j] = new Tile(
-						mx+i*Tile.getScale(),
-						my+j*Tile.getScale(),
+						mx + (8-i-1)*(Tile.getScale()) + j*Tile.getScale(),
+						my + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
 						null
 					);
 	}
@@ -63,7 +64,7 @@ public class Map {
 		Tile.setScale(scale);
 		for(int i = 0;i<dx;i++)
 			for(int j = 0;j<dy;j++)
-				table[i][j].reScale(-scaledif*i, -scaledif*j);
+				table[i][j].reScale(-scaledif*j+scaledif*i, -scaledif*j/2-scaledif/2*i);
 	}
 
 	public static void cycle(){
@@ -84,10 +85,15 @@ public class Map {
 				for(Plant pl : t){
 					RectTex skin = pl.getSkin();
 					try{
-						if(table[skin.getX()][skin.getY()].getPlant() == null){
-							table[skin.getX()][skin.getY()].setPlant(pl);
-							skin.setX(mx+skin.getX()*Tile.getScale());
-							skin.setY(my+skin.getY()*Tile.getScale());
+						int i = skin.getX();
+						int j = skin.getY(); 
+						Shape soil = table[i][j].getShape();
+						if(table[i][j].getPlant() == null){
+							table[i][j].setPlant(pl);
+							skin.setX(soil.getX()
+							+soil.getW()/4);
+							skin.setY(soil.getY()
+							-soil.getH()/2);
 						}
 					} catch (Exception e){} 
 				}

@@ -2,11 +2,10 @@ package render2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import elements.Label;
 import render2d.shape.Rect;
 import render2d.shape.RectTex;
 import render2d.shape.Shape;
-import render2d.write.Word;
+import render2d.write.Label;
 import root.Controls;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -47,11 +46,12 @@ public class Render {
 	public static void drawFrame(){
 		Camera.create();
 	    Controls.navigate();
-
-		glBindTexture(GL_TEXTURE_2D,0);
-	    glBegin(GL_TRIANGLES);	
 	    
 		for(ArrayList<Shape> l : layer){
+			
+			glBindTexture(GL_TEXTURE_2D,0);
+		    glBegin(GL_TRIANGLES);	
+		    
 			for(Shape s : l){
 				if(s instanceof Rect)
 					s.draw();
@@ -68,11 +68,10 @@ public class Render {
 				}
 				tex.clear();
 				glEnd();
-				glBindTexture(GL_TEXTURE_2D,0);
-			    glBegin(GL_TRIANGLES);	
 			}
 			
 			if(!wrd.isEmpty()){
+
 				glEnd();
 				glBindTexture(GL_TEXTURE_2D,1);
 				glGenerateMipmap(GL_TEXTURE_2D);
@@ -82,26 +81,11 @@ public class Render {
 					w.draw();
 				
 				wrd.clear();
-				glEnd();
-				glBindTexture(GL_TEXTURE_2D,0);
-			    glBegin(GL_TRIANGLES);	
 			}
+			glEnd();
+			
 		}
-		glEnd();
 		flush();
 	}	
 
-	public static void drawWord(Word w){
-		glEnd();
-		glBindTexture(GL_TEXTURE_2D,1);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glBegin(GL_TRIANGLES);	
-		
-		w.draw();
-		
-		glEnd();
-		glBindTexture(GL_TEXTURE_2D,0);
-	    glBegin(GL_TRIANGLES);	
-	}
 }

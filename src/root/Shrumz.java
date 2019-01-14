@@ -13,7 +13,6 @@ import static org.lwjgl.opengl.GL11.glEnd;
 
 import java.io.File;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -23,7 +22,7 @@ import render2d.Camera;
 import render2d.Render;
 import render2d.TextureLoad;
 import render2d.shape.Rect;
-import render2d.write.Word;
+import render2d.write.Label;
 
 public class Shrumz {
 
@@ -41,10 +40,10 @@ public class Shrumz {
 			
 		try{
     	  	Display.setDisplayMode(new DisplayMode(W, H));
-            Display.setTitle("TEngine");
+            Display.setTitle("Shrumz");
             Display.create();
             
-		} catch (LWJGLException e) {
+		} catch (Exception e) {
             System.err.println("Display wasn't initialized correctly.");
             System.exit(1);
         }
@@ -90,7 +89,7 @@ public class Shrumz {
 	
 	public static void preLoad(){ 
 		TextureLoad.loadAll();
-		Word.loadSymbols();
+		Label.loadSymbols();
 		Screen.load();
 		
 	}
