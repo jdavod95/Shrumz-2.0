@@ -12,6 +12,8 @@ import root.Shrumz;
 
 
 public class Camera {
+	static private int fps = 60;
+	
 	static private int W  = Shrumz.W;
 	static private int H  = Shrumz.H;
 	
@@ -28,9 +30,16 @@ public class Camera {
 	}
 	
 	
+	public static int getFps() {
+		return fps;
+	}
+	public static void setFps(int fps) {
+		Camera.fps = fps;
+	}
+	
 	public static void create(){
         Display.update();
-        Display.sync(60);
+        Display.sync(fps);
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();

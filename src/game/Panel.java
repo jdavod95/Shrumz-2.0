@@ -9,6 +9,7 @@ import render2d.write.Label;
 import render2d.Camera;
 
 import render2d.Render;
+import render2d.shape.Rect;
 import root.Shrumz;
 
 public class Panel {
@@ -19,7 +20,6 @@ public class Panel {
 	
 	static int cx = Camera.getCX()+mx;
 	static int cy = Camera.getCY()+my;
-	
 	static Button hidepanel = new Button(cx, cy, 25, 25, "",
 			ButtonEvents.HIDEPANEL, true);
 
@@ -28,7 +28,10 @@ public class Panel {
 	
 	public static void show() {
 
+			
 		updButt();
+		Render.addShape(new Rect(Camera.getCX(),Camera.getCY(), Shrumz.W, 100,128,128,128,0.5), 4);
+		
 //		Cursor.addClck(hidepanel);
 		for(Button b : butts)
 			Cursor.addClck(b);
@@ -38,11 +41,12 @@ public class Panel {
 			for(Button b : butts)
 				b.toRender(layer);
 		
-		Render.addShape(new Label(cx+43,cy+32, 20, "Row"), 3);
-		Render.addShape(new Label(cx+90,cy+32, 20, "Col"), 3);
-		Render.addShape(new Label(cx+125,cy+35, 17, "Scale"), 3);
-		Render.addShape(new Label(cx+350,cy+35, 17, "Speed"), 3);
+		Render.addShape(new Label(cx+43,cy+32, 20, "Row"), 5);
+		Render.addShape(new Label(cx+90,cy+32, 20, "Col"), 5);
+		Render.addShape(new Label(cx+125,cy+35, 17, "Scale"), 5);
+		Render.addShape(new Label(cx+350,cy+35, 17, "Speed"), 5);
 
+		
 	}
 
 	public static void load(){

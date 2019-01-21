@@ -3,9 +3,11 @@ package game;
 import org.lwjgl.util.Point;
 
 import elements.Clickable;
-import game.plants.Plant;
-import game.plants.Shrum;
-import game.plants.Weed;
+import game.plant.Plant;
+import game.plant.Shrum;
+import game.plant.Weed;
+import game.soil.Dirt;
+import game.soil.Soil;
 import render2d.Render;
 import render2d.shape.Rect;
 import render2d.shape.RectIsom;
@@ -20,22 +22,11 @@ public class Tile implements Clickable{
 	static int scale = 32;
 	
 	Plant plant;
-
+	Soil soil;
 	Point[][] neigh;
-	// TODO soil class
-	Rect soil;
-	int fert; 	// 0 - 3
-	
-	/* fert col codes
-	 * 160 128 64
-	 * 160 96 32
-	 * 96 64 32
-	 * 64 32 0 
-	 * */
-	
+	     
 	public Tile(int x, int y, Plant p){
-		fert = 0;
-		soil = new RectIsom(x,y,scale,160,128,64);
+		soil = new Dirt(x,y,Tile.getScale());
 		plant = p;
 	}
 	
@@ -53,6 +44,15 @@ public class Tile implements Clickable{
 	
 	public void setPlant(Plant p){
 		plant = p;
+	}
+	
+	
+	public Soil getSoil() {
+		return soil;
+	}
+
+	public void setSoil(Soil soil) {
+		this.soil = soil;
 	}
 	
 	public static boolean isRegen() {
@@ -86,7 +86,7 @@ public class Tile implements Clickable{
 //
 	@Override
 	public Shape getShape() {
-		return soil;
+		return soil.getSkin();
 	}
 
 	@Override
@@ -107,29 +107,54 @@ public class Tile implements Clickable{
 			case "Shrum":
 				setPlant(
 						new Shrum(
-							soil.getX()+soil.getW()/4,
-							soil.getY()-soil.getH()/2
+							getShape().getX()+getShape().getW()/4,
+							getShape().getY()-getShape().getH()/2
 						)
 					);
 				break;
 			case "Weed":
 				setPlant(
 						new Weed(
-							soil.getX()+soil.getW()/4,
-							soil.getY()-soil.getH()/2
+							getShape().getX()+getShape().getW()/4,
+							getShape().getY()-getShape().getH()/2
 						)
 					);
 				break;
 			default: setPlant(null);
 			}
 			if(Screen.getBrushFert() != -1)
-				setFert(Screen.getBrushFert());
+				soil.setFert(Screen.getBrushFert());
 		}
+	}
+	@Override
+	public boolean contains(Point m){
+
+		if(m.getX() < getShape().getX() || m.getX() > getShape().getX() + getShape().getW())
+			return false;
+		if(m.getY() < getShape().getY() || m.getY() > getShape().getY() + getShape().getH())
+			return false;
+		
+		int x = getShape().getX();
+		int y = getShape().getY();
+		
+		int mx = m.getX();
+		int my = m.getY();
+
+		int w = getShape().getW()/2;
+
+		if(mx < x+w){
+			if(my < (mx-x+w)/2+y && my > (x-mx+w)/2+y)
+				return true;
+		} else
+			if(my < (x-mx+w)/2+w+y && my > (mx-x-w)/2+y)
+				return true;
+		
+		return false;
 	}
 	
 	@Override
 	public void hover() {	
-		Render.addShape(new RectIsom(soil.getX(), soil.getY(), soil.getH(),128, 128, 128,0.5),4);
+		Render.addShape(new RectIsom(getShape().getX(), getShape().getY(), getShape().getH(),128, 128, 128,0.5),4);
 	}
 //
 // --------------------- Core ---------------------
@@ -137,27 +162,26 @@ public class Tile implements Clickable{
 // --------------------- Core ---------------------
 //
 	public void reScale(int xdif, int ydif){
-		soil.setX(soil.getX()+xdif);
-		soil.setY(soil.getY()+ydif);
+		getShape().setX(getShape().getX()+xdif);
+		getShape().setY(getShape().getY()+ydif);
 		
-		soil.setW(scale);
-		soil.setH(scale/2);
+		getShape().setW(scale);
+		getShape().setH(scale/2);
 		
 		if(plant == null)
 			return;
 		
-		plant.getSkin().setX(soil.getX()+soil.getW()/4);
-		plant.getSkin().setY(soil.getY()-soil.getH()/2);
+		plant.getSkin().setX(getShape().getX()+getShape().getW()/4);
+		plant.getSkin().setY(getShape().getY()-getShape().getH()/2);
 
 		plant.getSkin().setW(scale);
 		plant.getSkin().setH(scale);
 	}
 	
 	public void toRender(){
-		Render.addShape(soil, 2);
+		Render.addShape(getShape(), 2);
 		if(!hidden && plant != null)
 			Render.addShape(plant.getSkin(), 3);
-		
 	}
 	
 	public void chkDead(){
@@ -165,32 +189,13 @@ public class Tile implements Clickable{
 			plant.die(this);
 	}
 	
-	public int getFert() {
-		return fert;
-	}
-
-	public void setFert(int fert) {
-		if(fert > 3)
-			fert = 3;
-		else if(fert < 0)
-			fert = 0;
-		
-		this.fert = fert;
-		switch(fert){
-			case 0: soil.setCol(160, 128, 64); break;
-			case 1: soil.setCol(160, 96, 32); break;
-			case 2: soil.setCol(96, 64, 32); break;
-			case 3: soil.setCol(64, 32, 0); break;
-		}
-	}
-	
 	public Plant[] spread(){
 		return plant.spread(neigh);
 	}
 	
 	public boolean cycle(){
-		if(Shrumz.getTicks() % 12 == 0 && regen)
-			setFert(getFert()+1);
+//		if(Shrumz.getTicks() % 12 == 0 && regen)
+//			setFert(getFert()+1);
 		if(plant == null)
 			return false;
 		return plant.cycle(this) && plant.isSpreading();

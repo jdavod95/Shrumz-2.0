@@ -27,7 +27,7 @@ public class Rect extends Shape {
 
 	public void draw(){
 		
-		glColor4d(r/COLBITS,g/COLBITS,b/COLBITS,1.0);
+		glColor4d(r/COLBITS,g/COLBITS,b/COLBITS,op);
 				
 		glVertex2i(x,y);
 		glVertex2i(x+w,y);			

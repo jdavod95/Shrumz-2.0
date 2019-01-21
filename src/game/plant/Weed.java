@@ -1,4 +1,4 @@
-package game.plants;
+package game.plant;
 
 import org.lwjgl.util.Point;
 
@@ -29,14 +29,15 @@ public class Weed extends Plant {
 		
 		default:
 			spreading = true;
-			if(t.getFert() > 0 && getAge() % 10 == 0){
-				t.setFert(t.getFert()-1);
+			if(t.getSoil().getFert() > 0 && getAge() % 10 == 0){
+				t.getSoil().incTire();
 				incStage(true);
 			}
-			else if(t.getFert() < 1){
+			else if(t.getSoil().getFert() < 1){
 				t.setPlant(null);
 				if(stage > 0)
-					t.setFert(t.getFert()+stage);
+					for(int i = 0;i<stage;i++)
+					t.getSoil().incFert(true);
 			}
 		break;	
 		}

@@ -1,28 +1,39 @@
 package game;
 
+import org.lwjgl.input.Mouse;
+
+import render2d.Camera;
 import render2d.Render;
-import render2d.shape.Rect;
-import render2d.shape.RectIsom;
+import render2d.write.Label;
 import root.Shrumz;
 
 public class Screen {
 
-	static int perframe = 5;
+	static int perframe = 35;
 	static boolean paused = false;
 	static String brushPlant = "Shrum";
 	static int brushFert = 3;
-	
+
 	public static void show() {
 		Panel.show();
 		
 		if(!paused && Shrumz.getTicks() % perframe == 0)
 			Map.cycle();
+
+		Render.addShape(new Label(
+				Camera.getCX()+Mouse.getX()+50,
+				Camera.getCY()+Shrumz.H-Mouse.getY()+5,
+				16,
+				Integer.toString(Camera.getCX()+Mouse.getX()) +"          "+
+				Integer.toString(Camera.getCY()+Shrumz.H-Mouse.getY())
+				), 6);
+		
 		
 		Map.toRender();
 	}
 
 	public static void load(){
-		Map.load(8,8,32);
+		Map.load(16,16,32);
 		Panel.load();
 	}
 

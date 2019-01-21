@@ -16,16 +16,6 @@ public class RectIsom extends Rect{
 	@Override
 	public void draw(){
 		
-/*		glColor4d(0,1.0,0,1.0);
-		
-		glVertex2i(x,y);
-		glVertex2i(x+w,y);			
-		glVertex2i(x+w,y+h);
-		
-		glVertex2i(x,y);
-		glVertex2i(x,y+h);
-		glVertex2i(x+w,y+h);
-*/		
 		glColor4d(r/COLBITS,g/COLBITS,b/COLBITS,op);
 		
 		glVertex2i(x+w/2,y);

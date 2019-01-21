@@ -1,4 +1,4 @@
-package game.plants;
+package game.plant;
 
 import org.lwjgl.util.Point;
 
@@ -58,22 +58,22 @@ public class Shrum extends Plant {
 		switch(stage){
 		case 0:
 			if(nCount(2, t) == 2 && nCount(8, t) < 6 
-				&& t.getFert() > 0){
+				&& t.getSoil().getFert() > 0){
 				incStage(true);
-				t.setFert(t.getFert()-1);
+				t.getSoil().incTire();
 			}
 			else
 				t.setPlant(null);
 			break;
 		case 1: 
 			if(nCount(1, t) == 1 && nCount(8, t) < 4 
-				&& t.getFert() > 0){
+				&& t.getSoil().getFert() > 0){
 				incStage(true);
-				t.setFert(t.getFert()-1);
+				t.getSoil().incTire();
 			}
 			else{
 				t.setPlant(null);
-				t.setFert(t.getFert()+1);
+				t.getSoil().incFert(true);
 			}
 			break;
 		case 2:

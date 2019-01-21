@@ -30,7 +30,7 @@ public class Cursor {
 		Point p = new Point(Camera.getCX()+Mouse.getX(), 
 				Camera.getCY()+Shrumz.H-Mouse.getY());
     	for(Clickable c : clicks){
-    		if(Clickable.check(p, c.getShape())){
+    		if(c.contains(p)){
     			
     			c.hover();
     			if(Mouse.isButtonDown(0)){

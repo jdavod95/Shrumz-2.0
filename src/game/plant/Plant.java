@@ -1,4 +1,4 @@
-package game.plants;
+package game.plant;
 
 import org.lwjgl.util.Point;
 

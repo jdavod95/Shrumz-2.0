@@ -3,6 +3,8 @@ package elements;
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
+import org.lwjgl.util.Point;
+
 import render2d.Render;
 import render2d.shape.Rect;
 import render2d.shape.RectTex;
@@ -175,7 +177,13 @@ public class Button extends Rect implements Clickable {
 			e.action();
 		}
 	}
-
+	@Override
+	public boolean contains(Point m){
+		if(m.getX() > x && m.getX() < x + w)
+			if(m.getY() > y && m.getY() < y + h)
+					return true;
+		return false;
+	}
 	@Override
 	public void hover() {}
 	

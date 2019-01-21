@@ -6,7 +6,7 @@ import java.util.List;
 import org.lwjgl.util.Point;
 
 import elements.Cursor;
-import game.plants.Plant;
+import game.plant.Plant;
 import render2d.shape.RectTex;
 import render2d.shape.Shape;
 
@@ -40,7 +40,7 @@ public class Map {
 		for(int i = 0;i<dx;i++)
 			for(int j = 0;j<dy;j++)
 				table[i][j] = new Tile(
-						mx + (8-i-1)*(Tile.getScale()) + j*Tile.getScale(),
+						mx + (16-i-1)*(Tile.getScale()) + j*Tile.getScale(),
 						my + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
 						null
 					);
