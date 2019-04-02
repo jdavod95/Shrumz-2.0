@@ -19,18 +19,19 @@ import org.lwjgl.opengl.DisplayMode;
 import elements.Cursor;
 import game.Screen;
 import render2d.Camera;
+import render2d.Color;
 import render2d.Render;
 import render2d.TextureLoad;
 import render2d.shape.Rect;
 import render2d.write.Label;
 
-public class Shrumz {
-
+public class App {
+	
 	public final static int W = 1024;
 	public final static int H = 768;
 	static int ticks = 0;
 	static int sec = 0;
-	
+  	
 	public static void main(String[] args){
 		
 		System.setProperty(
@@ -63,11 +64,14 @@ public class Shrumz {
         glDisable(GL_LIGHTING);
           
 		while (!Display.isCloseRequested()) {
-			Render.addShape(new Rect(Camera.getCX(),Camera.getCY(),W,H,255,255,255),0);
-			
+			Render.addBgr(new Rect(Camera.getCX(),Camera.getCY(),W,H,Color.WHITE),0);
 		    Screen.show();
 		    
 		    Cursor.check();
+		    
+		    Camera.create();
+		    Controls.navigate();
+
 		    Render.drawFrame();	
 
 		    glEnd();

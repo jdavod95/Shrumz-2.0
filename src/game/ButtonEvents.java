@@ -1,6 +1,9 @@
 package game;
 
 import elements.MyEvent;
+import game.plant.BluShrum;
+import game.plant.Shrum;
+import game.plant.Weed;
 
 public class ButtonEvents {
 
@@ -60,7 +63,7 @@ public class ButtonEvents {
 			}
 		}
 	};
-	public final static MyEvent REGENSOIL = new MyEvent(){
+/*	public final static MyEvent REGENSOIL = new MyEvent(){
 		@Override
 		public void action(){
 			if(Tile.isRegen())
@@ -68,38 +71,36 @@ public class ButtonEvents {
 			else
 				Tile.setRegen(true);
 		}
-	};
-	public final static MyEvent HIDESHRUM = new MyEvent(){
-		@Override
-		public void action(){
-			if(Tile.isHidden())
-				Tile.setHidden(false);
-			else
-				Tile.setHidden(true);
-		}
-	};
+	};*/
 	public final static MyEvent BRPLSHRUM = new MyEvent(){
 		@Override
 		public void action(){
-			Screen.setBrushPlant("Shrum");
+			Screen.setBrushPlant(new Shrum());
+		}
+	};
+	public final static MyEvent BRPLBLUSHRUM = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.setBrushPlant(new BluShrum());
 		}
 	};
 	public final static MyEvent BRPLWEED = new MyEvent(){
 		@Override
 		public void action(){
-			Screen.setBrushPlant("Weed");
+			Screen.setBrushPlant(new Weed());
 		}
 	};
 	public final static MyEvent BRPLNULL = new MyEvent(){
 		@Override
 		public void action(){
-			Screen.setBrushPlant("");
+			Screen.setBrushPlant(null);
 		}
 	};
 	
 	public final static MyEvent BRSL_NO = new MyEvent(){
 		@Override
 		public void action(){
+			Screen.brushSoil = "";
 			Screen.setBrushFert(-1);
 		}
 	};
@@ -107,28 +108,24 @@ public class ButtonEvents {
 	public final static MyEvent BRSL_0 = new MyEvent(){
 		@Override
 		public void action(){
+			Screen.brushSoil = "Dirt";
 			Screen.setBrushFert(0);
-		}
-	};
-	
-	public final static MyEvent BRSL_1 = new MyEvent(){
-		@Override
-		public void action(){
-			Screen.setBrushFert(1);
-		}
-	};
-	
-	public final static MyEvent BRSL_2 = new MyEvent(){
-		@Override
-		public void action(){
-			Screen.setBrushFert(2);
 		}
 	};
 	
 	public final static MyEvent BRSL_3 = new MyEvent(){
 		@Override
 		public void action(){
+			Screen.brushSoil = "Dirt";
 			Screen.setBrushFert(3);
+		}
+	};
+	
+	public final static MyEvent BRSL_W = new MyEvent(){
+		@Override
+		public void action(){
+			Screen.brushSoil = "Water";
+			Screen.setBrushFert(0);
 		}
 	};
 	
@@ -167,20 +164,20 @@ public class ButtonEvents {
 	public final static MyEvent CTRLFRUP = new MyEvent(){
 		@Override
 		public void action(){
-			if(Screen.getPerframe() > 20)
-				Screen.setPerframe(Screen.getPerframe()+5);	
+			if(Screen.getCycleat() > 20)
+				Screen.setCycleat(Screen.getCycleat()+5);	
 			else
-				Screen.setPerframe(Screen.getPerframe()+1);
+				Screen.setCycleat(Screen.getCycleat()+1);
 		}
 	};
 	
 	public final static MyEvent CTRLFRDOWN = new MyEvent(){
 		@Override
 		public void action(){
-			if(Screen.getPerframe() > 20)
-				Screen.setPerframe(Screen.getPerframe()-5);	
+			if(Screen.getCycleat() > 20)
+				Screen.setCycleat(Screen.getCycleat()-5);	
 			else
-				Screen.setPerframe(Screen.getPerframe()-1);
+				Screen.setCycleat(Screen.getCycleat()-1);
 		}
 	};
 }

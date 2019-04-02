@@ -34,11 +34,13 @@ public class TextureLoad {
 	
 	public static void loadAll(){
 		// example  :   texture=Load("res/spore.png");		//1
-		dims  = new Point[4];
+		dims  = new Point[5];
 		texture = load("res/abc_0.png",1,1,1);
 		texture = load("res/Shrum64.png",2,2,2);
 		texture = load("res/Weed64.png",2,4,3);
 		texture = load("res/Controls.png",2,2,4);
+		texture = load("res/BluShrum64.png",2,2,5);
+
 		
 	}
 	public static int getTW(){

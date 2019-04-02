@@ -3,31 +3,36 @@ package game;
 import org.lwjgl.util.Point;
 
 import elements.Clickable;
+import elements.IndexPair;
+import game.plant.NoPlant;
 import game.plant.Plant;
-import game.plant.Shrum;
-import game.plant.Weed;
 import game.soil.Dirt;
 import game.soil.Soil;
+import game.soil.Water;
+import render2d.Color;
 import render2d.Render;
 import render2d.shape.Rect;
 import render2d.shape.RectIsom;
+import render2d.shape.RectTex;
 import render2d.shape.Shape;
-import root.Shrumz;
 
 public class Tile implements Clickable{
-	
-	static boolean regen = true;
+
+	private IndexPair pos;
+
 	static boolean down;
-	static boolean hidden = false;
 	static int scale = 32;
 	
-	Plant plant;
-	Soil soil;
-	Point[][] neigh;
-	     
-	public Tile(int x, int y, Plant p){
+	private Plant plant;
+	private Soil soil;
+
+	private RectTex plantSkin;
+	private Rect soilSkin;
+	
+	public Tile(int x, int y, Plant p, IndexPair pos){
 		soil = new Dirt(x,y,Tile.getScale());
-		plant = p;
+		setPlant(p);
+		this.pos = pos;
 	}
 	
 	public static int getScale(){
@@ -38,14 +43,23 @@ public class Tile implements Clickable{
 		scale = sc;
 	}
 	
+	public boolean hasPlant(){
+		return !(plant instanceof NoPlant);
+	}
+	
 	public Plant getPlant(){
 		return plant;
 	}
 	
 	public void setPlant(Plant p){
 		plant = p;
+		plantSkin = new RectTex(
+				soil.getSkin().getX()+soil.getSkin().getW()/4, 
+				soil.getSkin().getY()-soil.getSkin().getH()/2,
+				scale, scale,
+				p.getTEXTUREID(), 0
+				);
 	}
-	
 	
 	public Soil getSoil() {
 		return soil;
@@ -54,37 +68,32 @@ public class Tile implements Clickable{
 	public void setSoil(Soil soil) {
 		this.soil = soil;
 	}
-	
-	public static boolean isRegen() {
-		return regen;
+
+	public RectTex getPlantSkin() {
+		return plantSkin;
 	}
 
-	public static void setRegen(boolean regen) {
-		Tile.regen = regen;
+	public void setPlantSkin(RectTex plantSkin) {
+		this.plantSkin = plantSkin;
 	}
 
-	public static boolean isHidden() {
-		return hidden;
+	public Rect getSoilSkin() {
+		return soilSkin;
 	}
 
-	public static void setHidden(boolean hidden) {
-		Tile.hidden = hidden;
-	}
-
-	public void setNeigh(Point[][] p){
-		neigh = p;
+	public void setSoilSkin(Rect soilSkin) {
+		this.soilSkin = soilSkin;
 	}
 	
-	public Point[][] getNeigh(){
-		return neigh;
+	public IndexPair getPos() {
+		return pos;
 	}
-	
-//
+
+	//
 // --------------------- Clickable ---------------------
 // --------------------- Clickable ---------------------
 // --------------------- Clickable ---------------------
 //
-	@Override
 	public Shape getShape() {
 		return soil.getSkin();
 	}
@@ -98,29 +107,24 @@ public class Tile implements Clickable{
 	public void release() {
 		down = false;
 	}
-
+	
 	@Override
 	public void action() {
 		if(!down){
 			down = true;
-			switch(Screen.getBrushPlant()){
-			case "Shrum":
-				setPlant(
-						new Shrum(
-							getShape().getX()+getShape().getW()/4,
-							getShape().getY()-getShape().getH()/2
-						)
-					);
+			setPlant(Screen.getBrushPlant());
+			
+			switch(Screen.getBrushSoil()){
+				case "Dirt":
+					if(!(soil instanceof Dirt)){
+						soil = new Dirt(
+								soil.getSkin().getX(),
+								soil.getSkin().getY(),
+								Tile.getScale());
+						soil.setFert(Screen.getBrushFert());
+					}
 				break;
-			case "Weed":
-				setPlant(
-						new Weed(
-							getShape().getX()+getShape().getW()/4,
-							getShape().getY()-getShape().getH()/2
-						)
-					);
-				break;
-			default: setPlant(null);
+
 			}
 			if(Screen.getBrushFert() != -1)
 				soil.setFert(Screen.getBrushFert());
@@ -128,19 +132,19 @@ public class Tile implements Clickable{
 	}
 	@Override
 	public boolean contains(Point m){
-
-		if(m.getX() < getShape().getX() || m.getX() > getShape().getX() + getShape().getW())
-			return false;
-		if(m.getY() < getShape().getY() || m.getY() > getShape().getY() + getShape().getH())
-			return false;
 		
 		int x = getShape().getX();
 		int y = getShape().getY();
+
+		int w = getShape().getW()/2;
 		
 		int mx = m.getX();
 		int my = m.getY();
 
-		int w = getShape().getW()/2;
+		if(mx < x || mx > x + getShape().getW())
+			return false;
+		if(my < y || my > y + getShape().getH())
+			return false;
 
 		if(mx < x+w){
 			if(my < (mx-x+w)/2+y && my > (x-mx+w)/2+y)
@@ -154,7 +158,14 @@ public class Tile implements Clickable{
 	
 	@Override
 	public void hover() {	
-		Render.addShape(new RectIsom(getShape().getX(), getShape().getY(), getShape().getH(),128, 128, 128,0.5),4);
+		Render.addScn(
+				new RectIsom(
+						getShape().getX(),
+						getShape().getY(),
+						getShape().getH(),
+						Color.GRAY,
+						0.5),
+				4);
 	}
 //
 // --------------------- Core ---------------------
@@ -162,47 +173,56 @@ public class Tile implements Clickable{
 // --------------------- Core ---------------------
 //
 	public void reScale(int xdif, int ydif){
+		
 		getShape().setX(getShape().getX()+xdif);
 		getShape().setY(getShape().getY()+ydif);
 		
 		getShape().setW(scale);
 		getShape().setH(scale/2);
 		
-		if(plant == null)
+		if(!hasPlant())
 			return;
 		
-		plant.getSkin().setX(getShape().getX()+getShape().getW()/4);
-		plant.getSkin().setY(getShape().getY()-getShape().getH()/2);
+		plantSkin.setX(getShape().getX()+getShape().getW()/4);
+		plantSkin.setY(getShape().getY()-getShape().getH()/2);
 
-		plant.getSkin().setW(scale);
-		plant.getSkin().setH(scale);
+		plantSkin.setW(scale);
+		plantSkin.setH(scale);
 	}
 	
 	public void toRender(){
-		Render.addShape(getShape(), 2);
-		if(!hidden && plant != null)
-			Render.addShape(plant.getSkin(), 3);
+		Render.addScn(getShape(), 0);
+		if(hasPlant())
+			Render.addScn(plantSkin, 1);
 	}
 	
-	public void chkDead(){
-		if(plant != null)
-			plant.die(this);
+	private void cycleSoil(){
+		if(soil instanceof Water)
+			soil.incTire();
+	} 
+
+	private void cyclePlant(){
+		if(hasPlant()){
+			plant.incAge();
+			plantSkin.setFcu(plant.getStage());
+			if(plant.inSpreadStage())
+				Map.subSpread(this);
+			if(plant.inEndStage())
+				Map.subDead(this);
+		}
 	}
 	
-	public Plant[] spread(){
-		return plant.spread(neigh);
+	public void cycle(){
+		cyclePlant();
+		cycleSoil();
+	}
+
+	public void killPlant() {
+		plant = null;			// or epmtyGameObject
+	}
+
+	public IndexPair[] spreadPlant(){
+		return plant.spread();
 	}
 	
-	public boolean cycle(){
-//		if(Shrumz.getTicks() % 12 == 0 && regen)
-//			setFert(getFert()+1);
-		if(plant == null)
-			return false;
-		return plant.cycle(this) && plant.isSpreading();
-		// késõbb soil
-	}
-
-
-
-
 }

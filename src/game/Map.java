@@ -3,12 +3,9 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.util.Point;
-
 import elements.Cursor;
-import game.plant.Plant;
-import render2d.shape.RectTex;
-import render2d.shape.Shape;
+import elements.IndexPair;
+import game.plant.NoPlant;
 
 public class Map {
 
@@ -18,7 +15,8 @@ public class Map {
 	static int dx,dy;
 	static Tile[][] table;
 
-	static List<Point> spread = new ArrayList<>();
+	static List<Tile> spreadingPlants = new ArrayList<>();
+	static List<Tile> dyingPlants = new ArrayList<>();
 	
 	public static int getX(){
 		return dx;
@@ -32,6 +30,10 @@ public class Map {
 		return table;
 	}
 	
+	public static Tile getTile(int x, int y){
+		return table[x][y];
+	}
+	
 	public static void setTable(int x, int y){
 		table = new Tile[x][y];
 		dx = x;
@@ -42,7 +44,8 @@ public class Map {
 				table[i][j] = new Tile(
 						mx + (16-i-1)*(Tile.getScale()) + j*Tile.getScale(),
 						my + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
-						null
+						new NoPlant(),
+						new IndexPair(i, j)
 					);
 	}
 	
@@ -68,53 +71,39 @@ public class Map {
 	}
 
 	public static void cycle(){
-		
-		// growing
-		for(int i = 0;i<dx;i++)
-			for(int j = 0;j<dy;j++){
-				setNeigh(i, j, table[i][j]);
-				if(table[i][j].cycle())
-					spread.add(new Point(i,j));			
-			}
-		
-		// spreading
-		if(!spread.isEmpty()){
-			for(Point p : spread){
+		for(Tile[] tbl : table)
+			for(Tile t : tbl)
+				t.cycle();
 				
-				Plant[] t = table[p.getX()][p.getY()].spread();
-				for(Plant pl : t){
-					RectTex skin = pl.getSkin();
-					try{
-						int i = skin.getX();
-						int j = skin.getY(); 
-						Shape soil = table[i][j].getShape();
-						if(table[i][j].getPlant() == null){
-							table[i][j].setPlant(pl);
-							skin.setX(soil.getX()
-							+soil.getW()/4);
-							skin.setY(soil.getY()
-							-soil.getH()/2);
-						}
-					} catch (Exception e){} 
-				}
-			}
-			spread.clear();
-		}
+		for(Tile t : spreadingPlants)
+			spread(t);
+		spreadingPlants.clear();
 		
-		// clean up
-		for(int i = 0;i<dx;i++)
-			for(int j = 0;j<dy;j++)
-				table[i][j].chkDead();
+		for(Tile t : dyingPlants)
+			t.killPlant();
+		dyingPlants.clear();
 		
 	}
 
-	public static void setNeigh(int x, int y, Tile t){
-		Point[][] p = new Point[3][3];
+	public static void subSpread(Tile t){
+		spreadingPlants.add(t);
+	}
+	
+	public static void subDead(Tile t){
+		dyingPlants.add(t);
+	}
 
-		for(int i = -1;i < 2;i++)
-			for(int j = -1;j < 2;j++)
-				p[i+1][j+1] = new Point(x+i, y+j);
-
-		t.setNeigh(p);
+	public static void spread(Tile source){
+		IndexPair[] pairs = source.spreadPlant();
+		Tile t;
+		for(IndexPair ip : pairs){
+			t = getTile(
+					source.getPos().getX() + ip.getX(),
+					source.getPos().getX() + ip.getY()
+					);
+			if(!t.hasPlant())
+				t.setPlant(source.getPlant().getNew());
+		}
+			
 	}
 }

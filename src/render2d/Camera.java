@@ -8,14 +8,14 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 
 import org.lwjgl.opengl.Display;
 
-import root.Shrumz;
+import root.App;
 
 
 public class Camera {
 	static private int fps = 60;
 	
-	static private int W  = Shrumz.W;
-	static private int H  = Shrumz.H;
+	static private int W  = App.W;
+	static private int H  = App.H;
 	
 	static private int ch = H;
 	static private int cw = W;

@@ -1,91 +1,29 @@
 package render2d;
-import java.util.ArrayList;
-import java.util.List;
 
-import render2d.shape.Rect;
-import render2d.shape.RectTex;
 import render2d.shape.Shape;
-import render2d.write.Label;
-import root.Controls;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.glGenerateMipmap;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
 
 public class Render {
 	
-	// TODO: draw words by layers
-
-	//static List<Word> wrd = new ArrayList<>();
-
-	static List<Shape> tex = new ArrayList<>();
-	static List<Shape> wrd = new ArrayList<>();
-	static List<ArrayList<Shape>> layer = new ArrayList<>();
-	
-	public static void addShape(Shape[] s, int l){
-		if(l >= layer.size())
-			for(int i = layer.size();i <= l;i++)
-				layer.add(new ArrayList<Shape>());
-
-		for(int i = 0; i < s.length;i++)
-			layer.get(l).add(s[i]);
-	}
-	
-	public static void addShape(Shape s, int l){
-		if(l >= layer.size())
-			for(int i = layer.size();i <= l;i++)
-				layer.add(new ArrayList<Shape>());
-
-		layer.get(l).add(s);
-	}
-
-	public static void flush(){
-		layer.clear();
-	}
+	public static final Renderer BGR = new Renderer();	// background
+	public static final Renderer SCN = new Renderer();	// scene
+	public static final Renderer UI = new Renderer();	// foreground
 	
 	public static void drawFrame(){
-		Camera.create();
-	    Controls.navigate();
-	    
-		for(ArrayList<Shape> l : layer){
-			
-			glBindTexture(GL_TEXTURE_2D,0);
-		    glBegin(GL_TRIANGLES);	
-		    
-			for(Shape s : l){
-				if(s instanceof Rect)
-					s.draw();
-				else if(s instanceof RectTex)
-					tex.add(s);
-				else if(s instanceof Label)
-					wrd.add(s);
-			}
-			
-			if(!tex.isEmpty()){
-				for(Shape s : tex){
-					glEnd();	
-					s.draw();
-				}
-				tex.clear();
-				glEnd();
-			}
-			
-			if(!wrd.isEmpty()){
-
-				glEnd();
-				glBindTexture(GL_TEXTURE_2D,1);
-				glGenerateMipmap(GL_TEXTURE_2D);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				glBegin(GL_TRIANGLES);	
-				for(Shape w : wrd)
-					w.draw();
-				
-				wrd.clear();
-			}
-			glEnd();
-			
-		}
-		flush();
-	}	
-
+		BGR.drawFrame();
+		SCN.drawFrame();
+		UI.drawFrame();
+	}
+	 
+	public static void addBgr(Shape s, int l){
+		BGR.addShape(s, l);
+	}
+	
+	public static void addScn(Shape s, int l){
+		SCN.addShape(s, l);
+	}
+	
+	public static void addUi(Shape s, int l){
+		UI.addShape(s, l);
+	}
+	
 }

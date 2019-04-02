@@ -1,10 +1,16 @@
 package elements;
 
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glColor4d;
+import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import org.lwjgl.util.Point;
 
+import render2d.Color;
 import render2d.Render;
 import render2d.shape.Rect;
 import render2d.shape.RectTex;
@@ -13,7 +19,7 @@ import render2d.write.Label;
 
 public class Button extends Rect implements Clickable {
 
-	static int col = 224;
+	static Color col = new Color(224,224,224);
 	int cDif = 16;
 	int bd = 5;
 	
@@ -32,7 +38,7 @@ public class Button extends Rect implements Clickable {
 		};
 	
 	public Button(int x, int y, int w, int h, String label, MyEvent e, boolean toggle) {
-		super(x,y,w,h,col,col,col);
+		super(x,y,w,h,col);
 		this.label = new Label(x+bd, y+bd, h-2*bd, label);
 		this.type = toggle;
 		visible = true;
@@ -41,7 +47,7 @@ public class Button extends Rect implements Clickable {
 	}
 	
 	public Button(int x, int y, int w, int h, int fid, int fcu, MyEvent e, boolean toggle) {
-		super(x,y,w,h,col,col,col);
+		super(x,y,w,h,col);
 		this.lpic = new RectTex(x+bd ,y+bd, w-2*bd, h-2*bd, fid ,fcu);
 		this.type = toggle;
 		visible = true;
@@ -78,14 +84,16 @@ public class Button extends Rect implements Clickable {
 	}
 	@Override
 	public void draw() {	
-
-		glColor4d((r+cDif)/COLBITS,(g+cDif)/COLBITS,(b+cDif)/COLBITS,1.0);
+		glBindTexture(GL_TEXTURE_2D,0);
+		glBegin(GL_TRIANGLES);
+		
+		glColor4d((col.getR()+cDif)/COLBITS,(col.getG()+cDif)/COLBITS,(col.getB()+cDif)/COLBITS,1.0);
 		
 		glVertex2i(x,y);
 		glVertex2i(x+w,y);			
 		glVertex2i(x+w,y+h);
 		
-		glColor4d((r-cDif)/COLBITS,(g-cDif)/COLBITS,(b-cDif)/COLBITS,1.0);
+		glColor4d((col.getR()-cDif)/COLBITS,(col.getG()-cDif)/COLBITS,(col.getB()-cDif)/COLBITS,1.0);
 		
 		glVertex2i(x,y);
 		glVertex2i(x,y+h);
@@ -99,11 +107,15 @@ public class Button extends Rect implements Clickable {
 			h -= 1;
 			w -= 1;
 			y += 1;
-			setCol(col-8,col-8,col-8);
+			setCol(new Color(216,216,216));
 
 		}
 		
-		glColor4d(r/COLBITS,g/COLBITS,b/COLBITS,1.0);
+		glColor4d(
+				col.getR()/COLBITS,
+				col.getG()/COLBITS,
+				col.getB()/COLBITS,
+				1d);
 		
 		glVertex2i(x+bd,y+bd);
 		glVertex2i(x+w-bd,y+bd);			
@@ -113,17 +125,18 @@ public class Button extends Rect implements Clickable {
 		glVertex2i(x+bd,y+h-bd);
 		glVertex2i(x+w-bd,y+h-bd);
 		
-		setCol(col,col,col);
+		setCol(col);
 		
-		
+
+		glEnd();
 	}
 	
 	public void toRender(int l){
-		Render.addShape(this, l);
+		Render.addUi(this, l);
 		if(label != null)
-			Render.addShape(label, l);
+			Render.addUi(label, l);
 		else if(lpic != null)
-			Render.addShape(lpic, l);
+			Render.addUi(lpic, l);
 	}
 	
 	void labelNudge(){

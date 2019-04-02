@@ -7,7 +7,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Point;
 
 import render2d.Camera;
-import root.Shrumz;
+import root.App;
 
 public class Cursor {
 
@@ -28,7 +28,7 @@ public class Cursor {
 	
 	public static void check() {
 		Point p = new Point(Camera.getCX()+Mouse.getX(), 
-				Camera.getCY()+Shrumz.H-Mouse.getY());
+				Camera.getCY()+App.H-Mouse.getY());
     	for(Clickable c : clicks){
     		if(c.contains(p)){
     			

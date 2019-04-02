@@ -2,34 +2,46 @@ package game;
 
 import org.lwjgl.input.Mouse;
 
+import game.plant.Plant;
+import game.plant.Shrum;
 import render2d.Camera;
 import render2d.Render;
 import render2d.write.Label;
-import root.Shrumz;
+import root.App;
 
 public class Screen {
 
-	static int perframe = 35;
 	static boolean paused = false;
-	static String brushPlant = "Shrum";
+	static Plant brushPlant = new Shrum();
+	static String brushSoil = "Dirt";
+	
 	static int brushFert = 3;
-
+	
+	static int timer = 0;
+	static int cycleat = 35;
+	
 	public static void show() {
 		Panel.show();
+		if(!paused){
+			timer++;
+			if(!paused && timer >= cycleat){
+				Map.cycle();
+				timer = 0;
+			}
+		} else
+			timer = 0;
 		
-		if(!paused && Shrumz.getTicks() % perframe == 0)
-			Map.cycle();
-
-		Render.addShape(new Label(
+		Render.addUi(new Label(
 				Camera.getCX()+Mouse.getX()+50,
-				Camera.getCY()+Shrumz.H-Mouse.getY()+5,
+				Camera.getCY()+App.H-Mouse.getY()+5,
 				16,
 				Integer.toString(Camera.getCX()+Mouse.getX()) +"          "+
-				Integer.toString(Camera.getCY()+Shrumz.H-Mouse.getY())
+				Integer.toString(Camera.getCY()+App.H-Mouse.getY())
 				), 6);
 		
 		
 		Map.toRender();
+
 	}
 
 	public static void load(){
@@ -37,11 +49,19 @@ public class Screen {
 		Panel.load();
 	}
 
-	public static String getBrushPlant() {
+	public static String getBrushSoil() {
+		return brushSoil;
+	}
+
+	public static void setBrushSoil(String brushSoil) {
+		Screen.brushSoil = brushSoil;
+	}
+
+	public static Plant getBrushPlant() {
 		return brushPlant;
 	}
 
-	public static void setBrushPlant(String brushPlant) {
+	public static void setBrushPlant(Plant brushPlant) {
 		Screen.brushPlant = brushPlant;
 	}
 
@@ -53,16 +73,24 @@ public class Screen {
 		Screen.paused = paused;
 	}
 
-	public static int getPerframe() {
-		return perframe;
+	public static int getCycleat() {
+		return cycleat;
 	}
 
-	public static void setPerframe(int perframe) {
-		if(perframe > 60)
-			perframe = 60;
+	public static void setCycleat(int perframe) {
+		if(perframe > 120)
+			perframe = 120;
 		else if(perframe < 1)
-			perframe =  1;
-		Screen.perframe = perframe;
+			perframe = 1;
+		Screen.cycleat = perframe;
+	}
+	
+	public static int getTimer() {
+		return timer;
+	}
+
+	public static void setTimer(int timer) {
+		Screen.timer = timer;
 	}
 
 	public static int getBrushFert() {
