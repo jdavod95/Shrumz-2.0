@@ -1,19 +1,15 @@
 package game.soil;
 
-import render2d.shape.Shape;
-
 public abstract class Soil {
 
-	Shape skin;
 	
 	final int MAXFRT;
 	int fert;
 	int tiredness;
 	int[] treshold;
 
-	public Soil(int fert, int MAXFRT, Shape skin) {
+	public Soil(int fert, int MAXFRT) {
 		this.MAXFRT = MAXFRT;
-		this.skin = skin;
 		treshold = new int[MAXFRT+1];
 		tiredness = 0;
 		setFert(fert);
@@ -51,10 +47,6 @@ public abstract class Soil {
 			tiredness++;
 	}
 	
-	public Shape getSkin() {
-		return skin;
-	}
-
 	public int[] getTreshold() {
 		return treshold;
 	}

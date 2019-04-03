@@ -97,12 +97,13 @@ public class Map {
 		IndexPair[] pairs = source.spreadPlant();
 		Tile t;
 		for(IndexPair ip : pairs){
-			t = getTile(
-					source.getPos().getX() + ip.getX(),
-					source.getPos().getX() + ip.getY()
-					);
-			if(!t.hasPlant())
-				t.setPlant(source.getPlant().getNew());
+			try {
+				t = getTile(
+						source.getPos().getX() + ip.getX(),
+						source.getPos().getY() + ip.getY());
+				if (!t.hasPlant())
+					t.setPlant(source.getPlant().getNew());
+			} catch (Exception e) {}
 		}
 			
 	}

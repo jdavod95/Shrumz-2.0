@@ -1,22 +1,21 @@
 package game.soil;
 
 import render2d.Color;
-import render2d.shape.RectIsom;
 
 public class Dirt extends Soil{
 	
-	private static final Color f0 = new Color(160, 128, 64);
-	private static final Color f1 = new Color(160, 96, 32);
-	private static final Color f2 = new Color(96, 64, 32);
-	private static final Color f3 = new Color(64, 32, 0);
+	public static final Color f0 = new Color(160, 128, 64);
+	public static final Color f1 = new Color(160, 96, 32);
+	public static final Color f2 = new Color(96, 64, 32);
+	public static final Color f3 = new Color(64, 32, 0);
 								
-	public Dirt(int x, int y, int w) {
-		super(1, 3 ,new RectIsom(x,y,w,Color.BLACK));
+	public Dirt() {
+		super(2, 3);
 		setTreshold(new int[]{
 			5,5,5,5
 		});
 	}
-
+/*
 	@Override
 	public void setFert(int fert) {
 		switch(fert){
@@ -27,5 +26,10 @@ public class Dirt extends Soil{
 		}
 		this.fert = fert;
 	}
+*/
 
+	@Override
+	public void setFert(int fert) {
+		
+	}
 }

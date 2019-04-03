@@ -10,7 +10,7 @@ public abstract class Plant {
 
 	int stage = 0,
 		age = 0,
-		treshold = 10;
+		treshold = 1;
 	
 	Plant(int txid, int sprst, int endst){
 		SPREADSTAGE = sprst;
@@ -21,12 +21,11 @@ public abstract class Plant {
 	public void incAge(){
 		age++;
 		if(age % treshold == 0)		// to be changed
-			incStage();
+			grow();
 	}
 
 	public void incStage(){
 		stage++;
-		grow();
 	}
 
 	public boolean inSpreadStage(){

@@ -5,7 +5,7 @@ import elements.IndexPair;
 public class NoPlant extends Plant{
 	
 	public NoPlant() {
-		super(0, 0, 0);
+		super(1, 0, -1);
 	}
 
 	@Override

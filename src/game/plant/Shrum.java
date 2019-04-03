@@ -5,7 +5,7 @@ import elements.IndexPair;
 public class Shrum extends Plant {
 	
 	public Shrum() {
-		super(2, 2, 3);
+		super(2, 3, 3);
 	}
 	
 	@Override

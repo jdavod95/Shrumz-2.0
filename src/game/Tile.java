@@ -30,7 +30,8 @@ public class Tile implements Clickable{
 	private Rect soilSkin;
 	
 	public Tile(int x, int y, Plant p, IndexPair pos){
-		soil = new Dirt(x,y,Tile.getScale());
+		soil = new Dirt();
+		soilSkin = new RectIsom(x, y, scale, Dirt.f2);
 		setPlant(p);
 		this.pos = pos;
 	}
@@ -54,8 +55,8 @@ public class Tile implements Clickable{
 	public void setPlant(Plant p){
 		plant = p;
 		plantSkin = new RectTex(
-				soil.getSkin().getX()+soil.getSkin().getW()/4, 
-				soil.getSkin().getY()-soil.getSkin().getH()/2,
+				soilSkin.getX()+soilSkin.getW()/4, 
+				soilSkin.getY()-soilSkin.getH()/2,
 				scale, scale,
 				p.getTEXTUREID(), 0
 				);
@@ -95,7 +96,7 @@ public class Tile implements Clickable{
 // --------------------- Clickable ---------------------
 //
 	public Shape getShape() {
-		return soil.getSkin();
+		return soilSkin;
 	}
 
 	@Override
@@ -117,10 +118,7 @@ public class Tile implements Clickable{
 			switch(Screen.getBrushSoil()){
 				case "Dirt":
 					if(!(soil instanceof Dirt)){
-						soil = new Dirt(
-								soil.getSkin().getX(),
-								soil.getSkin().getY(),
-								Tile.getScale());
+						soil = new Dirt();
 						soil.setFert(Screen.getBrushFert());
 					}
 				break;
@@ -218,7 +216,7 @@ public class Tile implements Clickable{
 	}
 
 	public void killPlant() {
-		plant = null;			// or epmtyGameObject
+		setPlant(new NoPlant());			// or epmtyGameObject
 	}
 
 	public IndexPair[] spreadPlant(){

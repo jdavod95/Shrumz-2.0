@@ -12,8 +12,8 @@ public class Water extends Soil{
 	Point poz;
 	static int range = 3;
 	
-	public Water(int x, int y, int w, Point poz) {
-		super(0,1,new RectIsom(x,y,w, WATER));
+	public Water(Point poz) {
+		super(0,1);
 		this.poz = poz;
 		setTreshold(new int[]{
 				10
