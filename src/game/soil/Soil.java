@@ -1,60 +1,86 @@
 package game.soil;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import render2d.Color;
+
 public abstract class Soil {
 
+	private final int MAXFRT;
+	private final Set<SoilEffect> effects = new HashSet<>();
 	
-	final int MAXFRT;
-	int fert;
-	int tiredness;
-	int[] treshold;
-
-	public Soil(int fert, int MAXFRT) {
+	private double
+		water,
+		fertility,
+		waterFactor,
+		fertilityFactor
+		;
+	
+	public Soil(int MAXFRT, double fertilityFactor, double waterFactor) {
 		this.MAXFRT = MAXFRT;
-		treshold = new int[MAXFRT+1];
-		tiredness = 0;
-		setFert(fert);
+		fertility = 0;
+		water = 0;
+		this.waterFactor = waterFactor;
+		this.fertilityFactor = fertilityFactor;
 	}
 
-	public int getFert() {
-		return fert;
+	void incWater(){
+		water += waterFactor;
+	}
+	
+	void decWater(){
+		water -= waterFactor;
+	}
+	
+	void incFertility(){
+		if(fertility < MAXFRT)
+			fertility += fertilityFactor;
+	}
+	
+	void decFertility(){
+		fertility -= fertilityFactor;
+	}
+	
+	public final void cycle(boolean hasPlant){
+		if(!hasPlant)
+			incFertility();
+		applyEffects();
+		removeEffects();
+		innerCycle();
+	}
+	
+	public double getWater() {
+		return water;
 	}
 
-	public abstract void setFert(int fert);
+	public double getFertility() {
+		return fertility;
+	}
 
-	public void incFert(boolean inc){
-		if(inc){
-			if(fert < MAXFRT)
-				setFert(fert+1);
+	public void useWater(double amount){
+		water -= amount;
+	}
+	
+	public void useFertility(double amount){
+		fertility -= amount;
+	}
+	
+	private void applyEffects(){
+		for(SoilEffect se : effects){
+			se.action(this);
 		}
-		else
-			if(fert > 0)
-				setFert(fert-1);
-		setTiredness(0);
-	}
-
-	public int getTiredness() {
-		return tiredness;
-	}
-
-	void setTiredness(int tiredness) {
-		this.tiredness = tiredness;
-	}
-
-	public void incTire(){
-		if(tiredness >= treshold[fert])
-			incFert(false);
-		else
-			tiredness++;
 	}
 	
-	public int[] getTreshold() {
-		return treshold;
+	private void removeEffects(){
+		effects.clear();
 	}
 
-	public void setTreshold(int[] treshold) {
-		this.treshold = treshold;
+	public void addEffect(SoilEffect se){
+		effects.add(se);
 	}
 
+	public abstract Color getColor();
 	
-	
+	protected abstract void innerCycle();
 }

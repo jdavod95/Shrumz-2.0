@@ -8,7 +8,7 @@ import elements.Cursor;
 import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
-import render2d.shape.Rect;
+import render2d.shape.RectIsomClickable;
 import render2d.write.Label;
 import root.App;
 
@@ -26,12 +26,12 @@ public class Panel {
 	static List<Button> butts = new ArrayList<>();		
 
 	public static void show() {
-		Rect timerbd = new Rect(Camera.getCX()+mx+400,Camera.getCY()+my,30,90,Color.GRAY,0.5);
-		Rect timerin = new Rect(Camera.getCX()+mx+405,Camera.getCY()+my+85,20,0,Color.BLACK,0.5);
+		RectIsomClickable timerbd = new RectIsomClickable(Camera.getCX()+mx+400,Camera.getCY()+my,30,90,Color.GRAY,0.5);
+		RectIsomClickable timerin = new RectIsomClickable(Camera.getCX()+mx+405,Camera.getCY()+my+85,20,0,Color.BLACK,0.5);
 
 		timerin.setH((int)(Math.round(-(Screen.getTimer()+1)*(80.0/Screen.getCycleat()))));
 		upd();
-		Render.addUi(new Rect(Camera.getCX(),Camera.getCY(), App.W, 100,Color.GRAY,0.5), 0);
+		Render.addUi(new RectIsomClickable(Camera.getCX(),Camera.getCY(), App.W, 100,Color.GRAY,0.5), 0);
 
 		for(Button b : butts)
 			Cursor.addClck(b);

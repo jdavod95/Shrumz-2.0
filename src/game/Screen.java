@@ -4,6 +4,8 @@ import org.lwjgl.input.Mouse;
 
 import game.plant.Plant;
 import game.plant.Shrum;
+import game.soil.Dirt;
+import game.soil.Soil;
 import render2d.Camera;
 import render2d.Render;
 import render2d.write.Label;
@@ -13,7 +15,7 @@ public class Screen {
 
 	static boolean paused = false;
 	static Plant brushPlant = new Shrum();
-	static String brushSoil = "Dirt";
+	static Soil brushSoil = new Dirt();
 	
 	static int brushFert = 3;
 	
@@ -49,11 +51,11 @@ public class Screen {
 		Panel.load();
 	}
 
-	public static String getBrushSoil() {
+	public static Soil getBrushSoil() {
 		return brushSoil;
 	}
 
-	public static void setBrushSoil(String brushSoil) {
+	public static void setBrushSoil(Soil brushSoil) {
 		Screen.brushSoil = brushSoil;
 	}
 

@@ -2,12 +2,12 @@ package game.soil;
 
 import render2d.Color;
 
-public class Water extends Soil{
+public class NoSoil extends Soil{
 
-	public static final Color COLOR = new Color(64,200,240);
-			
-	public Water() {
-		super(0, 0, 0);
+	public static final Color COLOR = new Color(1,1,1);
+	
+	public NoSoil() {
+		super(0, 0 ,0);
 	}
 
 	@Override

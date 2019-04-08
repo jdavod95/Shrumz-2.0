@@ -1,15 +1,16 @@
 package game.plant;
 
 import elements.IndexPair;
+import game.soil.Soil;
 
 public class NoPlant extends Plant{
 	
 	public NoPlant() {
-		super(1, 0, -1);
+		super(1, -1, -1);
 	}
 
 	@Override
-	public void grow() {
+	public void grow(Soil s) {
 	}
 
 	@Override

@@ -3,9 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-import elements.Cursor;
 import elements.IndexPair;
-import game.plant.NoPlant;
 
 public class Map {
 
@@ -17,7 +15,7 @@ public class Map {
 
 	static List<Tile> spreadingPlants = new ArrayList<>();
 	static List<Tile> dyingPlants = new ArrayList<>();
-	
+	static List<Tile> enhancers = new ArrayList<>();
 	public static int getX(){
 		return dx;
 	}
@@ -44,7 +42,6 @@ public class Map {
 				table[i][j] = new Tile(
 						mx + (16-i-1)*(Tile.getScale()) + j*Tile.getScale(),
 						my + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
-						new NoPlant(),
 						new IndexPair(i, j)
 					);
 	}
@@ -55,10 +52,10 @@ public class Map {
 	}
 	
 	public static void toRender(){
-		for(int i = 0;i<dx;i++){
-			Cursor.addClck(table[i]);
-			for(int j = 0;j<dy;j++)
+		for(int i = 0;i<dx;i++)
+			for(int j = 0;j<dy;j++){
 				table[i][j].toRender();
+				table[i][j].toClick();
 		}
 	}
 	
@@ -83,6 +80,10 @@ public class Map {
 			t.killPlant();
 		dyingPlants.clear();
 		
+	/*	for(Tile t : enhancers)
+			applyEffects(t);
+		enhancers.clear();*/
+		
 	}
 
 	public static void subSpread(Tile t){
@@ -102,9 +103,21 @@ public class Map {
 						source.getPos().getX() + ip.getX(),
 						source.getPos().getY() + ip.getY());
 				if (!t.hasPlant())
-					t.setPlant(source.getPlant().getNew());
+					t.setPlant(source.getNewPlant());
 			} catch (Exception e) {}
 		}
-			
 	}
+	/*
+	public static void applyEffects(Tile source){
+		IndexPair[] pairs = source.spreadPlant();
+		Tile t;
+		for(IndexPair ip : pairs){
+			try {
+				t = getTile(
+						source.getPos().getX() + ip.getX(),
+						source.getPos().getY() + ip.getY());
+				t.applySoilEffect();
+			} catch (Exception e) {}
+		}
+	}*/
 }

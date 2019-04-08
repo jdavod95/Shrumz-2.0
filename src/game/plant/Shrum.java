@@ -1,6 +1,7 @@
 package game.plant;
 
 import elements.IndexPair;
+import game.soil.Soil;
 
 public class Shrum extends Plant {
 	
@@ -19,8 +20,16 @@ public class Shrum extends Plant {
 	}
 
 	@Override
-	public void grow() {
-		
+	public void grow(Soil s) {
+		if(inSpreadStage())
+			return;
+		if(s.getFertility() >= 1.0 && s.getWater() >= 1.0){
+			incStage();
+			s.useFertility(1.0);
+			s.useWater(1.0);
+		}
+		else
+			die();
 	}
 
 	@Override

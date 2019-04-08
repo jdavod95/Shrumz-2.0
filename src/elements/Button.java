@@ -10,14 +10,15 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import org.lwjgl.util.Point;
 
+import elements.clickable.Clickable;
 import render2d.Color;
 import render2d.Render;
-import render2d.shape.Rect;
+import render2d.shape.RectIsomClickable;
 import render2d.shape.RectTex;
 import render2d.shape.Shape;
 import render2d.write.Label;
 
-public class Button extends Rect implements Clickable {
+public class Button extends RectIsomClickable implements Clickable {
 
 	static Color col = new Color(224,224,224);
 	int cDif = 16;
@@ -175,7 +176,7 @@ public class Button extends Rect implements Clickable {
 	}
 
 	@Override
-	public void action() {		
+	public void onClick() {		
 		if(type){
 			if(!down){
 				down = true;

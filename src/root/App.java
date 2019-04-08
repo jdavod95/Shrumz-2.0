@@ -22,7 +22,7 @@ import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
 import render2d.TextureLoad;
-import render2d.shape.Rect;
+import render2d.shape.RectIsomClickable;
 import render2d.write.Label;
 
 public class App {
@@ -64,7 +64,7 @@ public class App {
         glDisable(GL_LIGHTING);
           
 		while (!Display.isCloseRequested()) {
-			Render.addBgr(new Rect(Camera.getCX(),Camera.getCY(),W,H,Color.WHITE),0);
+			Render.addBgr(new RectIsomClickable(Camera.getCX(),Camera.getCY(),W,H,Color.WHITE),0);
 		    Screen.show();
 		    
 		    Cursor.check();

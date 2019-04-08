@@ -10,17 +10,17 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import render2d.Color;
 
-public class Rect extends Shape {
+public class RectIsomClickable extends Shape {
 
 	static protected final double COLBITS = 255; 
 	protected Color col;
 	protected double op;
 	
-	public Rect(int x, int y, int w, int h, Color c) {
+	public RectIsomClickable(int x, int y, int w, int h, Color c) {
 		this(x, y, w, h, c, 1.0);
 	}
 	
-	public Rect(int x, int y, int w, int h, Color c, double op) {
+	public RectIsomClickable(int x, int y, int w, int h, Color c, double op) {
 		super(x, y, w, h);
 		this.col = c;
 		this.op = op;

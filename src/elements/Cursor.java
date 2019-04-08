@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Point;
 
+import elements.clickable.Clickable;
 import render2d.Camera;
 import root.App;
 
@@ -34,7 +35,7 @@ public class Cursor {
     			
     			c.hover();
     			if(Mouse.isButtonDown(0)){
-    				c.action();
+    				c.onClick();
 	    			if(pressed == null)
 	    				pressed = c;
 	    			else if(pressed != c){

@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import render2d.Color;
 
-public class RectIsom extends Rect{
+public class RectIsom extends RectIsomClickable{
 
 	public RectIsom(int x, int y, int w, Color c) {
 		super(x, y, w*2, w, c);

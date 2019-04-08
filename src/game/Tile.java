@@ -1,22 +1,21 @@
 package game;
 
-import org.lwjgl.util.Point;
 
-import elements.Clickable;
+import elements.Cursor;
 import elements.IndexPair;
+import elements.MyEvent;
+import elements.clickable.RectIsomClickable;
 import game.plant.NoPlant;
 import game.plant.Plant;
 import game.soil.Dirt;
 import game.soil.Soil;
-import game.soil.Water;
+import game.soil.SoilEffect;
 import render2d.Color;
 import render2d.Render;
-import render2d.shape.Rect;
 import render2d.shape.RectIsom;
 import render2d.shape.RectTex;
-import render2d.shape.Shape;
 
-public class Tile implements Clickable{
+public class Tile{
 
 	private IndexPair pos;
 
@@ -27,12 +26,31 @@ public class Tile implements Clickable{
 	private Soil soil;
 
 	private RectTex plantSkin;
-	private Rect soilSkin;
+	private RectIsomClickable soilSkin;
 	
-	public Tile(int x, int y, Plant p, IndexPair pos){
+	public Tile(int x, int y, IndexPair pos){
 		soil = new Dirt();
-		soilSkin = new RectIsom(x, y, scale, Dirt.f2);
-		setPlant(p);
+		RectIsomClickable ric = new RectIsomClickable(x, y, scale, soil.getColor());
+		ric.setClick(new MyEvent(){
+			public void action(){
+				setPlant(Screen.getBrushPlant().getNew());
+			//	setSoil(Screen.getBrushSoil());
+			}
+		});
+		ric.setHover(new MyEvent(){
+			public void action(){
+				Render.addScn(
+					new RectIsom(
+						soilSkin.getX(),
+						soilSkin.getY(),
+						soilSkin.getH(),
+						Color.GRAY,
+						0.5),
+					4);
+			}
+		});
+		soilSkin = ric;
+		setPlant(new NoPlant());
 		this.pos = pos;
 	}
 	
@@ -48,10 +66,6 @@ public class Tile implements Clickable{
 		return !(plant instanceof NoPlant);
 	}
 	
-	public Plant getPlant(){
-		return plant;
-	}
-	
 	public void setPlant(Plant p){
 		plant = p;
 		plantSkin = new RectTex(
@@ -62,10 +76,6 @@ public class Tile implements Clickable{
 				);
 	}
 	
-	public Soil getSoil() {
-		return soil;
-	}
-
 	public void setSoil(Soil soil) {
 		this.soil = soil;
 	}
@@ -78,11 +88,11 @@ public class Tile implements Clickable{
 		this.plantSkin = plantSkin;
 	}
 
-	public Rect getSoilSkin() {
+	public RectIsomClickable getSoilSkin() {
 		return soilSkin;
 	}
 
-	public void setSoilSkin(Rect soilSkin) {
+	public void setSoilSkin(RectIsomClickable soilSkin) {
 		this.soilSkin = soilSkin;
 	}
 	
@@ -90,118 +100,38 @@ public class Tile implements Clickable{
 		return pos;
 	}
 
-	//
-// --------------------- Clickable ---------------------
-// --------------------- Clickable ---------------------
-// --------------------- Clickable ---------------------
-//
-	public Shape getShape() {
-		return soilSkin;
-	}
-
-	@Override
-	public boolean getVis() {
-		return true;
-	}
-
-	@Override
-	public void release() {
-		down = false;
-	}
-	
-	@Override
-	public void action() {
-		if(!down){
-			down = true;
-			setPlant(Screen.getBrushPlant());
-			
-			switch(Screen.getBrushSoil()){
-				case "Dirt":
-					if(!(soil instanceof Dirt)){
-						soil = new Dirt();
-						soil.setFert(Screen.getBrushFert());
-					}
-				break;
-
-			}
-			if(Screen.getBrushFert() != -1)
-				soil.setFert(Screen.getBrushFert());
-		}
-	}
-	@Override
-	public boolean contains(Point m){
-		
-		int x = getShape().getX();
-		int y = getShape().getY();
-
-		int w = getShape().getW()/2;
-		
-		int mx = m.getX();
-		int my = m.getY();
-
-		if(mx < x || mx > x + getShape().getW())
-			return false;
-		if(my < y || my > y + getShape().getH())
-			return false;
-
-		if(mx < x+w){
-			if(my < (mx-x+w)/2+y && my > (x-mx+w)/2+y)
-				return true;
-		} else
-			if(my < (x-mx+w)/2+w+y && my > (mx-x-w)/2+y)
-				return true;
-		
-		return false;
-	}
-	
-	@Override
-	public void hover() {	
-		Render.addScn(
-				new RectIsom(
-						getShape().getX(),
-						getShape().getY(),
-						getShape().getH(),
-						Color.GRAY,
-						0.5),
-				4);
-	}
-//
-// --------------------- Core ---------------------
-// --------------------- Core ---------------------
-// --------------------- Core ---------------------
-//
 	public void reScale(int xdif, int ydif){
 		
-		getShape().setX(getShape().getX()+xdif);
-		getShape().setY(getShape().getY()+ydif);
+		soilSkin.setX(soilSkin.getX()+xdif);
+		soilSkin.setY(soilSkin.getY()+ydif);
 		
-		getShape().setW(scale);
-		getShape().setH(scale/2);
+		soilSkin.setW(scale);
+		soilSkin.setH(scale/2);
 		
 		if(!hasPlant())
 			return;
 		
-		plantSkin.setX(getShape().getX()+getShape().getW()/4);
-		plantSkin.setY(getShape().getY()-getShape().getH()/2);
+		plantSkin.setX(soilSkin.getX()+soilSkin.getW()/4);
+		plantSkin.setY(soilSkin.getY()-soilSkin.getH()/2);
 
 		plantSkin.setW(scale);
 		plantSkin.setH(scale);
 	}
 	
 	public void toRender(){
-		Render.addScn(getShape(), 0);
+		Render.addScn(soilSkin, 0);
 		if(hasPlant())
 			Render.addScn(plantSkin, 1);
 	}
 	
 	private void cycleSoil(){
-		if(soil instanceof Water)
-			soil.incTire();
+		soil.cycle(hasPlant());
+		soilSkin.setCol(soil.getColor());
 	} 
 
 	private void cyclePlant(){
 		if(hasPlant()){
-			plant.incAge();
+			plant.cycle(soil);
 			plantSkin.setFcu(plant.getStage());
 			if(plant.inSpreadStage())
 				Map.subSpread(this);
@@ -219,8 +149,19 @@ public class Tile implements Clickable{
 		setPlant(new NoPlant());			// or epmtyGameObject
 	}
 
+	public void applySoilEffect(SoilEffect se){
+		soil.addEffect(se);
+	}
+	
 	public IndexPair[] spreadPlant(){
 		return plant.spread();
 	}
 	
+	public Plant getNewPlant(){
+		return plant.getNew();
+	}
+	
+	public void toClick(){
+		Cursor.addClck(soilSkin);
+	}
 }
