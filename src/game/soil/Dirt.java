@@ -35,5 +35,10 @@ public class Dirt extends Soil{
 		else
 			return F3;
 	}
+
+	@Override
+	public Soil getNew() {
+		return new Dirt();
+	}
 	
 }

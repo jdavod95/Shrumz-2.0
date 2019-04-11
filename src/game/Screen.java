@@ -4,7 +4,6 @@ import org.lwjgl.input.Mouse;
 
 import game.plant.Plant;
 import game.plant.Shrum;
-import game.soil.Dirt;
 import game.soil.Soil;
 import render2d.Camera;
 import render2d.Render;
@@ -15,9 +14,7 @@ public class Screen {
 
 	static boolean paused = false;
 	static Plant brushPlant = new Shrum();
-	static Soil brushSoil = new Dirt();
-	
-	static int brushFert = 3;
+	static Soil brushSoil = null;
 	
 	static int timer = 0;
 	static int cycleat = 35;
@@ -95,14 +92,4 @@ public class Screen {
 		Screen.timer = timer;
 	}
 
-	public static int getBrushFert() {
-		return brushFert;
-	}
-
-	public static void setBrushFert(int brushFert) {
-		Screen.brushFert = brushFert;
-	}
-	
-	
-	
 }

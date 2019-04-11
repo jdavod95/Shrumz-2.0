@@ -88,13 +88,13 @@ public class Panel {
 		butts.add(new Button(cx+App.W-50, cy, 40, 40, "Off",
 				ButtonEvents.BRSL_NO, true));
 		
-		butts.add(new Button(cx+App.W-95, cy, 40, 40, "D0",
-				ButtonEvents.BRSL_0, true));
+//		butts.add(new Button(cx+App.W-95, cy, 40, 40, "D0",
+//				ButtonEvents.BRSL_0, true));
 		
-		butts.add(new Button(cx+App.W-140, cy, 40, 40, "D3",
-				ButtonEvents.BRSL_3, true));
+		butts.add(new Button(cx+App.W-140, cy, 40, 40, "Drt",
+				ButtonEvents.BRSL_D, true));
 		
-		butts.add(new Button(cx+App.W-185, cy, 40, 40, "W",
+		butts.add(new Button(cx+App.W-185, cy, 40, 40, "Wtr",
 				ButtonEvents.BRSL_W, true));
 		
 		butts.add(new Button(cx+250, cy, 40, 40, 4, 1,

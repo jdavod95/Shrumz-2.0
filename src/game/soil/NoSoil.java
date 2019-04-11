@@ -19,4 +19,9 @@ public class NoSoil extends Soil{
 		return COLOR;
 	}
 
+	@Override
+	public Soil getNew() {
+		return new NoSoil();
+	}
+
 }

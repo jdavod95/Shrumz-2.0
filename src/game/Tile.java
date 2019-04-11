@@ -27,16 +27,23 @@ public class Tile{
 
 	private RectTex plantSkin;
 	private RectIsomClickable soilSkin;
-	
+	private Affector aff;
 	public Tile(int x, int y, IndexPair pos){
 		soil = new Dirt();
 		RectIsomClickable ric = new RectIsomClickable(x, y, scale, soil.getColor());
+		
 		ric.setClick(new MyEvent(){
 			public void action(){
-				setPlant(Screen.getBrushPlant().getNew());
-			//	setSoil(Screen.getBrushSoil());
+				if(Screen.getBrushPlant() != null)
+					setPlant(Screen.getBrushPlant().getNew());
+				
+				if(Screen.getBrushSoil() != null)
+					setSoil(Screen.getBrushSoil().getNew());
+				
+				System.out.println(soil.getFertility());
 			}
 		});
+		
 		ric.setHover(new MyEvent(){
 			public void action(){
 				Render.addScn(
@@ -78,6 +85,10 @@ public class Tile{
 	
 	public void setSoil(Soil soil) {
 		this.soil = soil;
+		if(soil instanceof Affector)
+			aff = (Affector) soil;
+		else
+			aff = null;
 	}
 
 	public RectTex getPlantSkin() {
@@ -135,28 +146,42 @@ public class Tile{
 			plantSkin.setFcu(plant.getStage());
 			if(plant.inSpreadStage())
 				Map.subSpread(this);
-			if(plant.inEndStage())
+			if(plant.inEndStage())      
 				Map.subDead(this);
 		}
 	}
 	
+	private void cycleAffector(){
+		System.out.println(aff != null);
+		if(aff != null)
+			Map.subAffect(this);
+	}
 	public void cycle(){
 		cyclePlant();
 		cycleSoil();
+		cycleAffector();
 	}
 
 	public void killPlant() {
 		setPlant(new NoPlant());			// or epmtyGameObject
 	}
 
-	public void applySoilEffect(SoilEffect se){
-		soil.addEffect(se);
+	public void applySoilEffect(SoilEffect[] se){
+		for(SoilEffect s : se)
+			soil.addEffect(s);
 	}
 	
 	public IndexPair[] spreadPlant(){
 		return plant.spread();
 	}
 	
+	public IndexPair[] affectorRange(){
+		return aff.getEffectRange();
+	}
+	
+	public SoilEffect[] affectorEffects() {
+		return aff.getEffects();
+	}
 	public Plant getNewPlant(){
 		return plant.getNew();
 	}
