@@ -1,7 +1,7 @@
-package game.plant;
+package game.gameobject.plant;
 
 import elements.IndexPair;
-import game.soil.Soil;
+import game.gameobject.soil.Soil;
 
 public class Shrum extends Plant {
 	

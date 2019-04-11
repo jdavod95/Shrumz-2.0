@@ -1,9 +1,9 @@
-package game.plant;
+package game.gameobject.plant;
 
 import elements.IndexPair;
-import game.soil.Soil;
+import game.gameobject.soil.Soil;
 
-public abstract class Plant {
+public abstract class Plant{
 	
 	private final int TEXTUREID;
 	private final int ENDSTAGE;

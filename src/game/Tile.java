@@ -5,11 +5,11 @@ import elements.Cursor;
 import elements.IndexPair;
 import elements.MyEvent;
 import elements.clickable.RectIsomClickable;
-import game.plant.NoPlant;
-import game.plant.Plant;
-import game.soil.Dirt;
-import game.soil.Soil;
-import game.soil.SoilEffect;
+import game.gameobject.plant.NoPlant;
+import game.gameobject.plant.Plant;
+import game.gameobject.soil.Dirt;
+import game.gameobject.soil.Soil;
+import game.gameobject.soil.SoilEffect;
 import render2d.Color;
 import render2d.Render;
 import render2d.shape.RectIsom;
@@ -33,8 +33,10 @@ public class Tile{
 		RectIsomClickable ric = new RectIsomClickable(x, y, scale, soil.getColor());
 		ric.setClick(new MyEvent(){
 			public void action(){
-				setPlant(Screen.getBrushPlant().getNew());
-			//	setSoil(Screen.getBrushSoil());
+				if(Screen.getBrushPlant() != null)
+					setPlant(Screen.getBrushPlant().getNew());
+				if(Screen.getBrushSoil() != null);
+					setSoil(Screen.getBrushSoil().getNew());
 			}
 		});
 		ric.setHover(new MyEvent(){

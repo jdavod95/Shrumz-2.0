@@ -1,4 +1,4 @@
-package game.soil;
+package game.gameobject.soil;
 
 import render2d.Color;
 
@@ -34,6 +34,11 @@ public class Dirt extends Soil{
 			return F2;
 		else
 			return F3;
+	}
+
+	@Override
+	public Soil getNew() {
+		return new Dirt();
 	}
 	
 }

@@ -1,4 +1,4 @@
-package game.soil;
+package game.gameobject.soil;
 
 public enum SoilEffect{
 	

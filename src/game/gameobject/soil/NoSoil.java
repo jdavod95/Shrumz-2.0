@@ -1,4 +1,4 @@
-package game.soil;
+package game.gameobject.soil;
 
 import render2d.Color;
 
@@ -17,6 +17,11 @@ public class NoSoil extends Soil{
 	@Override
 	public Color getColor() {
 		return COLOR;
+	}
+
+	@Override
+	public Soil getNew() {
+		return new NoSoil();
 	}
 
 }

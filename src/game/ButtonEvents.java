@@ -1,12 +1,12 @@
 package game;
 
 import elements.MyEvent;
-import game.plant.BluShrum;
-import game.plant.Shrum;
-import game.plant.Weed;
-import game.soil.Dirt;
-import game.soil.NoSoil;
-import game.soil.Water;
+import game.gameobject.plant.BluShrum;
+import game.gameobject.plant.Shrum;
+import game.gameobject.plant.Weed;
+import game.gameobject.soil.Dirt;
+import game.gameobject.soil.NoSoil;
+import game.gameobject.soil.Water;
 
 public class ButtonEvents {
 

@@ -1,11 +1,11 @@
-package game.soil;
+package game.gameobject.soil;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import render2d.Color;
 
-public abstract class Soil {
+public abstract class Soil{
 
 	private final int MAXFRT;
 	private final Set<SoilEffect> effects = new HashSet<>();
@@ -81,6 +81,6 @@ public abstract class Soil {
 	}
 
 	public abstract Color getColor();
-	
+	public abstract Soil getNew();
 	protected abstract void innerCycle();
 }
