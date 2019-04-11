@@ -2,10 +2,11 @@ package game;
 
 import org.lwjgl.input.Mouse;
 
-import game.gameobject.plant.Plant;
-import game.gameobject.plant.Shrum;
-import game.gameobject.soil.Dirt;
-import game.gameobject.soil.Soil;
+
+import game.plant.Plant;
+import game.plant.Shrum;
+import game.soil.Soil;
+
 import render2d.Camera;
 import render2d.Render;
 import render2d.write.Label;
@@ -16,9 +17,7 @@ public class Screen {
 	static boolean paused = false;
 	static Plant brushPlant = new Shrum();
 	static Soil brushSoil = null;
-	
-	static int brushFert = 3;
-	
+
 	static int timer = 0;
 	static int cycleat = 35;
 	
@@ -95,14 +94,4 @@ public class Screen {
 		Screen.timer = timer;
 	}
 
-	public static int getBrushFert() {
-		return brushFert;
-	}
-
-	public static void setBrushFert(int brushFert) {
-		Screen.brushFert = brushFert;
-	}
-	
-	
-	
 }

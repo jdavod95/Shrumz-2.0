@@ -43,8 +43,8 @@ public abstract class Soil{
 	}
 	
 	public final void cycle(boolean hasPlant){
-		if(!hasPlant)
-			incFertility();
+	//	if(!hasPlant)
+	//		incFertility();
 		applyEffects();
 		removeEffects();
 		innerCycle();

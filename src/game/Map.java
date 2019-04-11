@@ -15,7 +15,7 @@ public class Map {
 
 	static List<Tile> spreadingPlants = new ArrayList<>();
 	static List<Tile> dyingPlants = new ArrayList<>();
-	static List<Tile> enhancers = new ArrayList<>();
+	static List<Tile> affectors = new ArrayList<>();
 	public static int getX(){
 		return dx;
 	}
@@ -80,10 +80,10 @@ public class Map {
 			t.killPlant();
 		dyingPlants.clear();
 		
-	/*	for(Tile t : enhancers)
+		for(Tile t : affectors)
 			applyEffects(t);
-		enhancers.clear();*/
-		
+		affectors.clear();
+	
 	}
 
 	public static void subSpread(Tile t){
@@ -93,6 +93,11 @@ public class Map {
 	public static void subDead(Tile t){
 		dyingPlants.add(t);
 	}
+	
+	public static void subAffect(Tile t){
+		affectors.add(t);
+	}
+	
 
 	public static void spread(Tile source){
 		IndexPair[] pairs = source.spreadPlant();
@@ -107,17 +112,17 @@ public class Map {
 			} catch (Exception e) {}
 		}
 	}
-	/*
+	
 	public static void applyEffects(Tile source){
-		IndexPair[] pairs = source.spreadPlant();
+		IndexPair[] pairs = source.affectorRange();
 		Tile t;
 		for(IndexPair ip : pairs){
 			try {
 				t = getTile(
 						source.getPos().getX() + ip.getX(),
 						source.getPos().getY() + ip.getY());
-				t.applySoilEffect();
+				t.applySoilEffect(source.affectorEffects());
 			} catch (Exception e) {}
 		}
-	}*/
+	}
 }

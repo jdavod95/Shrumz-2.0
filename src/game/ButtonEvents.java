@@ -1,12 +1,12 @@
 package game;
 
 import elements.MyEvent;
-import game.gameobject.plant.BluShrum;
-import game.gameobject.plant.Shrum;
-import game.gameobject.plant.Weed;
-import game.gameobject.soil.Dirt;
-import game.gameobject.soil.NoSoil;
-import game.gameobject.soil.Water;
+
+import game.plant.BluShrum;
+import game.plant.Shrum;
+import game.plant.Weed;
+import game.soil.Dirt;
+import game.soil.Water;
 
 public class ButtonEvents {
 
@@ -103,8 +103,7 @@ public class ButtonEvents {
 	public final static MyEvent BRSL_NO = new MyEvent(){
 		@Override
 		public void action(){
-			Screen.brushSoil = new NoSoil();
-			Screen.setBrushFert(-1);
+			Screen.brushSoil = null;
 		}
 	};
 	
@@ -112,15 +111,13 @@ public class ButtonEvents {
 		@Override
 		public void action(){
 			Screen.brushSoil = new Dirt();
-			Screen.setBrushFert(0);
 		}
 	};
 	
-	public final static MyEvent BRSL_3 = new MyEvent(){
+	public final static MyEvent BRSL_D = new MyEvent(){
 		@Override
 		public void action(){
 			Screen.brushSoil = new Dirt();
-			Screen.setBrushFert(3);
 		}
 	};
 	
@@ -128,7 +125,6 @@ public class ButtonEvents {
 		@Override
 		public void action(){
 			Screen.brushSoil = new Water();
-			Screen.setBrushFert(0);
 		}
 	};
 	

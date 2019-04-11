@@ -14,6 +14,18 @@ public enum SoilEffect{
 		public void action(Soil s) {
 			s.decWater();
 		}
+	},
+	INFERTILE(){
+		@Override
+		public void action(Soil s) {
+			s.decFertility();
+		}
+	},
+	FERTILE(){
+		@Override
+		public void action(Soil s) {
+			s.incFertility();
+		}
 	}
 	;
 	public abstract void action(Soil s);
