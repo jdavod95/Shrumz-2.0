@@ -2,9 +2,11 @@ package game;
 
 import org.lwjgl.input.Mouse;
 
+
 import game.plant.Plant;
 import game.plant.Shrum;
 import game.soil.Soil;
+
 import render2d.Camera;
 import render2d.Render;
 import render2d.write.Label;
@@ -15,7 +17,7 @@ public class Screen {
 	static boolean paused = false;
 	static Plant brushPlant = new Shrum();
 	static Soil brushSoil = null;
-	
+
 	static int timer = 0;
 	static int cycleat = 35;
 	
@@ -38,9 +40,8 @@ public class Screen {
 				Integer.toString(Camera.getCY()+App.H-Mouse.getY())
 				), 6);
 		
-		
 		Map.toRender();
-
+		Map.toClick();
 	}
 
 	public static void load(){

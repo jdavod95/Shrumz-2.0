@@ -10,14 +10,20 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import render2d.Color;
 
-public class RectIsom extends RectIsomClickable{
-
+public class RectIsom extends RectCol{
+	
+	static protected final double COLBITS = 255; 
+	protected Color col;
+	protected double op;
+	
 	public RectIsom(int x, int y, int w, Color c) {
-		super(x, y, w*2, w, c);
+		this(x, y, w, c, 1.0);
 	}
 	
 	public RectIsom(int x, int y, int w, Color c, double op) {
-		super(x, y, w*2, w, c, op);
+		super(x, y, w*2, w);
+		setCol(c);
+		this.op = op;
 	}
 	
 	@Override
@@ -41,6 +47,7 @@ public class RectIsom extends RectIsomClickable{
 	
 		glEnd();
 	}
+	
 	@Override
 	public void setH(int h) {
 		this.h = getW()/2;
@@ -49,5 +56,9 @@ public class RectIsom extends RectIsomClickable{
 	@Override
 	public void setW(int w) {
 		this.w = w*2;
+	}
+
+	public void setCol(Color c){
+		col = c;
 	}
 }

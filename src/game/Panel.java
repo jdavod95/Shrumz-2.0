@@ -26,12 +26,12 @@ public class Panel {
 	static List<Button> butts = new ArrayList<>();		
 
 	public static void show() {
-		RectIsomClickable timerbd = new RectIsomClickable(Camera.getCX()+mx+400,Camera.getCY()+my,30,90,Color.GRAY,0.5);
-		RectIsomClickable timerin = new RectIsomClickable(Camera.getCX()+mx+405,Camera.getCY()+my+85,20,0,Color.BLACK,0.5);
+		RectCol timerbd = new RectCol(Camera.getCX()+mx+400,Camera.getCY()+my,30,90,Color.GRAY,0.5);
+		RectCol timerin = new RectCol(Camera.getCX()+mx+405,Camera.getCY()+my+85,20,0,Color.BLACK,0.5);
 
 		timerin.setH((int)(Math.round(-(Screen.getTimer()+1)*(80.0/Screen.getCycleat()))));
 		upd();
-		Render.addUi(new RectIsomClickable(Camera.getCX(),Camera.getCY(), App.W, 100,Color.GRAY,0.5), 0);
+		Render.addUi(new RectCol(Camera.getCX(),Camera.getCY(), App.W, 100,Color.GRAY,0.5), 0);
 
 		for(Button b : butts)
 			Cursor.addClck(b);

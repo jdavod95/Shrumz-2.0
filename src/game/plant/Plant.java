@@ -3,7 +3,7 @@ package game.plant;
 import elements.IndexPair;
 import game.soil.Soil;
 
-public abstract class Plant {
+public abstract class Plant{
 	
 	private final int TEXTUREID;
 	private final int ENDSTAGE;
