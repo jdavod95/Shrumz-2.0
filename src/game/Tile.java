@@ -17,17 +17,17 @@ import render2d.shape.RectTex;
 
 public class Tile{
 
+	private static int scale = 32;
+	
 	private IndexPair pos;
 
-	static boolean down;
-	static int scale = 32;
-	
 	private Plant plant;
 	private Soil soil;
-
+	private Affector aff;
+	
 	private RectTex plantSkin;
 	private RectIsomClickable soilSkin;
-	private Affector aff;
+	
 	public Tile(int x, int y, IndexPair pos){
 		soil = new Dirt();
 		RectIsomClickable ric = new RectIsomClickable(x, y, scale, soil.getColor());
