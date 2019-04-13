@@ -1,7 +1,7 @@
-package game.gameobject.plant;
+package game.plant;
 
 import elements.IndexPair;
-import game.gameobject.soil.Soil;
+import game.soil.Soil;
 
 public abstract class Plant{
 	

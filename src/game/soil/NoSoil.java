@@ -1,4 +1,4 @@
-package game.gameobject.soil;
+package game.soil;
 
 import render2d.Color;
 

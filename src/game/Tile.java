@@ -5,11 +5,11 @@ import elements.Cursor;
 import elements.IndexPair;
 import elements.MyEvent;
 import elements.clickable.RectIsomClickable;
-import game.gameobject.plant.NoPlant;
-import game.gameobject.plant.Plant;
-import game.gameobject.soil.Dirt;
-import game.gameobject.soil.Soil;
-import game.gameobject.soil.SoilEffect;
+import game.plant.NoPlant;
+import game.plant.Plant;
+import game.soil.Dirt;
+import game.soil.Soil;
+import game.soil.SoilEffect;
 import render2d.Color;
 import render2d.Render;
 import render2d.shape.RectIsom;
@@ -28,6 +28,7 @@ public class Tile{
 	private RectTex plantSkin;
 	private RectIsomClickable soilSkin;
 	private Affector aff;
+	
 	public Tile(int x, int y, IndexPair pos){
 		soil = new Dirt();
 		RectIsomClickable ric = new RectIsomClickable(x, y, scale, soil.getColor());
@@ -151,7 +152,6 @@ public class Tile{
 	}
 	
 	private void cycleAffector(){
-		System.out.println(aff != null);
 		if(aff != null)
 			Map.subAffect(this);
 	}
