@@ -1,6 +1,5 @@
 package game;
 
-
 import elements.Cursor;
 import elements.IndexPair;
 import elements.MyEvent;
@@ -17,60 +16,50 @@ import render2d.shape.RectTex;
 
 public class Tile{
 
+	private static int scale = 32;
+	
 	private IndexPair pos;
 
-	static boolean down;
-	static int scale = 32;
-	
 	private Plant plant;
 	private Soil soil;
-
-	private RectTex plantSkin;
-	private RectIsomClickable soilSkin;
 	private Affector aff;
 	
-	public Tile(int x, int y, IndexPair pos){
-		soil = new Dirt();
-		RectIsomClickable ric = new RectIsomClickable(x, y, scale, soil.getColor());
-		
-		ric.setClick(new MyEvent(){
-			public void action(){
-				if(Screen.getBrushPlant() != null)
-					setPlant(Screen.getBrushPlant().getNew());
-				
-				if(Screen.getBrushSoil() != null)
-					setSoil(Screen.getBrushSoil().getNew());
+	private RectTex plantSkin;
+	private RectIsomClickable soilSkin;
 
-			}
-		});
-		
-		ric.setHover(new MyEvent(){
-			public void action(){
-				Render.addScn(
-					new RectIsom(
-						soilSkin.getX(),
-						soilSkin.getY(),
-						soilSkin.getH(),
-						Color.GRAY,
-						0.5),
-					4);
-			}
-		});
-		soilSkin = ric;
+	
+	private MyEvent click = new MyEvent(){
+		public void action(){
+			if(Screen.getBrushPlant() != null)
+				setPlant(Screen.getBrushPlant().getNew());
+			
+			if(Screen.getBrushSoil() != null)
+				setSoil(Screen.getBrushSoil().getNew());
+		}
+	};
+	
+	private MyEvent hover = new MyEvent(){
+		public void action(){
+			Render.addScn(
+				new RectIsom(
+					soilSkin.getX(),
+					soilSkin.getY(),
+					soilSkin.getH(),
+					Color.GRAY,
+					0.5),
+				4);
+		}
+	};
+	
+	public Tile(int x, int y, IndexPair pos){
+		setSoil(new Dirt());
 		setPlant(new NoPlant());
+		
+		soilSkin = new RectIsomClickable(x, y, scale, soil.getColor());
+		soilSkin.setClick(click);
+		soilSkin.setHover(hover);
+		
 		this.pos = pos;
-	}
-	
-	public static int getScale(){
-		return scale;
-	}
-	
-	public static void setScale(int sc){
-		scale = sc;
-	}
-	
-	public boolean hasPlant(){
-		return !(plant instanceof NoPlant);
 	}
 	
 	public void setPlant(Plant p){
@@ -90,49 +79,13 @@ public class Tile{
 		else
 			aff = null;
 	}
-
-	public RectTex getPlantSkin() {
-		return plantSkin;
-	}
-
-	public void setPlantSkin(RectTex plantSkin) {
-		this.plantSkin = plantSkin;
-	}
-
-	public RectIsomClickable getSoilSkin() {
-		return soilSkin;
-	}
-
-	public void setSoilSkin(RectIsomClickable soilSkin) {
-		this.soilSkin = soilSkin;
+	
+	public boolean hasPlant(){
+		return !(plant instanceof NoPlant);
 	}
 	
 	public IndexPair getPos() {
 		return pos;
-	}
-
-	public void reScale(int xdif, int ydif){
-		
-		soilSkin.setX(soilSkin.getX()+xdif);
-		soilSkin.setY(soilSkin.getY()+ydif);
-		
-		soilSkin.setW(scale);
-		soilSkin.setH(scale/2);
-		
-		if(!hasPlant())
-			return;
-		
-		plantSkin.setX(soilSkin.getX()+soilSkin.getW()/4);
-		plantSkin.setY(soilSkin.getY()-soilSkin.getH()/2);
-
-		plantSkin.setW(scale);
-		plantSkin.setH(scale);
-	}
-	
-	public void toRender(){
-		Render.addScn(soilSkin, 0);
-		if(hasPlant())
-			Render.addScn(plantSkin, 1);
 	}
 	
 	private void cycleSoil(){
@@ -155,6 +108,7 @@ public class Tile{
 		if(aff != null)
 			Map.subAffect(this);
 	}
+	
 	public void cycle(){
 		cyclePlant();
 		cycleSoil();
@@ -162,7 +116,7 @@ public class Tile{
 	}
 
 	public void killPlant() {
-		setPlant(new NoPlant());			// or epmtyGameObject
+		setPlant(new NoPlant());
 	}
 
 	public void applySoilEffect(SoilEffect[] se){
@@ -181,11 +135,45 @@ public class Tile{
 	public SoilEffect[] affectorEffects() {
 		return aff.getEffects();
 	}
+	
 	public Plant getNewPlant(){
 		return plant.getNew();
 	}
 	
 	public void toClick(){
 		Cursor.addClck(soilSkin);
+	}
+	
+	// ---- detach these --- 
+	
+	public static int getScale(){
+		return scale;
+	}
+	
+	public static void setScale(int sc){
+		scale = sc;
+	}
+	
+	public void reScale(int xdif, int ydif){
+
+		soilSkin.setX(soilSkin.getX()+xdif);
+		soilSkin.setY(soilSkin.getY()+ydif);
+		
+		soilSkin.setW(scale);
+		soilSkin.setH(scale/2);
+		
+		if(hasPlant()) {
+			plantSkin.setX(soilSkin.getX()+soilSkin.getW()/4);
+			plantSkin.setY(soilSkin.getY()-soilSkin.getH()/2);
+	
+			plantSkin.setW(scale);
+			plantSkin.setH(scale);
+		}
+	}
+	
+	public void toRender(){
+		Render.addScn(soilSkin, 0);
+		if(hasPlant())
+			Render.addScn(plantSkin, 1);
 	}
 }

@@ -47,6 +47,7 @@ public abstract class Shape {
 		return this;
 	}
 	
+	public abstract void reScale(int w, int h);
 	public abstract void draw();
 	
 }

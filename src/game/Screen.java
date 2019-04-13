@@ -40,9 +40,8 @@ public class Screen {
 				Integer.toString(Camera.getCY()+App.H-Mouse.getY())
 				), 6);
 		
-		
 		Map.toRender();
-
+		Map.toClick();
 	}
 
 	public static void load(){

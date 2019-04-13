@@ -16,6 +16,7 @@ public class Map {
 	static List<Tile> spreadingPlants = new ArrayList<>();
 	static List<Tile> dyingPlants = new ArrayList<>();
 	static List<Tile> affectors = new ArrayList<>();
+	
 	public static int getX(){
 		return dx;
 	}
@@ -52,11 +53,15 @@ public class Map {
 	}
 	
 	public static void toRender(){
-		for(int i = 0;i<dx;i++)
-			for(int j = 0;j<dy;j++){
-				table[i][j].toRender();
-				table[i][j].toClick();
-		}
+		for(Tile[] line : table)
+			for(Tile field : line)
+				field.toRender();
+	}
+	
+	public static void toClick() {
+		for(Tile[] line : table)
+			for(Tile field : line)
+				field.toClick();
 	}
 	
 	public static void reScale(int scale){
@@ -64,7 +69,9 @@ public class Map {
 		Tile.setScale(scale);
 		for(int i = 0;i<dx;i++)
 			for(int j = 0;j<dy;j++)
-				table[i][j].reScale(-scaledif*j+scaledif*i, -scaledif*j/2-scaledif/2*i);
+				table[i][j].reScale(
+						-scaledif*j+scaledif*i,
+						-scaledif*j/2-scaledif/2*i);
 	}
 
 	public static void cycle(){
@@ -98,15 +105,15 @@ public class Map {
 		affectors.add(t);
 	}
 	
-
 	public static void spread(Tile source){
 		IndexPair[] pairs = source.spreadPlant();
+		IndexPair sourcePos = source.getPos();
 		Tile t;
 		for(IndexPair ip : pairs){
 			try {
 				t = getTile(
-						source.getPos().getX() + ip.getX(),
-						source.getPos().getY() + ip.getY());
+						sourcePos.getX() + ip.getX(),
+						sourcePos.getY() + ip.getY());
 				if (!t.hasPlant())
 					t.setPlant(source.getNewPlant());
 			} catch (Exception e) {}
@@ -115,12 +122,13 @@ public class Map {
 	
 	public static void applyEffects(Tile source){
 		IndexPair[] pairs = source.affectorRange();
+		IndexPair sourcePos = source.getPos();
 		Tile t;
 		for(IndexPair ip : pairs){
 			try {
 				t = getTile(
-						source.getPos().getX() + ip.getX(),
-						source.getPos().getY() + ip.getY());
+						sourcePos.getX() + ip.getX(),
+						sourcePos.getY() + ip.getY());
 				t.applySoilEffect(source.affectorEffects());
 			} catch (Exception e) {}
 		}

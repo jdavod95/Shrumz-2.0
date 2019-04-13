@@ -18,7 +18,7 @@ import render2d.shape.RectTex;
 import render2d.shape.Shape;
 import render2d.write.Label;
 
-public class Button extends RectIsomClickable implements Clickable {
+public class Button extends RectCol implements Clickable {
 
 	static Color col = new Color(224,224,224);
 	int cDif = 16;
