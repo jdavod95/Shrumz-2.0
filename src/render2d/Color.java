@@ -5,14 +5,22 @@ public class Color {
 	public static final Color GRAY = new Color(128,128,128);
 	public static final Color BLACK = new Color(0,0,0);
 	public static final Color WHITE = new Color(255,255,255);
+	public static final Color MAGENTA = new Color(255,0,255);
 	
+	public static final int COLBITS = 255;
 	private int r, g, b;
-
+	private double opacity;
+	
 	public Color(int r, int g, int b) {
+		this(r, g, b, 1.0); 
+	}
+	
+	public Color(int r, int g, int b, double opacity) {
 		super();
 		this.r = r;
 		this.g = g;
 		this.b = b;
+		this.opacity = opacity;
 	}
 
 	public int getR() {
@@ -39,5 +47,25 @@ public class Color {
 		this.b = b;
 	}
 
+	public double getOpacity() {
+		return opacity;
+	}
+
+	public void setOpacity(double opacity) {
+		this.opacity = opacity;
+	}
+
+	public double getRVal(){
+		return r/COLBITS;
+	}
+	
+	public double getGVal(){
+		return g/COLBITS;
+	}
+	
+	public double getBVal(){
+		return b/COLBITS;
+	}
+	
 	
 }

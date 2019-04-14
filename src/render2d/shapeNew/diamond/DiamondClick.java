@@ -1,25 +1,20 @@
-package elements.clickable;
-
-import org.lwjgl.util.Point;
+package render2d.shapeNew.diamond;
 
 import elements.MyEvent;
 import render2d.Color;
-import render2d.shape.RectIsom;
+import render2d.shapeNew.Clickable;
+import render2d.shapeNew.Point;
 
-public class RectIsomClickable extends RectIsom implements Clickable{
+public class DiamondClick extends DiamondColor implements Clickable{
 
 	private boolean down;
-	private MyEvent click;
-	private MyEvent hover;
-	private MyEvent release;
+	private MyEvent 
+		click,
+		hover,
+		release;
 	
-	public RectIsomClickable(int x, int y, int w, Color c) {
-		super(x, y, w, c);
-	}
-	
-	@Override
-	public boolean getVis() {
-		return true;
+	public DiamondClick(Point pos, int w, int h, Color color) {
+		super(pos, w, h, color);
 	}
 
 	@Override
@@ -29,26 +24,32 @@ public class RectIsomClickable extends RectIsom implements Clickable{
 	}
 	
 	@Override
+	public void hover() {	
+		hover.action();
+	}
+
+	@Override
 	public void onClick() {
 		if(!down){
 			down = true;
 			click.action();
 		}
 	}
+	
 	@Override
-	public boolean contains(Point m){
+	public boolean contains(Point mouse){
 		
-		int x = getShape().getX();
-		int y = getShape().getY();
+		int x = getPos().getX();
+		int y = getPos().getY();
 
-		int w = getShape().getW()/2;
+		int w = getW()/2;
 		
-		int mx = m.getX();
-		int my = m.getY();
+		int mx = mouse.getX();
+		int my = mouse.getY();
 
-		if(mx < x || mx > x + getShape().getW())
+		if(mx < x || mx > x + getW())
 			return false;
-		if(my < y || my > y + getShape().getH())
+		if(my < y || my > y + getH())
 			return false;
 
 		if(mx < x+w){
@@ -61,10 +62,6 @@ public class RectIsomClickable extends RectIsom implements Clickable{
 		return false;
 	}
 	
-	@Override
-	public void hover() {	
-		hover.action();
-	}
 
 
 	public void setClick(MyEvent click) {
@@ -81,4 +78,5 @@ public class RectIsomClickable extends RectIsom implements Clickable{
 		this.release = release;
 	}
 
+	
 }

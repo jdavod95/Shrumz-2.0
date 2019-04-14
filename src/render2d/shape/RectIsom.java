@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import render2d.Color;
 
-public class RectIsom extends RectCol{
+public class RectIsom extends Shape{
 	
 	static protected final double COLBITS = 255; 
 	protected Color col;
@@ -60,5 +60,11 @@ public class RectIsom extends RectCol{
 
 	public void setCol(Color c){
 		col = c;
+	}
+
+	@Override
+	public void reScale(int w, int h) {
+		// TODO Auto-generated method stub
+		
 	}
 }

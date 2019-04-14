@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.util.Point;
 
-import elements.clickable.Clickable;
 import render2d.Camera;
+import render2d.shapeNew.Clickable;
+import render2d.shapeNew.Point;
 import root.App;
 
 public class Cursor {
@@ -17,14 +17,12 @@ public class Cursor {
 	public static List<Clickable> clicks = new ArrayList<>();
 	
 	public static void addClck(Clickable c){
-		if(c.getVis())
-			clicks.add(c);		
+		clicks.add(c);		
 	}
 	
 	public static void addClck(Clickable[] c){
 		for(Clickable o : c)
-			if(o.getVis())
-				clicks.add(o);		
+			clicks.add(o);		
 	}
 	
 	public static void check() {

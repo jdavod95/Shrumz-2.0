@@ -3,16 +3,17 @@ package game;
 import elements.Cursor;
 import elements.IndexPair;
 import elements.MyEvent;
-import elements.clickable.RectIsomClickable;
+
 import game.plant.NoPlant;
 import game.plant.Plant;
 import game.soil.Dirt;
 import game.soil.Soil;
 import game.soil.SoilEffect;
+
 import render2d.Color;
 import render2d.Render;
-import render2d.shape.RectIsom;
-import render2d.shape.RectTex;
+
+import render2d.shapeNew.Shape;
 
 public class Tile{
 
@@ -25,7 +26,7 @@ public class Tile{
 	private Affector aff;
 	
 	private RectTex plantSkin;
-	private RectIsomClickable soilSkin;
+	private DiamondClickable soilSkin;
 
 	
 	private MyEvent click = new MyEvent(){
@@ -41,12 +42,13 @@ public class Tile{
 	private MyEvent hover = new MyEvent(){
 		public void action(){
 			Render.addScn(
-				new RectIsom(
-					soilSkin.getX(),
-					soilSkin.getY(),
+				new Shape(
+					new Point(
+						soilSkin.getX(),
+						soilSkin.getY()),
+					soilSkin.getW(),
 					soilSkin.getH(),
-					Color.GRAY,
-					0.5),
+					Color.GRAY),
 				4);
 		}
 	};
@@ -55,7 +57,7 @@ public class Tile{
 		setSoil(new Dirt());
 		setPlant(new NoPlant());
 		
-		soilSkin = new RectIsomClickable(x, y, scale, soil.getColor());
+		soilSkin = new DiamondClick(x, y, scale, soil.getColor());
 		soilSkin.setClick(click);
 		soilSkin.setHover(hover);
 		

@@ -62,7 +62,7 @@ public class RectTex extends Shape{
 
 		setTexture(0f,0f,fid,fcu);
 		glVertex2i(x,y);
-		setTexture(0f,1f,fid,fcu);
+		setTexture(0f,1f,fid,fcu); 
 		glVertex2i(x,y+h);
 		setTexture(1f,1f,fid,fcu);
 		glVertex2i(x+w,y+h);
@@ -70,4 +70,11 @@ public class RectTex extends Shape{
 		glEnd();
 	}
 
+	@Override
+	public void reScale(int w, int h) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

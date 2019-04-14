@@ -3,7 +3,8 @@ package render2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import render2d.shape.Shape;
+import render2d.shapeNew.Shape;
+
 
 public class Renderer {
 

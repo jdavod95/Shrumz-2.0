@@ -10,7 +10,7 @@ import game.soil.Water;
 
 public class ButtonEvents {
 
-	public final static MyEvent HIDEPANEL = new MyEvent(){
+/*	public final static MyEvent HIDEPANEL = new MyEvent(){
 		@Override
 		public void action(){
 			if(Panel.butts.get(0).getVis())
@@ -21,7 +21,7 @@ public class ButtonEvents {
 					Panel.butts.get(i).setVis(true);
 		}
 	};
-	
+*/	
 	public final static MyEvent GROWMAPX = new MyEvent(){
 		@Override
 		public void action(){
