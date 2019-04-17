@@ -20,7 +20,7 @@ public abstract class Rectangle extends Shape{
 	}
 
 	@Override
-	protected void drawShape() {
+	public void drawShape() {
 		drawTriangle(getPos(), new Point(getW(), 0), new Point(getW(), getH()));
 		drawTriangle(getPos(), new Point(0, getH()), new Point(getW(), getH()));
 	}

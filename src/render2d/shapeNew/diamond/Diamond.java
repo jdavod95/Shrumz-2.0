@@ -15,7 +15,7 @@ public abstract class Diamond extends Shape{
 	}
 
 	@Override
-	protected void drawShape() {
+	public void drawShape() {
 		Point base = new Point(
 				getPos().getX(),
 				getPos().getY()+getH()/2);
