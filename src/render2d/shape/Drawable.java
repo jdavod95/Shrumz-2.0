@@ -1,4 +1,4 @@
-package render2d.shapeNew;
+package render2d.shape;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;

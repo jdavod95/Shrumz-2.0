@@ -1,9 +1,10 @@
-package render2d.shapeNew;
+package render2d.shape;
 
 import elements.MyEvent;
 
 public interface Clickable extends Drawable{
 
+	Shape getShape();	// ?????
 	MyEvent getRelease();
 	MyEvent getHover();
 	MyEvent getOnClick();

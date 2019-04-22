@@ -1,4 +1,4 @@
-package render2d.shape;
+package render2d.shapeDEPRECATED;
 
 import elements.clickable.Clickable;
 import render2d.Color;

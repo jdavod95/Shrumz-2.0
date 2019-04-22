@@ -8,9 +8,9 @@ import elements.Cursor;
 import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
-import render2d.shape.RectIsomClickable;
-import render2d.shapeNew.Point;
-import render2d.shapeNew.rectangle.RectangleColor;
+import render2d.shape.Point;
+import render2d.shape.ShapeFactory;
+import render2d.shape.rectangle.Rectangle;
 import render2d.write.Label;
 import root.App;
 
@@ -28,12 +28,12 @@ public class Panel {
 	static List<Button> butts = new ArrayList<>();		
 
 	public static void show() {
-		RectangleColor timerbd = new RectangleColor(new Point(Camera.getCX()+mx+400,Camera.getCY()+my),30,90,Color.GRAY);
-		RectangleColor timerin = new RectangleColor(new Point(Camera.getCX()+mx+405,Camera.getCY()+my+85),20,0,Color.BLACK);
+		Rectangle timerbd = ShapeFactory.createRectCol(new Point(Camera.getCX()+mx+400,Camera.getCY()+my),30,90,Color.GRAY);
+		Rectangle timerin = ShapeFactory.createRectCol(new Point(Camera.getCX()+mx+405,Camera.getCY()+my+85),20,0,Color.BLACK);
 
 		timerin.reScale(0,(int)(Math.round(-(Screen.getTimer()+1)*(80.0/Screen.getCycleat()))));
 		upd();
-		Render.addUi(new RectangleColor(new Point(Camera.getCX(),Camera.getCY()), App.W, 100,Color.GRAY), 0);
+		Render.addUi(ShapeFactory.createRectCol(new Point(Camera.getCX(),Camera.getCY()), App.W, 100,Color.GRAY), 0);
 
 		for(Button b : butts)
 			Cursor.addClck(b);
@@ -41,10 +41,10 @@ public class Panel {
 		for(Button b : butts)
 			b.toRender(1);
 		
-		Render.addUi(new Label(cx+43,cy+32, 20, "Row"), 1);
-		Render.addUi(new Label(cx+90,cy+32, 20, "Col"), 1);
-		Render.addUi(new Label(cx+125,cy+35, 17, "Scale"), 1);
-		Render.addUi(new Label(cx+350,cy+35, 17, "Speed"), 1);
+		Render.addUi(new Label(new Point(cx+43,cy+32), 20, "Row"), 1);
+		Render.addUi(new Label(new Point(cx+90,cy+32), 20, "Col"), 1);
+		Render.addUi(new Label(new Point(cx+125,cy+35), 17, "Scale"), 1);
+		Render.addUi(new Label(new Point(cx+350,cy+35), 17, "Speed"), 1);
 
 		Render.addUi(timerbd, 1);
 		Render.addUi(timerin, 1);

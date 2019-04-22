@@ -1,54 +1,58 @@
 package elements;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2i;
 
 import render2d.Color;
 import render2d.Render;
+import render2d.shape.Clickable;
+import render2d.shape.Point;
 import render2d.shape.Shape;
-
-import render2d.shapeNew.Clickable;
-import render2d.shapeNew.Point;
-import render2d.shapeNew.rectangle.RectangleColor;
-import render2d.shapeNew.rectangle.RectangleTextured;
+import render2d.shape.ShapeFactory;
+import render2d.shape.rectangle.Rectangle;
 import render2d.write.Label;
 
-public class Button extends RectangleColor implements Clickable {
+public class Button extends Shape implements Clickable{
 
 	static int COLBITS = 255;
 	static Color col = new Color(224,224,224);
 	int cDif = 16;
 	int bd = 5;
 	
-	RectangleTextured lpic = null;
+	Rectangle lpic = null;
 	Label label = null;
 	
 	boolean down = false;
 	boolean type = true; //toggle true|| hold false 
+	MyEvent e;
+
+	MyEvent release = new MyEvent(){
+		@Override
+		public void action() {
+			down = false;
+			labelNudge();
+		}
+	};
 	
-	MyEvent e = new MyEvent(){
-				@Override
-				public void action() {
-					System.out.println("No event specified");
-				}
-		};
-	
+	MyEvent onClick = new MyEvent(){	
+		@Override
+		public void action() {
+			labelNudge();
+			e.action();		
+		}
+	};
+		
 	public Button(Point pos, int w, int h, String label, MyEvent e, boolean toggle) {
-		super(pos, w, h, col);
-		this.label = new Label(pos.getX()+bd, pos.getY()+bd, h-2*bd, label);
+		super(pos, w, h);
+		this.label = new Label(new Point(pos.getX()+bd, pos.getY()+bd), h-2*bd, label);
 		this.type = toggle;
 		if(e != null)
 			this.e = e;
 	}
 	
 	public Button(Point pos, int w, int h, int fid, int fcu, MyEvent e, boolean toggle) {
-		super(pos, w, h, col);
-		this.lpic = new RectangleTextured(new Point(pos.getX()+bd, pos.getY()+bd), w-2*bd, h-2*bd, fid ,fcu);
+		super(pos, w, h);
+		this.lpic = ShapeFactory.createRectTex(new Point(pos.getX()+bd, pos.getY()+bd), w-2*bd, h-2*bd, fid);
 		this.type = toggle;
 		if(e != null)
 			this.e = e;
@@ -105,7 +109,7 @@ public class Button extends RectangleColor implements Clickable {
 			h -= 1;
 			w -= 1;
 			y += 1;
-			setColor(new Color(216,216,216));
+			col = new Color(216,216,216);
 		}
 		
 		glColor4d(
@@ -142,9 +146,8 @@ public class Button extends RectangleColor implements Clickable {
 		if(!down)
 			x *= -1;
 		if(label != null){
-			label.setH(label.getH()-x);
-			label.setW(label.getW()-x);
-			label.setY(label.getY()+x);
+			label.reScale((label.getH()-x), (label.getW()-x));
+			label.setY(label.getPos().getY()+x);
 		}
 		if(lpic != null){
 			lpic.reScale(
@@ -154,44 +157,51 @@ public class Button extends RectangleColor implements Clickable {
 		}
 			
 	}
-	
-	// Clickable
-	
+
 	@Override
-	public void release(){
-		down = false;
-		labelNudge();
+	public void reScale(int w, int h) {
+		// TODO Auto-generated method stub
+		
 	}
-	
+
 	@Override
-	public void onClick() {		
-		if(type){
-			if(!down){
-				down = true;
-				e.action();
-				labelNudge();
-			}
-		} 
-		else{
-			if(!down)
-				labelNudge();
-			down = true;
-			e.action();
-		}
+	public MyEvent getRelease() {
+		return release;
 	}
-	
+
 	@Override
-	public boolean contains(Point m){
+	public MyEvent getHover() {
+		return MyEvent.EMPTY;
+	}
+
+	@Override
+	public MyEvent getOnClick() {
+		return onClick;
+	}
+
+	@Override
+	public boolean isDown() {
+		return down;
+	}
+
+	@Override
+	public void setDown(boolean b) {
+		down = b;
+	}
+
+	@Override
+	public boolean contains(Point m) {
 		if(
-			m.getX() > getPos().getX() &&
-			m.getX() < getPos().getX() + getW())
-			if(
-				m.getY() > getPos().getY() && 
-				m.getY() < getPos().getY() + getH())
-				return true;
-		return false;
+				m.getX() > getShape().getPos().getX() &&
+				m.getX() < getShape().getPos().getX() + getShape().getW())
+				if(
+					m.getY() > getShape().getPos().getY() && 
+					m.getY() < getShape().getPos().getY() + getShape().getH())
+					return true;
+			
+			return false;
 	}
-	@Override
-	public void hover() {}
+	
+	
 
 }

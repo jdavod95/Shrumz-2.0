@@ -6,8 +6,8 @@ import java.util.List;
 import org.lwjgl.input.Mouse;
 
 import render2d.Camera;
-import render2d.shapeNew.Clickable;
-import render2d.shapeNew.Point;
+import render2d.shape.Clickable;
+import render2d.shape.Point;
 import root.App;
 
 public class Cursor {

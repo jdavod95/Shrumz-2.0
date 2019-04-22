@@ -1,4 +1,4 @@
-package render2d.shapeNew;
+package render2d.shape;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBindTexture;
@@ -11,13 +11,16 @@ public interface Textureable extends Drawable{
 
 	int getTexId();
 	int getCurrentFrame();
-
+	void setCurrentFrame(int frame);
+	
 	@Override
 	default void drawTriangle(Point base, Point vector1, Point vector2){
 		setTexture(0f, 0f);
 		glVertex2i(base.getX(),base.getY());
+		//
 		// !!!!!!! warning !!!!!!!	0
-		setTexture(1f *vector1.getX(), 1f * vector1.getY());
+		//
+		setTexture(1f * vector1.getX(), 1f * vector1.getY());
 		glVertex2i(
 				base.getX()+vector1.getX(),
 				base.getY()+vector1.getY());

@@ -16,30 +16,35 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
 
+import render2d.shape.Point;
 import render2d.shape.Shape;
+
 
 public class Label extends Shape{
 
 	// alphabet from bmfc
 	
-	private static String path = new File("res/abc.fnt").getAbsolutePath();//"D:/workspace/"projekt_nev"/res/abc.fnt";
+	private static String path = new File("res/abc.fnt").getAbsolutePath();
 	private static Symbol[] symb;
 
 	public static final float SCALE = 64;
-	public static final float TXSIZE = 512f;//(scale*scale)/(scale/8);
+	public static final float TXSIZE = (SCALE*SCALE)/(SCALE/8);
 
 	int[] word;
 	
-	public Label(int x, int y, int scale, String s){
-		super(x, y, 0, scale);
+	public Label(Point pos, int scale, String s){
+		super(pos, 0, scale);
 		
 		word = new int[s.length()];
 		for(int i = 0; i < s.length(); i++)
 			word[i] = s.charAt(i);
 	}
-	
-	public void draw(){
-		int x = this.x;
+	@Override
+	public void drawShape(){
+		int x = getPos().getX(),
+			y = getPos().getY(),
+			h = getH();
+		
 		glBindTexture(GL_TEXTURE_2D,1);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -101,5 +106,19 @@ public class Label extends Shape{
 		while(id != symb[i].getId())
 			i++;
 		return symb[i];
+	}
+
+	@Override
+	public void reScale(int w, int h) {
+		setH(h);
+		setW(w);
+	}
+
+	public void setX(int x) {
+		getPos().setX(x);
+	}
+	
+	public void setY(int y) {
+		getPos().setX(y);
 	}
 }

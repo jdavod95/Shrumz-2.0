@@ -1,37 +1,21 @@
 package render2d.shape;
 
-
-public abstract class Shape {
+public abstract class Shape implements Drawable{
 	
-	protected int x, y, w, h;
+	private Point pos;
+	private int w, h;
 	
-	protected Shape(int x, int y, int w, int h){
-		this.x = x;
-		this.y = y;
+	protected Shape(Point pos, int w, int h){
+		this.pos = pos;
 		this.w = w;
 		this.h = h;
-	}
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	public int getW() {
 		return w;
 	}
 
-	public void setW(int w) {
+	protected void setW(int w) {
 		this.w = w;
 	}
 
@@ -39,15 +23,29 @@ public abstract class Shape {
 		return h;
 	}
 
-	public void setH(int h) {
+	protected void setH(int h) {
 		this.h = h;
 	}
+
+	public Point getPos() {
+		return pos;
+	}
+
+	public void setPos(Point pos) {
+		this.pos = pos;
+	}
 	
+	public void setPos(int x, int y) {	//????
+		pos.setX(x);
+		pos.setY(y);
+	}
+
 	public Shape getShape(){
 		return this;
 	}
-	
+
 	public abstract void reScale(int w, int h);
-	public abstract void draw();
-	
+	// implement with calling drawTriangle()
+	public abstract void drawShape();
+
 }

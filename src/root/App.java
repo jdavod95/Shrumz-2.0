@@ -22,16 +22,21 @@ import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
 import render2d.TextureLoad;
-import render2d.shape.RectIsomClickable;
+import render2d.shape.Point;
+import render2d.shape.ShapeFactory;
+import render2d.shape.rectangle.Rectangle;
 import render2d.write.Label;
 
 public class App {
+	
 	
 	public final static int W = 1024;
 	public final static int H = 768;
 	static int ticks = 0;
 	static int sec = 0;
-  	
+	
+	private static final Rectangle BGR = ShapeFactory.createRectCol(new Point(Camera.getCX(),Camera.getCY()),W,H,Color.WHITE);
+
 	public static void main(String[] args){
 		
 		System.setProperty(
@@ -64,7 +69,8 @@ public class App {
         glDisable(GL_LIGHTING);
           
 		while (!Display.isCloseRequested()) {
-			Render.addBgr(new RectIsomClickable(Camera.getCX(),Camera.getCY(),W,H,Color.WHITE),0);
+			BGR.setPos(new Point(Camera.getCX(),Camera.getCY()));
+			Render.addBgr(BGR,0);
 		    Screen.show();
 		    
 		    Cursor.check();

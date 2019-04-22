@@ -1,4 +1,4 @@
-package render2d.shapeNew;
+package render2d.shape;
 
 public class Point {
 

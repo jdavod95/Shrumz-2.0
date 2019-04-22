@@ -4,7 +4,7 @@ import org.lwjgl.util.Point;
 
 import elements.MyEvent;
 import render2d.Color;
-import render2d.shape.RectIsom;
+import render2d.shapeDEPRECATED.RectIsom;
 
 public class RectIsomClickable extends RectIsom implements Clickable{
 

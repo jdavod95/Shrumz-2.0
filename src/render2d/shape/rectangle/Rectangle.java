@@ -1,7 +1,7 @@
-package render2d.shapeNew.rectangle;
+package render2d.shape.rectangle;
 
-import render2d.shapeNew.Point;
-import render2d.shapeNew.Shape;
+import render2d.shape.Point;
+import render2d.shape.Shape;
 
 public abstract class Rectangle extends Shape{
 

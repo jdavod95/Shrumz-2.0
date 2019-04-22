@@ -1,6 +1,6 @@
 package render2d;
 
-import render2d.shapeNew.Shape;
+import render2d.shape.Shape;
 
 public class Render {
 	

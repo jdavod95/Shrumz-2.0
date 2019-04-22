@@ -1,7 +1,7 @@
-package render2d.shapeNew.diamond;
+package render2d.shape.diamond;
 
-import render2d.shapeNew.Point;
-import render2d.shapeNew.Shape;
+import render2d.shape.Point;
+import render2d.shape.Shape;
 
 public abstract class Diamond extends Shape{
 

@@ -1,4 +1,4 @@
-package render2d.shape;
+package render2d.shapeDEPRECATED;
 
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glEnd;

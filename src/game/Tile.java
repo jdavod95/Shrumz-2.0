@@ -12,8 +12,13 @@ import game.soil.SoilEffect;
 
 import render2d.Color;
 import render2d.Render;
-
-import render2d.shapeNew.Shape;
+import render2d.shape.Clickable;
+import render2d.shape.Colorable;
+import render2d.shape.Point;
+import render2d.shape.ShapeFactory;
+import render2d.shape.Textureable;
+import render2d.shape.diamond.Diamond;
+import render2d.shape.rectangle.Rectangle;
 
 public class Tile{
 
@@ -25,8 +30,8 @@ public class Tile{
 	private Soil soil;
 	private Affector aff;
 	
-	private RectTex plantSkin;
-	private DiamondClickable soilSkin;
+	private Rectangle plantSkin;
+	private Diamond soilSkin;
 
 	
 	private MyEvent click = new MyEvent(){
@@ -42,10 +47,10 @@ public class Tile{
 	private MyEvent hover = new MyEvent(){
 		public void action(){
 			Render.addScn(
-				new Shape(
+				ShapeFactory.createRectCol(
 					new Point(
-						soilSkin.getX(),
-						soilSkin.getY()),
+						soilSkin.getPos().getX(),
+						soilSkin.getPos().getY()),
 					soilSkin.getW(),
 					soilSkin.getH(),
 					Color.GRAY),
@@ -55,22 +60,22 @@ public class Tile{
 	
 	public Tile(int x, int y, IndexPair pos){
 		setSoil(new Dirt());
-		setPlant(new NoPlant());
 		
-		soilSkin = new DiamondClick(x, y, scale, soil.getColor());
-		soilSkin.setClick(click);
-		soilSkin.setHover(hover);
-		
+		soilSkin = ShapeFactory.createDiamColClick(
+				new Point(x, y), scale, soil.getColor(),
+				click, MyEvent.EMPTY, hover);
 		this.pos = pos;
+		
+		setPlant(new NoPlant());
 	}
 	
 	public void setPlant(Plant p){
 		plant = p;
-		plantSkin = new RectTex(
-				soilSkin.getX()+soilSkin.getW()/4, 
-				soilSkin.getY()-soilSkin.getH()/2,
+		plantSkin = ShapeFactory.createRectTex(new Point(
+				soilSkin.getPos().getX()+soilSkin.getW()/4, 
+				soilSkin.getPos().getY()-soilSkin.getH()/2),
 				scale, scale,
-				p.getTEXTUREID(), 0
+				p.getTEXTUREID()
 				);
 	}
 	
@@ -92,13 +97,13 @@ public class Tile{
 	
 	private void cycleSoil(){
 		soil.cycle(hasPlant());
-		soilSkin.setCol(soil.getColor());
+		((Colorable) soilSkin).setColor(soil.getColor());
 	} 
 
 	private void cyclePlant(){
 		if(hasPlant()){
 			plant.cycle(soil);
-			plantSkin.setFcu(plant.getStage());
+			((Textureable) plantSkin).setCurrentFrame(plant.getStage());
 			if(plant.inSpreadStage())
 				Map.subSpread(this);
 			if(plant.inEndStage())      
@@ -143,7 +148,7 @@ public class Tile{
 	}
 	
 	public void toClick(){
-		Cursor.addClck(soilSkin);
+		Cursor.addClck((Clickable) soilSkin);
 	}
 	
 	// ---- detach these --- 
@@ -157,19 +162,18 @@ public class Tile{
 	}
 	
 	public void reScale(int xdif, int ydif){
-
-		soilSkin.setX(soilSkin.getX()+xdif);
-		soilSkin.setY(soilSkin.getY()+ydif);
-		
-		soilSkin.setW(scale);
-		soilSkin.setH(scale/2);
+		soilSkin.setPos(
+				soilSkin.getPos().getX()+xdif,
+				soilSkin.getPos().getY()+ydif
+				);
+		soilSkin.reScale(scale, scale/2);
 		
 		if(hasPlant()) {
-			plantSkin.setX(soilSkin.getX()+soilSkin.getW()/4);
-			plantSkin.setY(soilSkin.getY()-soilSkin.getH()/2);
-	
-			plantSkin.setW(scale);
-			plantSkin.setH(scale);
+			plantSkin.setPos(
+					soilSkin.getPos().getX()+soilSkin.getW()/4,
+					soilSkin.getPos().getY()-soilSkin.getH()/2
+					);
+			plantSkin.reScale(scale, scale);
 		}
 	}
 	
