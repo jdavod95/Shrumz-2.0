@@ -6,11 +6,7 @@ import render2d.Color;
 
 public interface Colorable extends Drawable{
 	
-	final Color color = new Color(1, 1, 1, 1);
-	
-	public default Color getColor() {
-		return color;
-	}
+	public Color getColor() ;
 
 	public default void setColor(Color color) {
 		getColor().setR(color.getR());
@@ -22,6 +18,7 @@ public interface Colorable extends Drawable{
 	@Override
 	default void GlColor(){
 		Color c = getColor();
-		glColor4d(c.getRVal(), c.getBVal(), c.getGVal(), c.getOpacity());
+		glColor4d(c.getRVal(), c.getGVal(), c.getBVal(), c.getOpacity());
 	}
+	
 }

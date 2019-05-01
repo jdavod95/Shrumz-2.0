@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
+import elements.Point;
 import render2d.TextureLoad;
 
 public interface Textureable extends Drawable{
@@ -20,7 +21,13 @@ public interface Textureable extends Drawable{
 		//
 		// !!!!!!! warning !!!!!!!	0
 		//
-		setTexture(1f * vector1.getX(), 1f * vector1.getY());
+		float x = (float)vector1.getX();
+		if(x != 0)
+			x = 1;
+		float y = (float)vector1.getY();
+		if(y != 0)
+			y = 1;
+		setTexture(x, y);
 		glVertex2i(
 				base.getX()+vector1.getX(),
 				base.getY()+vector1.getY());

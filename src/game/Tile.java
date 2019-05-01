@@ -1,9 +1,8 @@
 package game;
 
 import elements.Cursor;
-import elements.IndexPair;
+import elements.Point;
 import elements.MyEvent;
-
 import game.plant.NoPlant;
 import game.plant.Plant;
 import game.soil.Dirt;
@@ -14,7 +13,6 @@ import render2d.Color;
 import render2d.Render;
 import render2d.shape.Clickable;
 import render2d.shape.Colorable;
-import render2d.shape.Point;
 import render2d.shape.ShapeFactory;
 import render2d.shape.Textureable;
 import render2d.shape.diamond.Diamond;
@@ -24,7 +22,7 @@ public class Tile{
 
 	private static int scale = 32;
 	
-	private IndexPair pos;
+	private Point pos;
 
 	private Plant plant;
 	private Soil soil;
@@ -33,7 +31,6 @@ public class Tile{
 	private Rectangle plantSkin;
 	private Diamond soilSkin;
 
-	
 	private MyEvent click = new MyEvent(){
 		public void action(){
 			if(Screen.getBrushPlant() != null)
@@ -47,23 +44,23 @@ public class Tile{
 	private MyEvent hover = new MyEvent(){
 		public void action(){
 			Render.addScn(
-				ShapeFactory.createRectCol(
+				ShapeFactory.createDiamCol(
 					new Point(
 						soilSkin.getPos().getX(),
 						soilSkin.getPos().getY()),
 					soilSkin.getW(),
-					soilSkin.getH(),
-					Color.GRAY),
+					new Color(Color.WHITE, 0.5)),
 				4);
 		}
 	};
 	
-	public Tile(int x, int y, IndexPair pos){
-		setSoil(new Dirt());
-		
+	public Tile(int x, int y, Point pos){
+		Soil startSoil = new Dirt();
+
 		soilSkin = ShapeFactory.createDiamColClick(
-				new Point(x, y), scale, soil.getColor(),
+				new Point(x, y), scale*2, startSoil.getColor(),
 				click, MyEvent.EMPTY, hover);
+		setSoil(startSoil);
 		this.pos = pos;
 		
 		setPlant(new NoPlant());
@@ -81,6 +78,9 @@ public class Tile{
 	
 	public void setSoil(Soil soil) {
 		this.soil = soil;
+		soilSkin = ShapeFactory.createDiamColClick(
+				soilSkin.getPos(), scale*2, soil.getColor(),
+				click, MyEvent.EMPTY, hover);
 		if(soil instanceof Affector)
 			aff = (Affector) soil;
 		else
@@ -91,7 +91,7 @@ public class Tile{
 		return !(plant instanceof NoPlant);
 	}
 	
-	public IndexPair getPos() {
+	public Point getPos() {
 		return pos;
 	}
 	
@@ -131,11 +131,11 @@ public class Tile{
 			soil.addEffect(s);
 	}
 	
-	public IndexPair[] spreadPlant(){
+	public Point[] spreadPlant(){
 		return plant.spread();
 	}
 	
-	public IndexPair[] affectorRange(){
+	public Point[] affectorRange(){
 		return aff.getEffectRange();
 	}
 	

@@ -1,6 +1,6 @@
 package game.plant;
 
-import elements.IndexPair;
+import elements.Point;
 import game.soil.Soil;
 
 public class Shrum extends Plant {
@@ -10,12 +10,12 @@ public class Shrum extends Plant {
 	}
 	
 	@Override
-	public IndexPair[] spread() {
-		return new IndexPair[]{
-			new IndexPair(1, 0),
-			new IndexPair(0, 1),
-			new IndexPair(-1, 0),
-			new IndexPair(0, -1)
+	public Point[] spread() {
+		return new Point[]{
+			new Point(1, 0),
+			new Point(0, 1),
+			new Point(-1, 0),
+			new Point(0, -1)
 		};
 	}
 

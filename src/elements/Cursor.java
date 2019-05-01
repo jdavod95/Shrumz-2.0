@@ -7,7 +7,6 @@ import org.lwjgl.input.Mouse;
 
 import render2d.Camera;
 import render2d.shape.Clickable;
-import render2d.shape.Point;
 import root.App;
 
 public class Cursor {
@@ -33,7 +32,7 @@ public class Cursor {
     			
     			c.hover();
     			if(Mouse.isButtonDown(0)){
-    				c.onClick();
+    				c.click();
 	    			if(pressed == null)
 	    				pressed = c;
 	    			else if(pressed != c){

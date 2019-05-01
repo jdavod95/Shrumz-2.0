@@ -9,20 +9,23 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnd;
 
 import java.io.File;
+import java.nio.ByteBuffer;
+
+import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.opengl.ImageIOImageData;
 
 import elements.Cursor;
+import elements.Point;
 import game.Screen;
 import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
 import render2d.TextureLoad;
-import render2d.shape.Point;
 import render2d.shape.ShapeFactory;
 import render2d.shape.rectangle.Rectangle;
 import render2d.write.Label;
@@ -35,60 +38,29 @@ public class App {
 	static int ticks = 0;
 	static int sec = 0;
 	
-	private static final Rectangle BGR = ShapeFactory.createRectCol(new Point(Camera.getCX(),Camera.getCY()),W,H,Color.WHITE);
+	private static final Rectangle BGR = 
+			ShapeFactory.createRectCol(
+					new Point(Camera.getCX(),Camera.getCY()),
+					W,H,
+					Color.WHITE);
 
 	public static void main(String[] args){
 		
-		System.setProperty(
-				"org.lwjgl.librarypath", 
-				new File("lib/natives").getAbsolutePath()
-				);
-			
-		try{
-    	  	Display.setDisplayMode(new DisplayMode(W, H));
-            Display.setTitle("Shrumz");
-            Display.create();
-            
-		} catch (Exception e) {
-            System.err.println("Display wasn't initialized correctly.");
-            System.exit(1);
-        }
-    
-		
-		preLoad();
-		
-		
-		glEnable(GL_MULTISAMPLE);  
-		
-        glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D,0);
-        
-        glEnable(GL_BLEND); 
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-        glDisable(GL_LIGHTING);
-          
+		initDisplay();
+		          
 		while (!Display.isCloseRequested()) {
 			BGR.setPos(new Point(Camera.getCX(),Camera.getCY()));
 			Render.addBgr(BGR,0);
 		    Screen.show();
-		    
 		    Cursor.check();
-		    
 		    Camera.create();
 		    Controls.navigate();
-
 		    Render.drawFrame();	
-
-		    glEnd();
-    		
-    		ticks ++;
+		    ticks ++;
     		if(ticks == 60){
     			ticks = 0;
     			sec++;
     		}
-
-		   // System.out.println(ticks);
 		}
  
         Display.destroy();
@@ -107,4 +79,30 @@ public class App {
 		return ticks;
 	}
 
+	private static void initDisplay() {
+		System.setProperty(
+				"org.lwjgl.librarypath", 
+				new File("lib/natives").getAbsolutePath()
+				);
+			
+		try{
+    	  	Display.setDisplayMode(new DisplayMode(W, H));
+            Display.setTitle("Shrumz");
+            Display.create();
+            
+		} catch (Exception e) {
+            System.err.println("Display wasn't initialized correctly.");
+            System.exit(1);
+        }
+		
+		preLoad();
+		
+		glEnable(GL_MULTISAMPLE);  
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D,0);
+        glEnable(GL_BLEND); 
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDisable(GL_LIGHTING);
+
+	}
 }

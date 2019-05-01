@@ -1,7 +1,7 @@
 package game.plant;
 
 
-import elements.IndexPair;
+import elements.Point;
 import game.soil.Soil;
 
 public class Weed extends Plant {
@@ -28,7 +28,7 @@ public class Weed extends Plant {
 	}
 
 	@Override
-	public IndexPair[] spread() {
+	public Point[] spread() {
 		
 		int x = (int)Math.floor(Math.random()*3-1);
 		int y = (int)Math.floor(Math.random()*3-1);
@@ -36,8 +36,8 @@ public class Weed extends Plant {
 			x = (int)Math.floor(Math.random()*3-1);
 			y = (int)Math.floor(Math.random()*3-1);
 		}
-		return new IndexPair[]{
-			new IndexPair(x, y)
+		return new Point[]{
+			new Point(x, y)
 			};
 	}
 

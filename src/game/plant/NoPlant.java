@@ -1,6 +1,6 @@
 package game.plant;
 
-import elements.IndexPair;
+import elements.Point;
 import game.soil.Soil;
 
 public class NoPlant extends Plant{
@@ -14,8 +14,8 @@ public class NoPlant extends Plant{
 	}
 
 	@Override
-	public IndexPair[] spread() {
-		return new IndexPair[0];
+	public Point[] spread() {
+		return new Point[0];
 	}
 
 	@Override

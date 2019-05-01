@@ -1,6 +1,6 @@
 package game.plant;
 
-import elements.IndexPair;
+import elements.Point;
 import game.soil.Soil;
 
 public abstract class Plant{
@@ -38,7 +38,7 @@ public abstract class Plant{
 	public abstract void grow(Soil s);
 	
 	// spread pattern relative to tile position
-	public abstract IndexPair[] spread();
+	public abstract Point[] spread();
 
 	public int getTEXTUREID() {
 		return TEXTUREID;

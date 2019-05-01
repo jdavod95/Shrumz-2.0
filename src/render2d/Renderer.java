@@ -3,26 +3,24 @@ package render2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import render2d.shape.Shape;
-
+import render2d.shape.Drawable;
 
 public class Renderer {
 
-	private List<List<Shape>> layers;
+	private List<List<Drawable>> layers;
 	
 	public Renderer() {
 		super();
 		layers = new ArrayList<>();
 		layers.add(new ArrayList<>());
-		layers.add(new ArrayList<>());
 	}
 
-	public void addShape(Shape[] s, int l){
-		for(Shape sh: s)
-			addShape(sh, l);
+	public void addDrawable(Drawable[] s, int l){
+		for(Drawable sh: s)
+			addDrawable(sh, l);
 	}
 
-	public void addShape(Shape s, int l){
+	public void addDrawable(Drawable s, int l){
 		if(l >= layers.size())
 			expand(l);
 		layers.get(l).add(s);
@@ -38,8 +36,8 @@ public class Renderer {
 	}
 	
 	public void drawFrame(){
-		for(List<Shape> l : layers)
-			for(Shape s : l)
+		for(List<Drawable> l : layers)
+			for(Drawable s : l)
 				s.draw();
 		flush();
 	}	

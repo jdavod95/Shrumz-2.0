@@ -1,14 +1,8 @@
 package elements;
 
-public class IndexPair {
+public class Point {
 
-	int x, y;
-
-	public IndexPair(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
-	}
+	private int x, y;
 
 	public int getX() {
 		return x;
@@ -23,6 +17,17 @@ public class IndexPair {
 	}
 
 	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void setXY(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	
+	public Point(int x, int y) {
+		super();
+		this.x = x;
 		this.y = y;
 	}
 	

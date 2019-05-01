@@ -34,12 +34,13 @@ public class TextureLoad {
 	
 	public static void loadAll(){
 		// example  :   texture=Load("res/spore.png");		//1
-		dims  = new Point[5];
-		texture = load("res/abc_0.png",1,1,1);
-		texture = load("res/Shrum64.png",2,2,2);
-		texture = load("res/Weed64.png",2,4,3);
-		texture = load("res/Controls.png",2,2,4);
-		texture = load("res/BluShrum64.png",2,2,5);
+		dims  = new Point[6];
+		texture = load("res/overlay/abc_0.png",1,1,1);
+		texture = load("res/game/Shrum64.png",2,2,2);
+		texture = load("res/game/Weed64.png",2,4,3);
+		texture = load("res/overlay/Controls.png",2,2,4);
+		texture = load("res/game/BluShrum64.png",2,2,5);
+		texture = load("res/overlay/ButtonCol128.png",2,2,6);
 
 		
 	}

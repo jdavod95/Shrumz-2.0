@@ -7,7 +7,7 @@ public class Color {
 	public static final Color WHITE = new Color(255,255,255);
 	public static final Color MAGENTA = new Color(255,0,255);
 	
-	public static final int COLBITS = 255;
+	public static final double COLBITS = 255;
 	private int r, g, b;
 	private double opacity;
 	
@@ -15,6 +15,9 @@ public class Color {
 		this(r, g, b, 1.0); 
 	}
 	
+	public Color(Color c, double opacity) {
+		this(c.getR(), c.getG(), c.getB(), opacity); 
+	}
 	public Color(int r, int g, int b, double opacity) {
 		super();
 		this.r = r;
@@ -65,6 +68,11 @@ public class Color {
 	
 	public double getBVal(){
 		return b/COLBITS;
+	}
+
+	@Override
+	public String toString() {
+		return "Color [r=" + getRVal() + ", g=" + getGVal() + ", b=" + getBVal() + ", opacity=" + opacity + "]";
 	}
 	
 	

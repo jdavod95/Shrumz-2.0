@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-import elements.IndexPair;
+import elements.Point;
 
 public class Map {
 
@@ -43,7 +43,7 @@ public class Map {
 				table[i][j] = new Tile(
 						mx + (16-i-1)*(Tile.getScale()) + j*Tile.getScale(),
 						my + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
-						new IndexPair(i, j)
+						new Point(i, j)
 					);
 	}
 	
@@ -106,10 +106,10 @@ public class Map {
 	}
 	
 	public static void spread(Tile source){
-		IndexPair[] pairs = source.spreadPlant();
-		IndexPair sourcePos = source.getPos();
+		Point[] pairs = source.spreadPlant();
+		Point sourcePos = source.getPos();
 		Tile t;
-		for(IndexPair ip : pairs){
+		for(Point ip : pairs){
 			try {
 				t = getTile(
 						sourcePos.getX() + ip.getX(),
@@ -121,10 +121,10 @@ public class Map {
 	}
 	
 	public static void applyEffects(Tile source){
-		IndexPair[] pairs = source.affectorRange();
-		IndexPair sourcePos = source.getPos();
+		Point[] pairs = source.affectorRange();
+		Point sourcePos = source.getPos();
 		Tile t;
-		for(IndexPair ip : pairs){
+		for(Point ip : pairs){
 			try {
 				t = getTile(
 						sourcePos.getX() + ip.getX(),

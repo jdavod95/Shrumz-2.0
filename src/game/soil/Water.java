@@ -1,9 +1,6 @@
 package game.soil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import elements.IndexPair;
+import elements.Point;
 import game.Affector;
 import render2d.Color;
 
@@ -22,7 +19,7 @@ public class Water extends Soil implements Affector{
 
 	@Override
 	public Color getColor() {
-		return COLOR;
+		return new Color(COLOR, 1.0);
 	}
 
 	@Override
@@ -33,11 +30,11 @@ public class Water extends Soil implements Affector{
 	}
 
 	@Override
-	public IndexPair[] getEffectRange() {
-		IndexPair[] ip = new IndexPair[(int) Math.pow(EFFECT_RANGE*2+1, 2)];
+	public Point[] getEffectRange() {
+		Point[] ip = new Point[(int) Math.pow(EFFECT_RANGE*2+1, 2)];
 		for (int i =0; i <= EFFECT_RANGE*2; i++) 
 			for (int j = 0; j <= EFFECT_RANGE*2; j++) 
-				ip[i*EFFECT_RANGE+EFFECT_RANGE+j] = new IndexPair(i-EFFECT_RANGE, j-EFFECT_RANGE);
+				ip[i*EFFECT_RANGE+EFFECT_RANGE+j] = new Point(i-EFFECT_RANGE, j-EFFECT_RANGE);
 		return ip;
 	}
 

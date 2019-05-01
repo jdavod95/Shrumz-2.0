@@ -1,7 +1,7 @@
 package render2d.shape.diamond;
 
+import elements.Point;
 import render2d.shape.Clickable;
-import render2d.shape.Point;
 
 public interface DiamondClick extends Clickable{
 

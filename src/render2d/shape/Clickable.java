@@ -1,15 +1,26 @@
 package render2d.shape;
 
 import elements.MyEvent;
+import elements.Point;
 
 public interface Clickable extends Drawable{
 
 	Shape getShape();	// ?????
-	MyEvent getRelease();
-	MyEvent getHover();
-	MyEvent getOnClick();
+	
 	boolean isDown();
 	void setDown(boolean b);
+	
+	default MyEvent getRelease() {
+		return MyEvent.EMPTY;
+	}
+	
+	default MyEvent getHover() {
+		return MyEvent.EMPTY;
+	}
+	
+	default MyEvent getClick() {
+		return MyEvent.EMPTY;
+	}
 	
 	default void release() {
 		setDown(false);
@@ -20,10 +31,10 @@ public interface Clickable extends Drawable{
 		getHover().action();
 	}
 
-	default void onClick() {
+	default void click() {
 		if(!isDown()){
 			setDown(true);
-			getOnClick().action();
+			getClick().action();
 		}
 	}
 	

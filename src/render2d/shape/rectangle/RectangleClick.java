@@ -1,7 +1,7 @@
 package render2d.shape.rectangle;
 
+import elements.Point;
 import render2d.shape.Clickable;
-import render2d.shape.Point;
 
 public interface RectangleClick extends Clickable{
 	

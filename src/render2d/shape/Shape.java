@@ -1,5 +1,7 @@
 package render2d.shape;
 
+import elements.Point;
+
 public abstract class Shape implements Drawable{
 	
 	private Point pos;

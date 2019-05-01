@@ -8,12 +8,15 @@ import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
+import elements.Point;
+
 public interface Drawable {
 	
 	 public default void draw(){
 		GlBindTex();
 		GlTriangles();
 		GlColor();
+		
 		drawShape();
 		glEnd();
 	}

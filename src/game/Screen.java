@@ -2,14 +2,13 @@ package game;
 
 import org.lwjgl.input.Mouse;
 
-
+import elements.Point;
 import game.plant.Plant;
 import game.plant.Shrum;
 import game.soil.Soil;
 
 import render2d.Camera;
 import render2d.Render;
-import render2d.shape.Point;
 import render2d.write.Label;
 import root.App;
 
@@ -24,6 +23,7 @@ public class Screen {
 	
 	public static void show() {
 		Panel.show();
+		
 		if(!paused){
 			timer++;
 			if(!paused && timer >= cycleat){
@@ -33,9 +33,10 @@ public class Screen {
 		} else
 			timer = 0;
 		
-		Render.addUi(new Label(new Point(
-				Camera.getCX()+Mouse.getX()+50,
-				Camera.getCY()+App.H-Mouse.getY()+5),
+		Render.addUi(new Label(
+				new Point(
+						Camera.getCX()+Mouse.getX()+50,
+						Camera.getCY()+App.H-Mouse.getY()+5),
 				16,
 				Integer.toString(Camera.getCX()+Mouse.getX()) +"          "+
 				Integer.toString(Camera.getCY()+App.H-Mouse.getY())
