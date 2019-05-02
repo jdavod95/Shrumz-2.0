@@ -15,7 +15,7 @@ public class NoSoil extends Soil{
 	}
 
 	@Override
-	public Color getColor() {
+	public Color pickColor() {
 		return COLOR;
 	}
 

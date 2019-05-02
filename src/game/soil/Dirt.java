@@ -25,7 +25,7 @@ public class Dirt extends Soil{
 	}
 
 	@Override
-	public Color getColor() {
+	public Color pickColor() {
 		if(getFertility() < 1)
 			return F0;
 		else if(getFertility() < 2)

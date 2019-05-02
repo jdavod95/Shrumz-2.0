@@ -12,7 +12,7 @@ public class NoPlant extends Plant{
 	@Override
 	public void grow(Soil s) {
 	}
-
+ 
 	@Override
 	public Point[] spread() {
 		return new Point[0];

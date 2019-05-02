@@ -69,6 +69,11 @@ public class ShapeFactory {
 			public void setCurrentFrame(int frame) {
 				currentFrame = frame;
 			}
+			
+			@Override
+			public void setTexId(int texid) {
+				this.texId = texid;
+			}
 		}
 		
 		return new RectangleTex(pos, w, h, texId);
@@ -127,6 +132,11 @@ public class ShapeFactory {
 			@Override
 			public void setDown(boolean b) {
 				down = b;
+			}
+
+			@Override
+			public void setTexId(int texid) {
+				this.texId = texid;
 			}
 		}
 		

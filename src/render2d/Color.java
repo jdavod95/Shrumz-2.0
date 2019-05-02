@@ -70,6 +70,10 @@ public class Color {
 		return b/COLBITS;
 	}
 
+	public Color getNew() {
+		return new Color(this, opacity);
+	}
+	
 	@Override
 	public String toString() {
 		return "Color [r=" + getRVal() + ", g=" + getGVal() + ", b=" + getBVal() + ", opacity=" + opacity + "]";

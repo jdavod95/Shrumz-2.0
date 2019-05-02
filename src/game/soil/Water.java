@@ -18,8 +18,8 @@ public class Water extends Soil implements Affector{
 	}
 
 	@Override
-	public Color getColor() {
-		return new Color(COLOR, 1.0);
+	public Color pickColor() {
+		return COLOR;
 	}
 
 	@Override
@@ -42,4 +42,5 @@ public class Water extends Soil implements Affector{
 	public Soil getNew() {
 		return new Water();
 	}
+
 }

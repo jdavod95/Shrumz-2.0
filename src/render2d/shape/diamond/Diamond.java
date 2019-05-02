@@ -11,7 +11,12 @@ public abstract class Diamond extends Shape{
 
 	@Override
 	public void reScale(int w, int h) {
-		
+		Point pos = getPos();
+		pos.setXY(
+				pos.getX()+(getW() - w)/2,
+				pos.getY()+(getH() - h)/2);
+		setW(w);
+		setH(h);
 	}
 
 	@Override

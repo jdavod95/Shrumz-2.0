@@ -56,31 +56,31 @@ public class Tile{
 	
 	public Tile(int x, int y, Point pos){
 		Soil startSoil = new Dirt();
+		Plant startPlant = new NoPlant();
+		this.pos = pos;
 
 		soilSkin = ShapeFactory.createDiamColClick(
 				new Point(x, y), scale*2, startSoil.getColor(),
 				click, MyEvent.EMPTY, hover);
+		plantSkin = ShapeFactory.createRectTex(
+				new Point(
+					x+scale/2, 
+					y-scale/4),
+				scale, scale,
+				startPlant.getTEXTUREID());
 		setSoil(startSoil);
-		this.pos = pos;
-		
-		setPlant(new NoPlant());
+		setPlant(startPlant);
 	}
 	
 	public void setPlant(Plant p){
 		plant = p;
-		plantSkin = ShapeFactory.createRectTex(new Point(
-				soilSkin.getPos().getX()+soilSkin.getW()/4, 
-				soilSkin.getPos().getY()-soilSkin.getH()/2),
-				scale, scale,
-				p.getTEXTUREID()
-				);
+		((Textureable) plantSkin).setTexId(p.getTEXTUREID());
 	}
 	
 	public void setSoil(Soil soil) {
-		this.soil = soil;
-		soilSkin = ShapeFactory.createDiamColClick(
-				soilSkin.getPos(), scale*2, soil.getColor(),
-				click, MyEvent.EMPTY, hover);
+		this.soil = soil.getNew();
+		((Colorable)soilSkin).setColor(soil.getColor()); 
+		
 		if(soil instanceof Affector)
 			aff = (Affector) soil;
 		else

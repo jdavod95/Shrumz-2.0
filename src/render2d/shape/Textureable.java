@@ -11,6 +11,7 @@ import render2d.TextureLoad;
 public interface Textureable extends Drawable{
 
 	int getTexId();
+	void setTexId(int texId);
 	int getCurrentFrame();
 	void setCurrentFrame(int frame);
 	
@@ -46,7 +47,7 @@ public interface Textureable extends Drawable{
 	default void setTexture(float fx, float fy){
 		int fid = getTexId();
 		int fcu = getCurrentFrame();
-				
+		
 		TextureLoad.setDims(fid);
 		
 		float fw = TextureLoad.getIW() / TextureLoad.getTW();
