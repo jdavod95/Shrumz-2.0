@@ -6,7 +6,7 @@ import game.soil.Soil;
 public class Shrum extends Plant {
 	
 	public Shrum() {
-		super(2, 3, 3);
+		super("SHRUM", 3, 3);
 	}
 	
 	@Override

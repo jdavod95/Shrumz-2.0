@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.util.StringTokenizer;
 
 import elements.Point;
+import render2d.Texturing;
 import render2d.shape.Shape;
 
 
@@ -24,7 +25,7 @@ public class Label extends Shape{
 
 	// alphabet from bmfc
 	
-	private static String path = new File("res/overlay/abc.fnt").getAbsolutePath();
+	private static String path = new File("src/render2d/write/abc.fnt").getAbsolutePath();
 	private static Symbol[] symb;
 
 	public static final float SCALE = 64;
@@ -46,7 +47,7 @@ public class Label extends Shape{
 			h = getH();
 
 		glEnd();
-		glBindTexture(GL_TEXTURE_2D,1);
+		glBindTexture(GL_TEXTURE_2D,Texturing.getTexIdFor("ABC"));
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glBegin(GL_TRIANGLES);

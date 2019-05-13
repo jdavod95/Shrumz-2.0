@@ -45,19 +45,20 @@ public class ShapeFactory {
 		return new RectangleCol(pos, w, h, c);
 	}
 	
-	public static Rectangle createRectTex(Point pos, int w, int h, int texId) {
+	public static Rectangle createRectTex(Point pos, int w, int h, String texName) {
 		class RectangleTex extends Rectangle implements Textureable{
-			int texId, currentFrame;
+			String texName;
+			int currentFrame;
 			
-			protected RectangleTex(Point pos, int w, int h, int texId) {
+			protected RectangleTex(Point pos, int w, int h, String texName) {
 				super(pos, w, h);
-				this.texId = texId;
+				this.texName = texName;
 				currentFrame = 0;
 			}
 
 			@Override
-			public int getTexId() {
-				return texId;
+			public String getTexName() {
+				return texName;
 			}
 
 			@Override
@@ -71,22 +72,23 @@ public class ShapeFactory {
 			}
 			
 			@Override
-			public void setTexId(int texid) {
-				this.texId = texid;
+			public void setTexName(String texName) {
+				this.texName = texName;
 			}
 		}
 		
-		return new RectangleTex(pos, w, h, texId);
+		return new RectangleTex(pos, w, h, texName);
 	}
 	
-	public static Rectangle createRectTexClick(Point pos, int w, int h, MyEvent release, MyEvent hover, MyEvent click, int texId) {
+	public static Rectangle createRectTexClick(Point pos, int w, int h, MyEvent release, MyEvent hover, MyEvent click, String texName) {
 		class Inner extends Rectangle implements Textureable, RectangleClick{
-			int texId, currentFrame;
+			String texName;
+			int currentFrame;
 			boolean down;
 			MyEvent release, hover, click;
-			protected Inner(Point pos, int w, int h, MyEvent release, MyEvent hover, MyEvent click, int texId) {
+			protected Inner(Point pos, int w, int h, MyEvent release, MyEvent hover, MyEvent click, String texName) {
 				super(pos, w, h);
-				this.texId = texId;
+				this.texName = texName;
 				currentFrame = 0;
 				down = false;
 				this.release = release;
@@ -95,8 +97,8 @@ public class ShapeFactory {
 			}
 
 			@Override
-			public int getTexId() {
-				return texId;
+			public String getTexName() {
+				return texName;
 			}
 
 			@Override
@@ -135,12 +137,12 @@ public class ShapeFactory {
 			}
 
 			@Override
-			public void setTexId(int texid) {
-				this.texId = texid;
+			public void setTexName(String texName) {
+				this.texName = texName;
 			}
 		}
 		
-		return new Inner(pos, w, h, release, hover, click, texId);
+		return new Inner(pos, w, h, release, hover, click, texName);
 	}
 
 	public static Diamond createDiamColClick(Point pos, int w, Color color, MyEvent onClick, MyEvent release, MyEvent hover) {

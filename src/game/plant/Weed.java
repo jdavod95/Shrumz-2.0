@@ -10,7 +10,7 @@ public class Weed extends Plant {
 	private int spreadCount = 0;
 	
 	public Weed(){
-		super(3, 4, 6);
+		super("WEED", 4, 6);
 	}
 
 	@Override

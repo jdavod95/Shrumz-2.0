@@ -28,14 +28,14 @@ public class Button{
 	};
 		
 	public Button(Point pos, int w, int h, String label, MyEvent e) {
-		skin = ShapeFactory.createRectTexClick(pos, w, h, release, MyEvent.EMPTY, click, 6);
+		skin = ShapeFactory.createRectTexClick(pos, w, h, release, MyEvent.EMPTY, click, "BUTTONCOL");
 	//	Rectangle label = new Label(label);
 		if(e != null)
 			this.e = e;
 	}
 	
 	public Button(Point pos, int w, int h, Rectangle label, MyEvent e) {
-		skin = ShapeFactory.createRectTexClick(pos, w, h, release, MyEvent.EMPTY, click, 6);
+		skin = ShapeFactory.createRectTexClick(pos, w, h, release, MyEvent.EMPTY, click, "BUTTONCOL");
 		this.label = label;
 		if(e != null)
 			this.e = e;

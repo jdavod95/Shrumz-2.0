@@ -5,7 +5,7 @@ import game.soil.Soil;
 
 public abstract class Plant{
 	
-	private final int TEXTUREID;
+	private final String TEXTURENAME;
 	private final int ENDSTAGE;
 	private final int SPREADSTAGE;
 	
@@ -13,10 +13,10 @@ public abstract class Plant{
 		age = 0,
 		treshold = 1;
 	
-	Plant(int txid, int sprst, int endst){
+	Plant(String texName, int sprst, int endst){
 		SPREADSTAGE = sprst;
 		ENDSTAGE = endst;
-		TEXTUREID = txid;
+		TEXTURENAME = texName;
 	}
 
 	private void incAge(){
@@ -40,8 +40,8 @@ public abstract class Plant{
 	// spread pattern relative to tile position
 	public abstract Point[] spread();
 
-	public int getTEXTUREID() {
-		return TEXTUREID;
+	public String getTEXTURENAME() {
+		return TEXTURENAME;
 	}
 
 	public int getStage() {

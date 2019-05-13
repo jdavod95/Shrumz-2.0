@@ -6,7 +6,7 @@ import game.soil.Soil;
 public class NoPlant extends Plant{
 	
 	public NoPlant() {
-		super(1, -1, -1);
+		super("no", -1, -1);
 	}
 
 	@Override

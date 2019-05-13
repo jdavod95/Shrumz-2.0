@@ -11,21 +11,15 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 
 import java.io.File;
-import java.nio.ByteBuffer;
-
-import javax.imageio.ImageIO;
-
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.newdawn.slick.opengl.ImageIOImageData;
-
 import elements.Cursor;
 import elements.Point;
 import game.Screen;
 import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
-import render2d.TextureLoad;
+import render2d.Texturing;
 import render2d.shape.ShapeFactory;
 import render2d.shape.rectangle.Rectangle;
 import render2d.write.Label;
@@ -45,9 +39,7 @@ public class App {
 					Color.WHITE);
 
 	public static void main(String[] args){
-		
 		initDisplay();
-		          
 		while (!Display.isCloseRequested()) {
 			BGR.setPos(new Point(Camera.getCX(),Camera.getCY()));
 			Render.addBgr(BGR,0);
@@ -56,20 +48,16 @@ public class App {
 		    Camera.create();
 		    Controls.navigate();
 		    Render.drawFrame();	
-		    ticks ++;
-    		if(ticks == 60){
-    			ticks = 0;
-    			sec++;
-    		}
+		    tick();
 		}
  
         Display.destroy();
         System.exit(0);
         
 	}
-	
+
 	public static void preLoad(){ 
-		TextureLoad.loadAll();
+		Texturing.loadAll();
 		Label.loadSymbols();
 		Screen.load();
 		
@@ -77,6 +65,14 @@ public class App {
 	
 	public static int getTicks(){
 		return ticks;
+	}
+	
+	private static void tick() {
+		ticks ++;
+		if(ticks == 60){
+			ticks = 0;
+			sec++;
+		}
 	}
 
 	private static void initDisplay() {

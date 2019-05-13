@@ -67,14 +67,14 @@ public class Tile{
 					x+scale/2, 
 					y-scale/4),
 				scale, scale,
-				startPlant.getTEXTUREID());
+				startPlant.getTEXTURENAME());
 		setSoil(startSoil);
 		setPlant(startPlant);
 	}
 	
 	public void setPlant(Plant p){
 		plant = p;
-		((Textureable) plantSkin).setTexId(p.getTEXTUREID());
+		((Textureable) plantSkin).setTexName(p.getTEXTURENAME());
 	}
 	
 	public void setSoil(Soil soil) {
@@ -179,7 +179,8 @@ public class Tile{
 	
 	public void toRender(){
 		Render.addScn(soilSkin, 0);
-		if(hasPlant())
+		if(hasPlant()) 
 			Render.addScn(plantSkin, 1);
+		
 	}
 }
