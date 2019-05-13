@@ -15,6 +15,7 @@ public class Weed extends Plant {
 
 	@Override
 	public void grow(Soil s) {
+		
 		if(s.getFertility() >= 0.5 && s.getWater() >= 0.5){
 			if(stage == 5 && spreadCount < MAXSPRD)
 				stage = 4;
@@ -38,7 +39,7 @@ public class Weed extends Plant {
 		}
 		return new Point[]{
 			new Point(x, y)
-			};
+		};
 	}
 
 	@Override

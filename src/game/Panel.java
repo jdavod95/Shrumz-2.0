@@ -22,8 +22,6 @@ public class Panel {
 	
 	static int cx = Camera.getCX()+mx;
 	static int cy = Camera.getCY()+my;
-/*	static Button hidepanel = new Button(cx, cy, 25, 25, "",
-			ButtonEvents.HIDEPANEL, true);*/
 
 	static List<Button> butts = new ArrayList<>();		
 
@@ -77,26 +75,20 @@ public class Panel {
 		butts.add(new Button(new Point(cx+130, cy+60), 25, 25, "-",
 				ButtonEvents.SCALEDOWN));
 		
-//		butts.add(new Button(cx+170, cy, 40, 40, "Reg",
-//				ButtonEvents.REGENSOIL, true));
-		
 		butts.add(new Button(new Point(cx+App.W-50, cy+45), 40, 40, "Del",
 				ButtonEvents.BRPLNULL));
 		
-		butts.add(new Button(new Point(cx+App.W-95, cy+45), 40, 40, "txid2",
+		butts.add(new Button(new Point(cx+App.W-95, cy+45), 40, 40, "SHRUM",
 				ButtonEvents.BRPLSHRUM));
 		
-		butts.add(new Button(new Point(cx+App.W-140, cy+45), 40, 40, "txid5",
+		butts.add(new Button(new Point(cx+App.W-140, cy+45), 40, 40, "BLUSHRUM",
 				ButtonEvents.BRPLBLUSHRUM));
 		
-		butts.add(new Button(new Point(cx+App.W-185, cy+45), 40, 40, "txid3",
+		butts.add(new Button(new Point(cx+App.W-185, cy+45), 40, 40, "WEED",
 				ButtonEvents.BRPLWEED));
 		
 		butts.add(new Button(new Point(cx+App.W-50, cy), 40, 40, "Off",
 				ButtonEvents.BRSL_NO));
-		
-//		butts.add(new Button(cx+App.W-95, cy, 40, 40, "D0",
-//				ButtonEvents.BRSL_0, true));
 		
 		butts.add(new Button(new Point(cx+App.W-140, cy), 40, 40, "Drt",
 				ButtonEvents.BRSL_D));
@@ -104,22 +96,19 @@ public class Panel {
 		butts.add(new Button(new Point(cx+App.W-185, cy), 40, 40, "Wtr",
 				ButtonEvents.BRSL_W));
 		
-		butts.add(new Button(new Point(cx+250, cy), 40, 40, "txid4",
+		butts.add(new Button(new Point(cx+250, cy), 40, 40, "CONTROLPLAY",
 				ButtonEvents.CTRLPLAY));
-	
-		butts.add(new Button(new Point(cx+295, cy), 40, 40, "txid4", 
+		
+		butts.add(new Button(new Point(cx+295, cy), 40, 40, "CONTROLPAUSE", 
 				ButtonEvents.CTRLPAUSE));
 		
-//		butts.add(  new Button(cx+290, cy+45, 40, 40, 4, 3,
-//				ButtonEvents.CTRLSTOP, true));
-		
-		butts.add(new Button(new Point(cx+250, cy+45), 40, 40, "txid4",
+		butts.add(new Button(new Point(cx+250, cy+45), 40, 40, "CONTROLSTEP",
 				ButtonEvents.CTRLSTEP));
 		
-		butts.add(new Button(new Point(cx+360, cy), 25, 25, "+",
+		butts.add(new Button(new Point(cx+360, cy), 25, 25, " +",
 				ButtonEvents.CTRLFRDOWN));
 		
-		butts.add(new Button(new Point(cx+360, cy+60), 25, 25, "-",
+		butts.add(new Button(new Point(cx+360, cy+60), 25, 25, " -",
 				ButtonEvents.CTRLFRUP));
 		
 	}

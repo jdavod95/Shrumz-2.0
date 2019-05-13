@@ -1,16 +1,8 @@
 package game;
 
-import org.lwjgl.input.Mouse;
-
-import elements.Point;
 import game.plant.Plant;
 import game.plant.Shrum;
 import game.soil.Soil;
-
-import render2d.Camera;
-import render2d.Render;
-import render2d.write.Label;
-import root.App;
 
 public class Screen {
 
@@ -19,7 +11,7 @@ public class Screen {
 	static Soil brushSoil = null;
 
 	static int timer = 0;
-	static int cycleat = 35;
+	static int cycleat = 16;
 	
 	public static void show() {
 		Panel.show();
@@ -32,15 +24,6 @@ public class Screen {
 			}
 		} else
 			timer = 0;
-		
-		Render.addUi(new Label(
-				new Point(
-						Camera.getCX()+Mouse.getX()+50,
-						Camera.getCY()+App.H-Mouse.getY()+5),
-				16,
-				Integer.toString(Camera.getCX()+Mouse.getX()) +"          "+
-				Integer.toString(Camera.getCY()+App.H-Mouse.getY())
-				), 6);
 		
 		Map.toRender();
 		Map.toClick();

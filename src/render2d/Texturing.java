@@ -78,6 +78,7 @@ public class Texturing {
 	            files.add(fileEntry);
 	    	else if (!fileEntry.getName().equals("raw"))
 	    		files.addAll(getFilesForFolder(fileEntry));
+	    	
 	    }
 	    return files;
 	}
@@ -121,10 +122,12 @@ public class Texturing {
 		
 		double w = (double)getTW() / getIW();
 		double h = (double)getTH() / getIH();
-		
 		x = (x * w) + ((fcu % tex.getColumns()) * w);
-		y = (y * h) + ((fcu / tex.getRows()) * h);
-		
+		/// nemjó
+		y = (y * h) + (((fcu / tex.getColumns()) + (fcu % tex.getColumns())) * h);
+		if( texName == "WEED") {
+		System.out.println("xy "+x+" "+y);
+		System.out.println("wh "+w+" "+h);}
 		glTexCoord2d(x, y);
 	}
 }

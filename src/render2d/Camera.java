@@ -29,7 +29,6 @@ public class Camera {
 		return cy;
 	}
 	
-	
 	public static int getFps() {
 		return fps;
 	}

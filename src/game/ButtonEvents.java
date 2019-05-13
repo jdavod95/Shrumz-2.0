@@ -10,18 +10,6 @@ import game.soil.Water;
 
 public class ButtonEvents {
 
-/*	public final static MyEvent HIDEPANEL = new MyEvent(){
-		@Override
-		public void action(){
-			if(Panel.butts.get(0).getVis())
-				for(int i = 0;i<Panel.butts.size();i++)
-					Panel.butts.get(i).setVis(false);
-			else
-				for(int i = 0;i<Panel.butts.size();i++)
-					Panel.butts.get(i).setVis(true);
-		}
-	};
-*/	
 	public final static MyEvent GROWMAPX = new MyEvent(){
 		@Override
 		public void action(){
@@ -66,15 +54,7 @@ public class ButtonEvents {
 			}
 		}
 	};
-/*	public final static MyEvent REGENSOIL = new MyEvent(){
-		@Override
-		public void action(){
-			if(Tile.isRegen())
-				Tile.setRegen(false);
-			else
-				Tile.setRegen(true);
-		}
-	};*/
+
 	public final static MyEvent BRPLSHRUM = new MyEvent(){
 		@Override
 		public void action(){
@@ -150,7 +130,6 @@ public class ButtonEvents {
 			Screen.load();
 		}
 	};
-	
 
 	public final static MyEvent CTRLSTEP = new MyEvent(){
 		@Override

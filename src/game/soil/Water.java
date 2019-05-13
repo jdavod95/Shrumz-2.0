@@ -1,12 +1,15 @@
 package game.soil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import elements.Point;
 import game.Affector;
 import render2d.Color;
 
 public class Water extends Soil implements Affector{
 
-	private static final int EFFECT_RANGE = 2;
+	private static final int EFFECT_RANGE = 3;
 	public static final Color COLOR = new Color(64,200,240);
 			
 	public Water() {
@@ -31,11 +34,11 @@ public class Water extends Soil implements Affector{
 
 	@Override
 	public Point[] getEffectRange() {
-		Point[] ip = new Point[(int) Math.pow(EFFECT_RANGE*2+1, 2)];
-		for (int i =0; i <= EFFECT_RANGE*2; i++) 
-			for (int j = 0; j <= EFFECT_RANGE*2; j++) 
-				ip[i*EFFECT_RANGE+EFFECT_RANGE+j] = new Point(i-EFFECT_RANGE, j-EFFECT_RANGE);
-		return ip;
+		List<Point> affectedList = new ArrayList<>();
+		for (int i = 0; i <= EFFECT_RANGE * 2; i++) 
+			for (int j = 0; j <= EFFECT_RANGE * 2;  j++) 
+				affectedList.add(new Point(i-EFFECT_RANGE, j-EFFECT_RANGE));
+		return affectedList.toArray(new Point[affectedList.size()]);
 	}
 
 	@Override

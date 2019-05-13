@@ -37,7 +37,7 @@ public abstract class Shape implements Drawable{
 		this.pos = pos;
 	}
 	
-	public void setPos(int x, int y) {	//????
+	public void setPos(int x, int y) {
 		pos.setX(x);
 		pos.setY(y);
 	}

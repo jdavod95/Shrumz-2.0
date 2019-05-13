@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
@@ -43,10 +42,12 @@ public class App {
 		while (!Display.isCloseRequested()) {
 			BGR.setPos(new Point(Camera.getCX(),Camera.getCY()));
 			Render.addBgr(BGR,0);
-		    Screen.show();
-		    Cursor.check();
-		    Camera.create();
+			
 		    Controls.navigate();
+		    Cursor.check();
+		    Screen.show();
+		    
+		    Camera.create();
 		    Render.drawFrame();	
 		    tick();
 		}
@@ -60,7 +61,6 @@ public class App {
 		Texturing.loadAll();
 		Label.loadSymbols();
 		Screen.load();
-		
 	}
 	
 	public static int getTicks(){
@@ -95,7 +95,6 @@ public class App {
 		
 		glEnable(GL_MULTISAMPLE);  
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D,0);
         glEnable(GL_BLEND); 
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDisable(GL_LIGHTING);

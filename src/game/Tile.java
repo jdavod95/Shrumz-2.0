@@ -163,15 +163,15 @@ public class Tile{
 	
 	public void reScale(int xdif, int ydif){
 		soilSkin.setPos(
-				soilSkin.getPos().getX()+xdif,
-				soilSkin.getPos().getY()+ydif
+				soilSkin.getPos().getX() + xdif,
+				soilSkin.getPos().getY() + ydif
 				);
 		soilSkin.reScale(scale, scale/2);
 		
 		if(hasPlant()) {
 			plantSkin.setPos(
-					soilSkin.getPos().getX()+soilSkin.getW()/4,
-					soilSkin.getPos().getY()-soilSkin.getH()/2
+					soilSkin.getPos().getX() + soilSkin.getW()/4,
+					soilSkin.getPos().getY() - soilSkin.getH()/2
 					);
 			plantSkin.reScale(scale, scale);
 		}
@@ -179,7 +179,7 @@ public class Tile{
 	
 	public void toRender(){
 		Render.addScn(soilSkin, 0);
-		if(hasPlant()) 
+		if(hasPlant())
 			Render.addScn(plantSkin, 1);
 		
 	}

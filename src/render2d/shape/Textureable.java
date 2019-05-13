@@ -17,17 +17,14 @@ public interface Textureable extends Drawable{
 	@Override
 	default void drawTriangle(Point base, Point vector1, Point vector2){
 		Texturing.setTexture(0, 0, getTexName(), getCurrentFrame());
-		glVertex2i(base.getX(),base.getY());
-		//
-		// !!!!!!! warning !!!!!!!	0
-		//
-		float x = (float)vector1.getX();
-		if(x != 0)
-			x = 1;
-		float y = (float)vector1.getY();
-		if(y != 0)
-			y = 1;
-		Texturing.setTexture(x, y, getTexName(), getCurrentFrame());
+		glVertex2i(
+				base.getX(),
+				base.getY());
+		
+		Texturing.setTexture(
+				vector1.getX() == 0 ? 0 : 1,
+				vector1.getY() == 0 ? 0 : 1,
+				getTexName(), getCurrentFrame());
 		glVertex2i(
 				base.getX()+vector1.getX(),
 				base.getY()+vector1.getY());
