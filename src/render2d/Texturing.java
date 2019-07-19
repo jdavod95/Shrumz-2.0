@@ -120,14 +120,11 @@ public class Texturing {
 		texture.setTextureHeight(getIH() / tex.getRows());
 		texture.setTextureWidth(getIW() / tex.getColumns());
 		
-		double w = (double)getTW() / getIW();
-		double h = (double)getTH() / getIH();
+		double w = (double) getTW() / getIW();
+		double h = (double) getTH() / getIH();
 		x = (x * w) + ((fcu % tex.getColumns()) * w);
 		/// nemjó
 		y = (y * h) + (((fcu / tex.getColumns()) + (fcu % tex.getColumns())) * h);
-		if( texName == "WEED") {
-		System.out.println("xy "+x+" "+y);
-		System.out.println("wh "+w+" "+h);}
 		glTexCoord2d(x, y);
 	}
 }

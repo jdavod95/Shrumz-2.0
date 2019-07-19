@@ -13,50 +13,41 @@ import java.io.File;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import elements.Cursor;
-import elements.Point;
 import game.Screen;
 import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
 import render2d.Texturing;
-import render2d.shape.ShapeFactory;
-import render2d.shape.rectangle.Rectangle;
+import render2d.drawable.Shape;
+import render2d.drawable.ShapeBuilder;
 import render2d.write.Label;
 
 public class App {
-	
 	
 	public final static int W = 1024;
 	public final static int H = 768;
 	static int ticks = 0;
 	static int sec = 0;
 	
-	private static final Rectangle BGR = 
-			ShapeFactory.createRectCol(
-					new Point(Camera.getCX(),Camera.getCY()),
-					W,H,
-					Color.WHITE);
-
 	public static void main(String[] args){
 		initDisplay();
+		gameLoop();
+        Display.destroy();
+        System.exit(0);
+	}
+
+	private static void gameLoop() {
 		while (!Display.isCloseRequested()) {
-			BGR.setPos(new Point(Camera.getCX(),Camera.getCY()));
-			Render.addBgr(BGR,0);
-			
 		    Controls.navigate();
 		    Cursor.check();
 		    Screen.show();
-		    
 		    Camera.create();
+			Render.addBgr(getBackground(),0);
 		    Render.drawFrame();	
 		    tick();
 		}
- 
-        Display.destroy();
-        System.exit(0);
-        
 	}
-
+	// Observer?
 	public static void preLoad(){ 
 		Texturing.loadAll();
 		Label.loadSymbols();
@@ -99,5 +90,12 @@ public class App {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDisable(GL_LIGHTING);
 
+	}
+	
+	private static Shape getBackground() {
+		ShapeBuilder shapes = new ShapeBuilder();
+		shapes.newRectangle(Camera.getCameraPos(), W, H);
+		shapes.setColor(Color.WHITE);
+		return shapes.getShape();
 	}
 }

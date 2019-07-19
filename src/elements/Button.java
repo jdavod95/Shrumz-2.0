@@ -1,57 +1,91 @@
 package elements;
 
+import render2d.Camera;
 import render2d.Render;
 import render2d.Texturing;
-import render2d.shape.Clickable;
-import render2d.shape.Shape;
-import render2d.shape.ShapeFactory;
-import render2d.shape.Textureable;
-import render2d.shape.rectangle.Rectangle;
+import render2d.drawable.Clickable;
+import render2d.drawable.Rectangle;
+import render2d.drawable.RectangleClick;
+import render2d.drawable.Shape;
+import render2d.drawable.ShapeBuilder;
 import render2d.write.Label;
 
 public class Button{
 
+	private static final ShapeBuilder SHAPES = new ShapeBuilder();
+	private final static String TEXTURE_NAME = "BUTTONCOL";
+	private final static Point NUDGE = new Point(1, 1);
+	private final Point relativePosition;
+	
 	Shape label;
 	Rectangle skin;
-	MyEvent e;
-	private static Point nudge = new Point(1, 1);
+	Action function;
+	boolean down = false;
 	
-	MyEvent release = new MyEvent(){
+	Action click = new Action(){
 		@Override
-		public void action() {
-			((Textureable) skin).setCurrentFrame(0);
-			label.getPos().subtract(nudge);
+		public void run() {
+			skin.setCurrentFrame(1);
+			label.getPos().add(NUDGE);
+			function.run();
+			down = true;
 		}
 	};
 	
-	MyEvent click = new MyEvent(){	
+	Action release = new Action(){
 		@Override
-		public void action() {
-			e.action();		
-			((Textureable) skin).setCurrentFrame(1);
-			label.getPos().add(nudge);
+		public void run() {
+			skin.setCurrentFrame(0);
+			label.getPos().subtract(NUDGE);
+			down = false;
 		}
 	};
+	
+	public Button(Point pos, int w, int h, String label, Action function) {
+		//possible bug
+		this.function = function;
+		this.relativePosition = pos;
 		
-	public Button(Point pos, int w, int h, String label, MyEvent e) {
-		skin = ShapeFactory.createRectTexClick(
-				pos.getNew(), w, h, release, MyEvent.EMPTY, click, "BUTTONCOL");
+		SHAPES.newRectangle(
+				Camera.getCameraPos().getNew(pos),
+				w, h);
+		SHAPES.setTexture(TEXTURE_NAME);
+		SHAPES.setClickable(RectangleClick.class, click, release, Action.EMPTY);
+		skin = (Rectangle) SHAPES.getShape();
+		
 		Integer tex = Texturing.getTexIdFor(label);
 		if(tex == 0)
 			this.label = new Label(pos, w, label);
-		else
-			this.label = ShapeFactory.createRectTex(pos, w, h, label);
-		if(e != null)
-			this.e = e;
+		else {
+			SHAPES.newRectangle(pos, w, h);
+			SHAPES.setTexture(label);
+			this.label = SHAPES.getShape();
+		}
 	}
 	
 	public void toRender(int l){
 		Render.addUi(skin, l);
 		Render.addUi(label, l);
-	}
+	} 
 
 	public Clickable getClickable() {
-		return (Clickable) skin;
+		return skin.getClickable();
 	}
 
+	public Point getPos() {
+		return skin.getPos().getNew();
+	}
+
+	public void setPos(Point pos) {
+		skin.setPos(pos);
+		if(!down)
+			label.setPos(pos);
+		else
+			label.setPos(pos.getNew(NUDGE));
+	}
+	
+	public Point getRelativePosition() {
+		return relativePosition;
+	}
+	
 }

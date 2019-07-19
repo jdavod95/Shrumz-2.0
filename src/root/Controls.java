@@ -1,40 +1,37 @@
 package root;
 
-
-
 import org.lwjgl.input.Keyboard;
 
-import game.ButtonEvents;
+import game.Actions;
 import game.Screen;
 import render2d.Camera;
 
 public class Controls {
 	
 	public static void navigate(){
-		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-			Camera.set(Camera.getCX()-15,Camera.getCY());
+			Camera.step(-15, 0);
 		else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-			Camera.set(Camera.getCX()+15,Camera.getCY());
+			Camera.step(15, 0);
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-			Camera.set(Camera.getCX(),Camera.getCY()+15);
+			Camera.step(0, 15);
 		else if(Keyboard.isKeyDown(Keyboard.KEY_UP))
-			Camera.set(Camera.getCX(),Camera.getCY()-15);
+			Camera.step(0, -15);
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_R))
-			Camera.set(0,0);
+			Camera.rePosition(0,0);
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SUBTRACT))
-			ButtonEvents.SCALEDOWN.action();
+			Actions.SCALEDOWN.run();
 		else if(Keyboard.isKeyDown(Keyboard.KEY_ADD))
-			ButtonEvents.SCALEUP.action();
+			Actions.SCALEUP.run();
 	
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 			if(!Screen.isPaused())
-				ButtonEvents.CTRLPAUSE.action();
+				Actions.CTRLPAUSE.run();
 			else
-				ButtonEvents.CTRLSTEP.action();
+				Actions.CTRLSTEP.run();
 		
 	}
 

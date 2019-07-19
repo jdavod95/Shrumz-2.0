@@ -1,14 +1,19 @@
-package render2d.shape.rectangle;
+package render2d.drawable;
 
+import elements.Action;
 import elements.Point;
-import render2d.shape.Shape;
 
-public abstract class Rectangle extends Shape{
+public class Rectangle extends Shape{
 
-	protected Rectangle(Point pos, int w, int h) {
+	Rectangle(Point pos, int w, int h) {
 		super(pos, w, h);
 	}
 
+	Rectangle(Point pos, int w, int h, Action click, Action release, Action hover){
+		super(pos, w, h);
+		setClickable(new RectangleClick(getShape(), click, release, hover));
+	}
+	
 	@Override
 	public void reScale(int w, int h) {
 		Point pos = getPos();

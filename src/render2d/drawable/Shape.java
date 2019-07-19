@@ -1,13 +1,14 @@
-package render2d.shape;
+package render2d.drawable;
 
 import elements.Point;
 
-public abstract class Shape implements Drawable{
+public abstract class Shape extends Drawable{
 	
 	private Point pos;
 	private int w, h;
 	
 	protected Shape(Point pos, int w, int h){
+		super();
 		this.pos = pos;
 		this.w = w;
 		this.h = h;
@@ -47,7 +48,5 @@ public abstract class Shape implements Drawable{
 	}
 
 	public abstract void reScale(int w, int h);
-	// implement with calling drawTriangle()
-	public abstract void drawShape();
 
 }

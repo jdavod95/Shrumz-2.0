@@ -18,6 +18,7 @@ public class Color {
 	public Color(Color c, double opacity) {
 		this(c.getR(), c.getG(), c.getB(), opacity); 
 	}
+	
 	public Color(int r, int g, int b, double opacity) {
 		super();
 		this.r = r;

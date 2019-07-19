@@ -25,6 +25,9 @@ public class Point {
 		this.y = y;
 	}
 	
+	public void setXY(Point point) {
+		setXY(point.getX(), point.getY());
+	}
 	public void add(int x, int y) {
 		setXY(
 			getX() + x,
@@ -62,4 +65,13 @@ public class Point {
 	public Point getNew() {
 		return new Point(x, y);
 	}
+	
+	public Point getNew(int offsetX, int offsetY) {
+		return new Point(x + offsetX, y + offsetY);
+	}
+	
+	public Point getNew(Point offset) {
+		return getNew(offset.getX(), offset.getY());
+	}
+
 }

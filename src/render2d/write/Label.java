@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
 
 import elements.Point;
 import render2d.Texturing;
-import render2d.shape.Shape;
+import render2d.drawable.Shape;
 
 
 public class Label extends Shape{

@@ -7,15 +7,15 @@ import elements.Point;
 
 public class Map {
 
-	static final int mx = 5;
-	static final int my = 95;
+	private static final int MARGIN_X = 5;
+	private static final int MARGIN_Y = 95;
 	
-	static int dx,dy;
-	static Tile[][] table;
+	private static int dx,dy;
+	private static Tile[][] table;
 
-	static List<Tile> spreadingPlants = new ArrayList<>();
-	static List<Tile> dyingPlants = new ArrayList<>();
-	static List<Tile> affectors = new ArrayList<>();
+	private static List<Tile> spreadingPlants = new ArrayList<>();
+	private static List<Tile> dyingPlants = new ArrayList<>();
+	private static List<Tile> affectors = new ArrayList<>();
 	
 	public static int getX(){
 		return dx;
@@ -38,13 +38,13 @@ public class Map {
 		dx = x;
 		dy = y;
 		
-		for(int i = 0;i<dx;i++)
-			for(int j = 0;j<dy;j++)
+		for(int i = 0; i < dx;i++)
+			for(int j = 0; j < dy;j++)
 				table[i][j] = new Tile(
-						mx + (16-i-1)*(Tile.getScale()) + j*Tile.getScale(),
-						my + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
-						new Point(i, j)
-					);
+					MARGIN_X + (16-i-1)*(Tile.getScale()) + j*Tile.getScale(),
+					MARGIN_Y + (i+1)*Tile.getScale()/2 + j*Tile.getScale()/2,
+					new Point(i, j)
+				);
 	}
 	
 	public static void load(int x, int y, int scale){
@@ -70,8 +70,8 @@ public class Map {
 		for(int i = 0;i<dx;i++)
 			for(int j = 0;j<dy;j++)
 				table[i][j].reScale(
-						-scaledif*j+scaledif*i,
-						-scaledif*j/2-scaledif/2*i);
+					-scaledif * j + scaledif * i,
+					-scaledif * j / 2 - scaledif / 2 * i);
 	}
 
 	public static void cycle(){

@@ -3,14 +3,13 @@ package render2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import render2d.shape.Drawable;
+import render2d.drawable.Drawable;
 
 public class Renderer {
 
 	private List<List<Drawable>> layers;
 	
 	public Renderer() {
-		super();
 		layers = new ArrayList<>();
 		layers.add(new ArrayList<>());
 	}

@@ -1,6 +1,6 @@
 package render2d;
 
-import render2d.shape.Drawable;
+import render2d.drawable.Drawable;
 
 public class Render {
 	
@@ -18,12 +18,23 @@ public class Render {
 		BGR.addDrawable(d, l);
 	}
 	
+	public static void addBgr(Drawable[] d, int l){
+		BGR.addDrawable(d, l);
+	}
+	
 	public static void addScn(Drawable d, int l){
+		SCN.addDrawable(d, l);
+	}
+	
+	public static void addScn(Drawable[] d, int l){
 		SCN.addDrawable(d, l);
 	}
 	
 	public static void addUi(Drawable d, int l){
 		UI.addDrawable(d, l);
 	}
-	
+
+	public static void addUi(Drawable[] d, int l){
+		UI.addDrawable(d, l);
+	}
 }

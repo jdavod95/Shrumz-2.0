@@ -1,14 +1,19 @@
-package render2d.shape.diamond;
+package render2d.drawable;
 
+import elements.Action;
 import elements.Point;
-import render2d.shape.Shape;
 
-public abstract class Diamond extends Shape{
+public class Diamond extends Shape{
 
-	protected Diamond(Point pos, int w, int h) {
+	Diamond(Point pos, int w, int h) {
 		super(pos, w, h);
 	}
 
+	Diamond(Point pos, int w, int h, Action click, Action release, Action hover){
+		super(pos, w, h);
+		setClickable(new DiamondClick(getShape(), click, release, hover));
+	}
+	
 	@Override
 	public void reScale(int w, int h) {
 		Point pos = getPos();
