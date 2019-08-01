@@ -1,7 +1,7 @@
 package game;
 
-import elements.Point;
 import game.soil.SoilEffect;
+import render2d.elements.Point;
 
 public interface Affector {
 

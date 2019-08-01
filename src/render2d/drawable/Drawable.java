@@ -1,16 +1,20 @@
 package render2d.drawable;
 
+import static org.lwjgl.opengl.GL11.GL_LINEAR_MIPMAP_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
 import static org.lwjgl.opengl.GL11.glColor4d;
 import static org.lwjgl.opengl.GL11.glVertex2i;
+import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
-import elements.Point;
 import render2d.Color;
 import render2d.Texturing;
+import render2d.elements.Point;
 
 public abstract class Drawable {
 	
@@ -32,6 +36,8 @@ public abstract class Drawable {
 
 	public final void draw(){
 		glBindTexture(GL_TEXTURE_2D, Texturing.getTexIdFor(texName));
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glBegin(GL_TRIANGLES);
 		glColor4d(color.getRVal(), color.getGVal(), color.getBVal(), color.getOpacity());
 		drawShape();

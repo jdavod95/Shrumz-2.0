@@ -1,17 +1,17 @@
 package render2d.drawable;
 
-import elements.Action;
-import elements.Point;
+import render2d.elements.CursorActions;
+import render2d.elements.Point;
 
 public class Rectangle extends Shape{
 
-	Rectangle(Point pos, int w, int h) {
+	public Rectangle(Point pos, int w, int h) {
 		super(pos, w, h);
 	}
 
-	Rectangle(Point pos, int w, int h, Action click, Action release, Action hover){
+	Rectangle(Point pos, int w, int h, CursorActions action){
 		super(pos, w, h);
-		setClickable(new RectangleClick(getShape(), click, release, hover));
+		setClickable(new RectangleClick(getShape(), action));
 	}
 	
 	@Override

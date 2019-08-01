@@ -16,30 +16,30 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
 
-import elements.Point;
 import render2d.Texturing;
 import render2d.drawable.Shape;
+import render2d.elements.Point;
 
 
 public class Label extends Shape{
 
 	// alphabet from bmfc
 	
-	private static String path = new File("src/render2d/write/abc.fnt").getAbsolutePath();
+	private static String path = new File("res/abc.fnt").getAbsolutePath();
 	private static Symbol[] symb;
 
 	public static final float SCALE = 64;
 	public static final float TXSIZE = (SCALE*SCALE)/(SCALE/8);
 
 	int[] word;
-	
+
 	public Label(Point pos, int scale, String s){
 		super(pos, 0, scale);
-		
 		word = new int[s.length()];
 		for(int i = 0; i < s.length(); i++)
 			word[i] = s.charAt(i);
 	}
+	
 	@Override
 	public void drawShape(){
 		int x = getPos().getX(),

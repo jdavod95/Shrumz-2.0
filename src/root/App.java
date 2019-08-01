@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import java.io.File;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import elements.Cursor;
+
 import game.Screen;
 import render2d.Camera;
 import render2d.Color;
@@ -20,6 +20,7 @@ import render2d.Render;
 import render2d.Texturing;
 import render2d.drawable.Shape;
 import render2d.drawable.ShapeBuilder;
+import render2d.elements.Cursor;
 import render2d.write.Label;
 
 public class App {

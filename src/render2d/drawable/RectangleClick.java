@@ -1,12 +1,12 @@
 package render2d.drawable;
 
-import elements.Action;
-import elements.Point;
+import render2d.elements.CursorActions;
+import render2d.elements.Point;
 
 public final class RectangleClick extends ClickableShapeDummy{
 	
-	public RectangleClick(Shape shape, Action click, Action release, Action hover) {
-		super(shape, click, release, hover);
+	public RectangleClick(Shape shape, CursorActions action) {
+		super(shape, action);
 	}
 
 	public boolean contains(Point m){

@@ -1,6 +1,6 @@
 package render2d.drawable;
 
-import elements.Point;
+import render2d.elements.Point;
 
 public abstract class Shape extends Drawable{
 	

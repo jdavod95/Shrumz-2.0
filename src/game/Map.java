@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-import elements.Point;
+import render2d.elements.Point;
 
 public class Map {
 

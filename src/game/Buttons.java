@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import elements.Button;
-import elements.Point;
+import render2d.elements.Button;
+import render2d.elements.Point;
 import root.App;
 
 public class Buttons {

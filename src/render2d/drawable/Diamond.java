@@ -1,17 +1,17 @@
 package render2d.drawable;
 
-import elements.Action;
-import elements.Point;
+import render2d.elements.CursorActions;
+import render2d.elements.Point;
 
 public class Diamond extends Shape{
 
-	Diamond(Point pos, int w, int h) {
+	public Diamond(Point pos, int w, int h) {
 		super(pos, w, h);
 	}
 
-	Diamond(Point pos, int w, int h, Action click, Action release, Action hover){
+	Diamond(Point pos, int w, int h, CursorActions action){
 		super(pos, w, h);
-		setClickable(new DiamondClick(getShape(), click, release, hover));
+		setClickable(new DiamondClick(getShape(), action));
 	}
 	
 	@Override

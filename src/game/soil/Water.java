@@ -3,9 +3,9 @@ package game.soil;
 import java.util.ArrayList;
 import java.util.List;
 
-import elements.Point;
 import game.Affector;
 import render2d.Color;
+import render2d.elements.Point;
 
 public class Water extends Soil implements Affector{
 

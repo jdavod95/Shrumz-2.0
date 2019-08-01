@@ -2,14 +2,14 @@ package game;
 
 import java.util.List;
 
-import elements.Button;
-import elements.Cursor;
-import elements.Point;
 import render2d.Camera;
 import render2d.Color;
 import render2d.Render;
 import render2d.drawable.Rectangle;
 import render2d.drawable.ShapeBuilder;
+import render2d.elements.Button;
+import render2d.elements.Cursor;
+import render2d.elements.Point;
 import render2d.write.Label;
 import root.App;
 

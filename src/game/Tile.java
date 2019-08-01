@@ -1,20 +1,18 @@
 package game;
 
-import elements.Cursor;
-import elements.Point;
-import elements.Action;
 import game.plant.NoPlant;
 import game.plant.Plant;
 import game.soil.Dirt;
 import game.soil.Soil;
 import game.soil.SoilEffect;
 
-import render2d.Color;
 import render2d.Render;
 import render2d.drawable.Diamond;
 import render2d.drawable.DiamondClick;
 import render2d.drawable.Rectangle;
 import render2d.drawable.ShapeBuilder;
+import render2d.elements.Cursor;
+import render2d.elements.Point;
 
 public class Tile{
 
@@ -29,29 +27,6 @@ public class Tile{
 	
 	private Rectangle plantSkin;
 	private Diamond soilSkin;
-
-	private Action click = new Action(){
-		public void run(){
-			if(Screen.getBrushPlant() != null)
-				setPlant(Screen.getBrushPlant().getNew());
-			
-			if(Screen.getBrushSoil() != null)
-				setSoil(Screen.getBrushSoil().getNew());
-		}
-	};
-	
-	private Action hover = new Action(){
-		public void run(){
-			SHAPES.newDiamond(
-				new Point(
-					soilSkin.getPos().getX(),
-					soilSkin.getPos().getY()),
-				soilSkin.getW(),
-				soilSkin.getW()/2
-			).setColor(new Color(Color.WHITE, 0.5));
-			Render.addScn(SHAPES.getShape(),4);
-		}
-	};
 	
 	public Tile(int x, int y, Point pos){
 		Soil startSoil = new Dirt();
@@ -59,13 +34,16 @@ public class Tile{
 		this.pos = pos;
 		
 		SHAPES.newDiamond(new Point(x, y), scale*2, scale)
-		.setColor(startSoil.getColor())
-		.setClickable(DiamondClick.class, click, Action.EMPTY, hover);
+			.setColor(startSoil.getColor())
+			.setClickable(
+					DiamondClick.class, 
+					new TileActions(this, (Diamond) SHAPES.getShape()));
 		soilSkin = (Diamond) SHAPES.getShape();
 		
 		SHAPES.newRectangle(new Point(x+scale/2, y-scale/4), scale, scale)
-		.setTexture(startPlant.getTEXTURENAME());
+			.setTexture(startPlant.getTEXTURENAME());
 		plantSkin = (Rectangle) SHAPES.getShape();
+
 		
 		setSoil(startSoil);
 		setPlant(startPlant);

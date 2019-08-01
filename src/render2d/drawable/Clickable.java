@@ -1,7 +1,8 @@
 package render2d.drawable;
 
-import elements.Action;
-import elements.Point;
+import render2d.elements.Action;
+import render2d.elements.CursorActions;
+import render2d.elements.Point;
 
 public abstract class Clickable{
 	
@@ -18,6 +19,10 @@ public abstract class Clickable{
 		this.click = click;
 		this.release = release;
 		this.hover = hover;
+	}
+	
+	protected Clickable(CursorActions action) {
+		this(action.getClick(), action.getRelease(), action.getHover());
 	}
 	
 	public Clickable() {

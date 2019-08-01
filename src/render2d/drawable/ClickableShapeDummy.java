@@ -1,19 +1,15 @@
 package render2d.drawable;
 
-import elements.Action;
-import elements.Point;
+import render2d.elements.CursorActions;
+import render2d.elements.Point;
 
 public class ClickableShapeDummy extends Clickable{
 
 	protected Shape shape;
 
-	protected ClickableShapeDummy(Shape shape, Action click, Action release, Action hover) {
-		super(click, release, hover);
+	protected ClickableShapeDummy(Shape shape, CursorActions action) {
+		super(action);
 		this.shape = shape;
-	}
-
-	public ClickableShapeDummy() {
-		super();
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package elements;
+package render2d.elements;
 
 public class Point {
 
@@ -74,4 +74,8 @@ public class Point {
 		return getNew(offset.getX(), offset.getY());
 	}
 
+	public boolean equals(Point p) {
+		return p.getX() == getX()
+			&& p.getY() == getY();
+	}
 }

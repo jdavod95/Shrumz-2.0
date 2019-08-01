@@ -1,12 +1,11 @@
 package game;
 
-import elements.Action;
-
 import game.plant.BluShrum;
 import game.plant.Shrum;
 import game.plant.Weed;
 import game.soil.Dirt;
 import game.soil.Water;
+import render2d.elements.Action;
 
 public class Actions {
 

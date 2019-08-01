@@ -1,36 +1,32 @@
-package elements;
+package render2d.elements;
 
-public class ButtonEvent {
+public class CursorActions {
 	private Action click;
 	private Action hover;
 	private Action release;
 	private Action hold;
 	
-	public ButtonEvent() {
+	public CursorActions() {
 		click = Action.EMPTY;
 		hover = Action.EMPTY;
 		release = Action.EMPTY;
 		hold = Action.EMPTY;
 	}
 	
-	public ButtonEvent setClick(Action click) {
+	protected void setClick(Action click) {
 		this.click = click;
-		return this;
 	}
 
-	public ButtonEvent setHover(Action hover) {
+	protected void setHover(Action hover) {
 		this.hover = hover;
-		return this;
 	}
 
-	public ButtonEvent setRelease(Action release) {
+	protected void setRelease(Action release) {
 		this.release = release;
-		return this;
 	}
 
-	public ButtonEvent setHold(Action hold) {
+	protected void setHold(Action hold) {
 		this.hold = hold;
-		return this;
 	}
 
 	public Action getClick() {

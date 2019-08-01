@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 
 import org.lwjgl.opengl.Display;
 
-import elements.Point;
+import render2d.elements.Point;
 import root.App;
 
 

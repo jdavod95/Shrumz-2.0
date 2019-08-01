@@ -1,8 +1,8 @@
 package game.plant;
 
 
-import elements.Point;
 import game.soil.Soil;
+import render2d.elements.Point;
 
 public class Weed extends Plant {
 
