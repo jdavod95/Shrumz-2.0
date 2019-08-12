@@ -14,6 +14,11 @@ public class Renderer {
 		layers.add(new ArrayList<>());
 	}
 
+	public void addDrawable(List<? extends Drawable> s, int l){
+		for(Drawable sh: s)
+			addDrawable(sh, l);
+	}
+	
 	public void addDrawable(Drawable[] s, int l){
 		for(Drawable sh: s)
 			addDrawable(sh, l);
