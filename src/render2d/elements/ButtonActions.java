@@ -2,22 +2,27 @@ package render2d.elements;
 
 public class ButtonActions extends CursorActions{
 
+	private Button button;
+	private Action buttonFunction;
+	
 	public ButtonActions(Button butt, Action function) {
-		setClick(()->{
-				butt.skin.setCurrentFrame(1);
-				butt.label.getPos().add(Button.NUDGE);
-				function.run();
-				butt.down = true;
-			});
-		
-		setRelease(()->{
-				butt.skin.setCurrentFrame(0);
-				butt.label.getPos().subtract(Button.NUDGE);
-				butt.down = false;
-		});
-		
-		
-		
+		this.button = butt;
+		this.buttonFunction = function;
+	}
+
+	@Override
+	protected void actionClick() {
+		button.skin.setCurrentFrame(1);
+		button.label.getPos().add(Button.NUDGE);
+		buttonFunction.run();
+		button.down = true;
+	}
+	
+	@Override
+	protected void actionRelease() {
+		button.skin.setCurrentFrame(0);
+		button.label.getPos().subtract(Button.NUDGE);
+		button.down = false;
 	}
 	
 }

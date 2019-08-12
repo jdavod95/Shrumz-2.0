@@ -1,32 +1,16 @@
 package render2d.elements;
 
-public class CursorActions {
+public abstract class CursorActions {
 	private Action click;
 	private Action hover;
 	private Action release;
 	private Action hold;
 	
 	public CursorActions() {
-		click = Action.EMPTY;
-		hover = Action.EMPTY;
-		release = Action.EMPTY;
-		hold = Action.EMPTY;
-	}
-	
-	protected void setClick(Action click) {
-		this.click = click;
-	}
-
-	protected void setHover(Action hover) {
-		this.hover = hover;
-	}
-
-	protected void setRelease(Action release) {
-		this.release = release;
-	}
-
-	protected void setHold(Action hold) {
-		this.hold = hold;
+		click = this::actionClick;
+		hover = this::actionHover;
+		release = this::actionRelease;
+		hold = this::actionHold;
 	}
 
 	public Action getClick() {
@@ -44,5 +28,9 @@ public class CursorActions {
 	public Action getHold() {
 		return hold;
 	}
-	
+
+	protected void actionClick() {}
+	protected void actionHover() {}
+	protected void actionRelease() {}
+	protected void actionHold() {}
 }
